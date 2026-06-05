@@ -20,13 +20,13 @@
   {
     "first": "Ірина",
     "last": "Стельмах",
-    "designation": "Гінеколог",
+    "designation": "Доросла та дитяча гінеколог",
     "email": "istelmakh@vulyk.clinic"
   },
   {
     "first": "Христина",
     "last": "Лашків",
-    "designation": "Адміністратор",
+    "designation": "Менеджер з адміністративної діяльності",
     "email": "h.lashkiv@vulyk.clinic"
   },
   {
@@ -40,12 +40,6 @@
     "last": "Лісовська",
     "designation": "Педіатр",
     "email": "y.lisovska@vulyk.clinic"
-  },
-  {
-    "first": "Галина",
-    "last": "Дацко",
-    "designation": "Гінеколог",
-    "email": "h.datsko@vulyk.clinic"
   },
   {
     "first": "Софія",
@@ -80,13 +74,13 @@
   {
     "first": "Марія",
     "last": "Єзерська",
-    "designation": "Адміністратор",
+    "designation": "Адміністратор кол-центру",
     "email": "m.yezerska@vulyk.clinic"
   },
   {
     "first": "Дзвінка",
     "last": "Копанська",
-    "designation": "Дитяча отоларинголог",
+    "designation": "Доросла та дитяча отоларинголог",
     "email": "d.kopanska@vulyk.clinic"
   },
   {
@@ -104,7 +98,7 @@
   {
     "first": "Орест",
     "last": "Лешневський",
-    "designation": "Хірург",
+    "designation": "Дорослий та дитячий хірург",
     "email": "leshnevskyi@vulyk.clinic"
   },
   {
@@ -146,7 +140,7 @@
   {
     "first": "Катерина",
     "last": "Горон",
-    "designation": "Оториноларинголог",
+    "designation": "Доросла та дитяча отоларинголог",
     "email": "horon@vulyk.clinic"
   },
   {
@@ -176,14 +170,8 @@
   {
     "first": "Марта",
     "last": "Чаус",
-    "designation": "Адміністратор",
+    "designation": "Менеджер з адміністративної діяльності",
     "email": "chaus@vulyk.clinic"
-  },
-  {
-    "first": "Захар",
-    "last": "Пікулицький",
-    "designation": "HR",
-    "email": "z.pikulytskyi@vulyk.clinic"
   },
   {
     "first": "Ольга",
@@ -194,7 +182,7 @@
   {
     "first": "Маріанна",
     "last": "Когут",
-    "designation": "Медична Директор",
+    "designation": "Медична Директор, Сімейна лікарка",
     "email": "kohut@vulyk.clinic"
   },
   {
@@ -220,5 +208,77 @@
     "last": "Пікулицька",
     "designation": "Керівник",
     "email": "dr.pikulytska@vulyk.clinic"
+  },
+  {
+    "first": "Анна",
+    "last": "Прішутова",
+    "designation": "Дитячий невролог",
+    "email": ""
+  },
+  {
+    "first": "Оксана",
+    "last": "Тавридзька",
+    "designation": "Дитячий психотерапевт",
+    "email": ""
+  },
+  {
+    "first": "Наталія",
+    "last": "Мудрик",
+    "designation": "Практичний психолог",
+    "email": ""
+  },
+  {
+    "first": "Юлія",
+    "last": "Скрипник",
+    "designation": "Адміністратор",
+    "email": ""
+  },
+  {
+    "first": "Марія",
+    "last": "Шпилька",
+    "designation": "SMM-менеджер",
+    "email": ""
+  },
+  {
+    "first": "Михайло",
+    "last": "Пікулицький",
+    "designation": "Завідувач по господарській частині",
+    "email": ""
+  },
+  {
+    "first": "Оксана",
+    "last": "Гавур",
+    "designation": "Адміністратор",
+    "email": ""
+  },
+  {
+    "first": "Євгенія",
+    "last": "Дерев'янко",
+    "designation": "Медсестра",
+    "email": ""
+  },
+  {
+    "first": "Ірина",
+    "last": "Дубневич",
+    "designation": "Педіатр",
+    "email": ""
+  },
+  {
+    "first": "Олена",
+    "last": "Коритова",
+    "designation": "Медсестра",
+    "email": ""
+  },
+  {
+    "first": "Христина",
+    "last": "Лазарчук",
+    "designation": "Медсестра",
+    "email": ""
+  },
+  {
+    "first": "Іванна",
+    "last": "Лишак",
+    "designation": "Медсестра",
+    "email": ""
   }
 ]

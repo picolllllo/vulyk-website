@@ -52,7 +52,30 @@
       "Bash(python3 patch_about_texts.py)",
       "Bash(python3 /tmp/make_prices.py)",
       "Bash(python \"C:\\\\Users\\\\picol\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\dc159d8c-7ba7-4b79-bb98-350cb88e2e91\\\\ccd0caa5-5f68-4145-8a46-dadedd9184bf\\\\skills\\\\xlsx\\\\make_prices.py\")",
-      "Bash(python \"C:\\\\.My computer\\\\Vulyk Clinic Website\\\\make_prices_ua.py\")"
+      "Bash(python \"C:\\\\.My computer\\\\Vulyk Clinic Website\\\\make_prices_ua.py\")",
+      "Bash(python -c ' *)",
+      "Bash(python3 -m pip install pandas openpyxl -q)",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(del \"C:\\\\.My computer\\\\Vulyk Clinic Website\\\\Employees\\\\xlsx_dump.txt\")",
+      "Bash(xargs grep -h \"doc-tag--location\")",
+      "Bash(grep -v \".xlsx\\\\|~\\\\$\\\\|employees.json\")",
+      "Read(//c/Users/picol/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/dc159d8c-7ba7-4b79-bb98-350cb88e2e91/ccd0caa5-5f68-4145-8a46-dadedd9184bf/skills/docx/**)",
+      "Bash(extract-text \"C:\\\\Users\\\\picol\\\\Downloads\\\\Правила використання лого.docx\")",
+      "Bash(pandoc \"C:\\\\Users\\\\picol\\\\Downloads\\\\Правила використання лого.docx\" -o /tmp/rules.md)",
+      "Read(//tmp/**)",
+      "Bash(python scripts/office/unpack.py \"C:\\\\Users\\\\picol\\\\Downloads\\\\Правила використання лого.docx\" /tmp/rules_unpacked/)",
+      "Bash(cp /tmp/rules/word/media/image1.png \"/tmp/_lg1.png\")",
+      "Bash(cp /tmp/rules/word/media/image2.png \"/tmp/_lg2.png\")",
+      "Bash(cygpath -w /tmp/_lg1.png)",
+      "Bash(cp \"/tmp/rules/word/media/image1.png\" \"C:\\\\.My computer\\\\Vulyk Clinic Website\\\\screening40-logo.png\" && ls -la \"C:\\\\.My computer\\\\Vulyk Clinic Website\\\\screening40-logo.png\")",
+      "Bash(python3)",
+      "Bash(ls -1 \"Info about employees/\")",
+      "Bash(find . -maxdepth 2 -iname \"*Info about employ*\")",
+      "Bash(find . -maxdepth 3 -iname \"*Первинк*\")",
+      "Bash(git add *)",
+      "Bash(git reset *)",
+      "Bash(git rm *)",
+      "Bash(grep '~\\\\$')"
     ]
   }
 }
