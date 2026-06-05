@@ -700,12 +700,17 @@
     var sections = {}, order = [], notes = [], cur = '';
     for (var i = 1; i < rows.length; i++) {
       var r = rows[i];
-      var sec = r[0] || cur, svc = r[1] || '', price = r[2] || '', note = r[3] || '';
-      if (!sec && !svc) continue;
-      if (svc.charAt(0) === '*' || sec === 'Примітки:') {
-        notes.push(svc.replace(/^\*\s*/, ''));
+      var aRaw = (r[0] || '').trim(), svc = r[1] || '', price = r[2] || '', note = r[3] || '';
+      /* Примітка-рядок: зірочка на початку «Розділу» (A) АБО «Послуги» (B),
+         або текст під заголовком «Примітки:» — рендеримо дрібним сірим, а не як заголовок розділу */
+      if (svc.charAt(0) === '*' || aRaw.charAt(0) === '*' || aRaw === 'Примітки:') {
+        var nt = (svc.charAt(0) === '*') ? svc : (aRaw.charAt(0) === '*' ? aRaw : svc);
+        nt = nt.replace(/^\*\s*/, '');
+        if (nt) notes.push(nt);
         continue;
       }
+      var sec = aRaw || cur;
+      if (!sec && !svc) continue;
       cur = sec;
       if (!sections[sec]) { sections[sec] = []; order.push(sec); }
       if (svc) sections[sec].push({ svc: svc, price: price, note: note });
