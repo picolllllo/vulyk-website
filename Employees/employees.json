@@ -1,0 +1,224 @@
+[
+  {
+    "first": "Лідія",
+    "last": "Ковалик",
+    "designation": "Медсестра",
+    "email": "kovalyk@vulyk.clinic"
+  },
+  {
+    "first": "Діана",
+    "last": "Нирка",
+    "designation": "Адміністратор",
+    "email": "nyrka@vulyk.clinic"
+  },
+  {
+    "first": "Яна",
+    "last": "Денисенко",
+    "designation": "Адміністратор",
+    "email": "denysenko@vulyk.clinic"
+  },
+  {
+    "first": "Ірина",
+    "last": "Стельмах",
+    "designation": "Гінеколог",
+    "email": "istelmakh@vulyk.clinic"
+  },
+  {
+    "first": "Христина",
+    "last": "Лашків",
+    "designation": "Адміністратор",
+    "email": "h.lashkiv@vulyk.clinic"
+  },
+  {
+    "first": "Анна",
+    "last": "Дзюбанська",
+    "designation": "Дитяча отоларинголог",
+    "email": "a.mykhalevych@vulyk.clinic"
+  },
+  {
+    "first": "Юлія",
+    "last": "Лісовська",
+    "designation": "Педіатр",
+    "email": "y.lisovska@vulyk.clinic"
+  },
+  {
+    "first": "Галина",
+    "last": "Дацко",
+    "designation": "Гінеколог",
+    "email": "h.datsko@vulyk.clinic"
+  },
+  {
+    "first": "Софія",
+    "last": "Галак",
+    "designation": "Медсестра",
+    "email": "s.galak@vulyk.clinic"
+  },
+  {
+    "first": "Оксана",
+    "last": "Коліщак",
+    "designation": "Психіатр",
+    "email": "kolishchak@vulyk.clinic"
+  },
+  {
+    "first": "Христина",
+    "last": "Кобрин",
+    "designation": "Педіатр",
+    "email": "kobryn@vulyk.clinic"
+  },
+  {
+    "first": "Наталя",
+    "last": "Бігун",
+    "designation": "Сімейна Лікарка",
+    "email": "n.bihun@vulyk.clinic"
+  },
+  {
+    "first": "Наталія",
+    "last": "Кришеник",
+    "designation": "Терапевт",
+    "email": "kryshenyk@vulyk.clinic"
+  },
+  {
+    "first": "Марія",
+    "last": "Єзерська",
+    "designation": "Адміністратор",
+    "email": "m.yezerska@vulyk.clinic"
+  },
+  {
+    "first": "Дзвінка",
+    "last": "Копанська",
+    "designation": "Дитяча отоларинголог",
+    "email": "d.kopanska@vulyk.clinic"
+  },
+  {
+    "first": "Соломія",
+    "last": "Плахетко",
+    "designation": "Ендокинолог",
+    "email": "plakhetko@vulyk.clinic"
+  },
+  {
+    "first": "Наталія",
+    "last": "Захарків",
+    "designation": "Медсестра",
+    "email": "zakharkiv@vulyk.clinic"
+  },
+  {
+    "first": "Орест",
+    "last": "Лешневський",
+    "designation": "Хірург",
+    "email": "leshnevskyi@vulyk.clinic"
+  },
+  {
+    "first": "Оксана",
+    "last": "Курилець",
+    "designation": "Сімейна Лікарка",
+    "email": "kurylets@vulyk.clinic"
+  },
+  {
+    "first": "Галина",
+    "last": "Думич",
+    "designation": "Медсестра",
+    "email": "dumych@vulyk.clinic"
+  },
+  {
+    "first": "Світлана",
+    "last": "Павлишин",
+    "designation": "Медсестра",
+    "email": "pavlyshyn@vulyk.clinic"
+  },
+  {
+    "first": "Олександра",
+    "last": "Колотело",
+    "designation": "Педіатр",
+    "email": "o.kolotelo@vulyk.clinic"
+  },
+  {
+    "first": "Леся",
+    "last": "Кошлата",
+    "designation": "Педіатр",
+    "email": "koshlata@vulyk.clinic"
+  },
+  {
+    "first": "Назарій",
+    "last": "Томащук",
+    "designation": "Кардіолог",
+    "email": "tomashchuk@vulyk.clinic"
+  },
+  {
+    "first": "Катерина",
+    "last": "Горон",
+    "designation": "Оториноларинголог",
+    "email": "horon@vulyk.clinic"
+  },
+  {
+    "first": "Станіслав",
+    "last": "Кравчук",
+    "designation": "Гастроентеролог",
+    "email": "kravchuk@vulyk.clinic"
+  },
+  {
+    "first": "Ірина",
+    "last": "Лехоцінська",
+    "designation": "Педіатр",
+    "email": "i.lekhotsinska@vulyk.clinic"
+  },
+  {
+    "first": "Ірина",
+    "last": "Маркіна",
+    "designation": "Бухгалтер",
+    "email": "markina@vulyk.clinic"
+  },
+  {
+    "first": "Наталія",
+    "last": "Гусак",
+    "designation": "Адміністратор",
+    "email": "husak@vulyk.clinic"
+  },
+  {
+    "first": "Марта",
+    "last": "Чаус",
+    "designation": "Адміністратор",
+    "email": "chaus@vulyk.clinic"
+  },
+  {
+    "first": "Захар",
+    "last": "Пікулицький",
+    "designation": "HR",
+    "email": "z.pikulytskyi@vulyk.clinic"
+  },
+  {
+    "first": "Ольга",
+    "last": "Миронець",
+    "designation": "Сімейна Лікарка",
+    "email": "o.myronets@vulyk.clinic"
+  },
+  {
+    "first": "Маріанна",
+    "last": "Когут",
+    "designation": "Медична Директор",
+    "email": "kohut@vulyk.clinic"
+  },
+  {
+    "first": "Христина",
+    "last": "Возьна",
+    "designation": "Педіатр",
+    "email": "h.vozna@vulyk.clinic"
+  },
+  {
+    "first": "Юліан",
+    "last": "Конечний",
+    "designation": "Терапевт",
+    "email": "y.konechnyi@vulyk.clinic"
+  },
+  {
+    "first": "Ольга",
+    "last": "Король",
+    "designation": "Операційна Директор",
+    "email": "korol@vulyk.clinic"
+  },
+  {
+    "first": "Ярина",
+    "last": "Пікулицька",
+    "designation": "Керівник",
+    "email": "dr.pikulytska@vulyk.clinic"
+  }
+]

@@ -1,0 +1,261 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     РЕЗЕРВНА КОПІЯ — блок "Як ми можемо допомогти" (network canvas)
+     Щоб відновити: вставити між секцією fq та секцією doctors-section
+     в index.html
+═══════════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════ DIRECTIONS FLOW ═══════════════ -->
+<section class="dirs-section" aria-label="Наші напрями">
+  <div class="dirs-section__inner">
+    <p class="dirs-section__title">Як ми можемо допомогти?</p>
+    <p class="dirs-section__sub">Вулик — це система, яка охоплює повний цикл сімейної медицини</p>
+    <canvas id="netCanvas" aria-label="Мережа медичних напрямів — натисніть для переходу до цін"></canvas>
+  </div>
+</section>
+<script>
+(function () {
+
+  var canvas = document.getElementById('netCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+
+  var ACCENT  = '#E8A820';
+  var PRIMARY = '#2B4B3E';
+  var WARM_BG = '#fffef9';
+  var TEXT_C  = '#1A1A1A';
+  var FONT    = "'Nunito Sans', system-ui, sans-serif";
+
+  var nodeData = [
+    { id:  0, label: 'Сімейна медицина', hub: true },
+    { id:  1, label: 'Педіатрія'        },
+    { id:  2, label: 'Терапія'          },
+    { id:  3, label: 'Кардіологія'      },
+    { id:  4, label: 'УЗД'              },
+    { id:  5, label: 'Психіатрія'       },
+    { id:  6, label: 'Психотерапія'     },
+    { id:  7, label: 'Гастроентерол.'   },
+    { id:  8, label: 'Ендокринологія'   },
+    { id:  9, label: 'Гінекологія'      },
+    { id: 10, label: 'ЛОР'              },
+    { id: 11, label: 'Хірургія'         },
+    { id: 12, label: 'Вакцинація'       },
+    { id: 13, label: 'Лабораторія'      },
+    { id: 14, label: 'Профілактика'     },
+    { id: 15, label: 'Неврологія'       },
+  ];
+
+  var edgeList = [
+    [0,1],[0,2],[0,3],[0,4],[0,5],[0,8],[0,9],[0,12],[0,13],[0,14],
+    [1,2],[1,4],[1,10],[1,12],[1,15],
+    [2,3],[2,5],[2,7],[2,8],[2,10],[2,13],
+    [3,4],[3,13],
+    [4,7],[4,8],[4,9],
+    [5,6],
+    [7,11],[7,13],
+    [8,13],
+    [9,13],
+    [10,11],
+    [12,14],
+    [13,14],
+  ];
+
+  /* adjacency */
+  var adj = {};
+  nodeData.forEach(function(n){ adj[n.id] = new Set(); });
+  edgeList.forEach(function(e){ adj[e[0]].add(e[1]); adj[e[1]].add(e[0]); });
+
+  var degree = nodeData.map(function(n){ return adj[n.id].size; });
+  var N = nodeData.length;
+
+  /* initial positions: hub in centre, others in circle */
+  var nodes = nodeData.map(function(d, i){
+    var angle = (2 * Math.PI * i) / (N - 1);
+    var rad   = i === 0 ? 0 : 380;
+    return {
+      id: d.id, label: d.label, hub: !!d.hub,
+      x: i === 0 ? 0 : Math.cos(angle) * rad,
+      y: i === 0 ? 0 : Math.sin(angle) * rad,
+      vx: 0, vy: 0
+    };
+  });
+
+  /* ── force simulation ── */
+  var frame = 0, FRAMES = 320;
+
+  function simulate(){
+    var a = Math.max(0.015, 1 - frame / FRAMES);
+
+    for(var i=0;i<N;i++){
+      for(var j=i+1;j<N;j++){
+        var dx=nodes[j].x-nodes[i].x, dy=nodes[j].y-nodes[i].y;
+        var d2=dx*dx+dy*dy||0.01, d=Math.sqrt(d2);
+        var f=36000/d2*a;
+        nodes[i].vx-=(dx/d)*f; nodes[i].vy-=(dy/d)*f;
+        nodes[j].vx+=(dx/d)*f; nodes[j].vy+=(dy/d)*f;
+      }
+    }
+
+    edgeList.forEach(function(e){
+      var A=nodes[e[0]], B=nodes[e[1]];
+      var dx=B.x-A.x, dy=B.y-A.y;
+      var d=Math.sqrt(dx*dx+dy*dy)||0.01;
+      var f=(d-210)*0.035*a;
+      A.vx+=(dx/d)*f; A.vy+=(dy/d)*f;
+      B.vx-=(dx/d)*f; B.vy-=(dy/d)*f;
+    });
+
+    var hw = canvas.offsetWidth  / 2;
+    var hh = canvas.offsetHeight / 2;
+
+    nodes.forEach(function(n, i){
+      n.vx-=n.x*0.006*a; n.vy-=n.y*0.006*a;
+      n.x+=n.vx; n.y+=n.vy;
+      n.vx*=0.82; n.vy*=0.82;
+
+      /* soft boundary — push back if node drifts near edge */
+      var margin = nodeRadius(i) + 12;
+      var lim = hw - margin;
+      if(n.x < -lim){ n.x = -lim; n.vx *= -0.4; }
+      if(n.x >  lim){ n.x =  lim; n.vx *= -0.4; }
+      lim = hh - margin;
+      if(n.y < -lim){ n.y = -lim; n.vy *= -0.4; }
+      if(n.y >  lim){ n.y =  lim; n.vy *= -0.4; }
+    });
+    frame++;
+  }
+
+  /* ── resize ── */
+  function resize(){
+    var w=canvas.offsetWidth, h=canvas.offsetHeight;
+    canvas.width=w*dpr; canvas.height=h*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+
+  /* ── draw ── */
+  var hovId = -1;
+
+  function nodeRadius(i){
+    return nodes[i].hub ? 52 : degree[i] >= 5 ? 41 : 34;
+  }
+
+  function draw(){
+    var w=canvas.offsetWidth, h=canvas.offsetHeight;
+    ctx.clearRect(0,0,w,h);
+    var cx=w/2, cy=h/2;
+
+    /* edges */
+    edgeList.forEach(function(e){
+      var na=nodes[e[0]], nb=nodes[e[1]];
+      var hi = hovId!==-1 && (hovId===na.id||hovId===nb.id);
+      ctx.beginPath();
+      ctx.moveTo(cx+na.x, cy+na.y);
+      ctx.lineTo(cx+nb.x, cy+nb.y);
+      ctx.strokeStyle = hi ? 'rgba(232,168,32,0.55)' : 'rgba(0,0,0,0.07)';
+      ctx.lineWidth   = hi ? 2 : 1;
+      ctx.stroke();
+    });
+
+    /* nodes */
+    nodes.forEach(function(n, i){
+      var px=cx+n.x, py=cy+n.y;
+      var r   = nodeRadius(i);
+      var isH = hovId===n.id;
+      var isC = hovId!==-1 && adj[hovId].has(n.id);
+      var isF = hovId!==-1 && !isH && !isC;
+
+      if(isH){ ctx.shadowColor='rgba(232,168,32,0.4)'; ctx.shadowBlur=20; }
+
+      ctx.beginPath(); ctx.arc(px,py,r,0,Math.PI*2);
+      ctx.fillStyle = n.hub ? (isH?'#1e3a2c':PRIMARY)
+                    : isH   ? ACCENT
+                    : isC   ? 'rgba(232,168,32,0.13)'
+                    : isF   ? 'rgba(255,254,249,0.35)'
+                    : WARM_BG;
+      ctx.fill();
+      ctx.shadowBlur=0; ctx.shadowColor='transparent';
+
+      ctx.strokeStyle = n.hub ? (isH?ACCENT:PRIMARY)
+                      : isH  ? ACCENT
+                      : isC  ? 'rgba(232,168,32,0.45)'
+                      : 'rgba(0,0,0,0.1)';
+      ctx.lineWidth = (isH||n.hub) ? 2 : 1;
+      ctx.stroke();
+
+      /* label */
+      ctx.globalAlpha = isF ? 0.22 : 1;
+      ctx.fillStyle   = n.hub ? '#fff' : (isH ? '#fff' : TEXT_C);
+      ctx.textAlign   = 'center';
+      ctx.textBaseline= 'middle';
+
+      if(n.hub){
+        ctx.font = 'bold 15px '+FONT;
+        ctx.fillText('Сімейна',  px, py-9);
+        ctx.fillText('медицина', px, py+9);
+      } else {
+        var words = n.label.split(' ');
+        if(words.length > 1){
+          ctx.font = '13px '+FONT;
+          var mid = Math.ceil(words.length/2);
+          ctx.fillText(words.slice(0,mid).join(' '), px, py-8);
+          ctx.fillText(words.slice(mid).join(' '),   px, py+8);
+        } else {
+          ctx.font = '13px '+FONT;
+          ctx.fillText(n.label, px, py);
+        }
+      }
+      ctx.globalAlpha = 1;
+    });
+  }
+
+  /* ── hit test ── */
+  function nodeAt(mx,my){
+    var cx=canvas.offsetWidth/2, cy=canvas.offsetHeight/2;
+    for(var i=0;i<N;i++){
+      var r=nodeRadius(i);
+      var dx=mx-(cx+nodes[i].x), dy=my-(cy+nodes[i].y);
+      if(dx*dx+dy*dy<=r*r) return nodes[i].id;
+    }
+    return -1;
+  }
+
+  /* ── events ── */
+  canvas.addEventListener('mousemove', function(e){
+    var rect=canvas.getBoundingClientRect();
+    var id=nodeAt(e.clientX-rect.left, e.clientY-rect.top);
+    if(id!==hovId){ hovId=id; draw(); }
+    canvas.style.cursor = id!==-1 ? 'pointer' : 'default';
+  });
+  canvas.addEventListener('mouseleave', function(){ hovId=-1; draw(); });
+  canvas.addEventListener('click', function(e){
+    var rect=canvas.getBoundingClientRect();
+    if(nodeAt(e.clientX-rect.left,e.clientY-rect.top)!==-1)
+      window.location.href='prices.html';
+  });
+
+  /* ── loop ── */
+  function tick(){
+    if(frame<FRAMES) simulate();
+    draw();
+    requestAnimationFrame(tick);
+  }
+
+  resize();
+  window.addEventListener('resize', function(){ resize(); draw(); });
+  requestAnimationFrame(tick);
+
+  /* ── scroll reveal for title/sub ── */
+  var ioObs = new IntersectionObserver(function(entries, obs){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.2 });
+  var title = document.querySelector('.dirs-section__title');
+  var sub   = document.querySelector('.dirs-section__sub');
+  if(title){ title.style.transitionDelay='0ms';  ioObs.observe(title); }
+  if(sub)  { sub.style.transitionDelay='80ms';   ioObs.observe(sub);   }
+
+})();
+</script>

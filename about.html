@@ -1,0 +1,1202 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Про нас — Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Колір сторінки ── */
+    body { --primary: #2E3440; }
+
+    /* ── PAGE HERO ──────────────────────────────── */
+    .about-hero {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .about-hero__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('About page photos/VYLUK_COMANDA_STRUISKA62.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.03);
+      transition: transform 8s ease;
+    }
+    .about-hero:hover .about-hero__bg { transform: scale(1); }
+    .about-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,.82) 0%,
+        rgba(0,0,0,.38) 55%,
+        rgba(0,0,0,.12) 100%
+      );
+    }
+    .about-hero__content {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad) 72px;
+      width: 100%;
+    }
+    .about-hero__label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .about-hero__title {
+      font-size: clamp(52px, 9vw, 100px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.06;
+      margin-bottom: 20px;
+      max-width: 760px;
+    }
+    .about-hero__title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .about-hero__sub {
+      font-size: clamp(15px, 1.5vw, 18px);
+      color: rgba(255,255,255,.7);
+      max-width: 540px;
+      line-height: 1.7;
+    }
+
+    /* ── STATS STRIP ────────────────────────────── */
+    .about-stats {
+      background: var(--primary);
+    }
+    .about-stats__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .stat-item {
+      padding: 36px 24px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,.1);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item__num {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-item__label {
+      font-size: 14px;
+      color: rgba(255,255,255,.6);
+      line-height: 1.4;
+    }
+
+    /* ── MISSION ────────────────────────────────── */
+    .about-mission {
+      background: var(--warm-bg);
+      padding: 100px var(--pad);
+    }
+    .about-mission__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-mission__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .about-mission__title {
+      font-size: clamp(28px, 3.2vw, 46px);
+      font-weight: 800;
+      line-height: 1.12;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .about-mission__title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .about-mission__text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 16px;
+    }
+    .about-mission__text:last-of-type { margin-bottom: 36px; }
+    .about-mission__photo-wrap {
+      position: relative;
+    }
+    .about-mission__photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 20px;
+      display: block;
+      box-shadow: 0 24px 72px rgba(0,0,0,.15);
+    }
+    .about-mission__photo-accent {
+      position: absolute;
+      bottom: -24px;
+      left: -24px;
+      width: 50%;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,.18);
+      border: 4px solid var(--warm-bg);
+    }
+    .about-mission__photo-accent img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* ── VALUES ─────────────────────────────────── */
+    .about-values {
+      background: var(--warm-bg);
+      padding: 100px var(--pad);
+    }
+    .about-values__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-values__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .about-values__title {
+      font-size: clamp(28px, 3.2vw, 46px);
+      font-weight: 800;
+      line-height: 1.12;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .about-values__sub {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .about-values__photo-accent {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 50%;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,.18);
+      border: 4px solid #f3f1ec;
+    }
+    .about-values__photo-accent img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 36px 48px;
+    }
+    .value-card {
+      /* без карточки — чистий layout */
+    }
+    .value-card__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(232,168,32,.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      color: var(--accent-deep);
+    }
+    .value-card__title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .value-card__text {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    
+
+    /* ── ACETERNITY-STYLE TIMELINE ──────────────── */
+    .acet-tl {
+      background: #fff;
+      padding: 100px 0 20px;
+      overflow: hidden;
+    }
+    .acet-tl__header {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+      margin-bottom: 72px;
+    }
+    .acet-tl__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .acet-tl__title {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .acet-tl__sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 480px;
+    }
+
+    /* Body: relative, hosts the track line */
+    .acet-tl__body {
+      position: relative;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+    }
+
+    /* Vertical track */
+    .acet-tl__track {
+      position: absolute;
+      left: calc(var(--pad) + 128px + 28px); /* year-col + half-gap */
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(0,0,0,.08);
+      border-radius: 1px;
+    }
+    .acet-tl__fill {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 0%;
+      background: linear-gradient(to bottom,
+        var(--accent) 0%,
+        var(--primary) 100%
+      );
+      border-radius: 1px;
+      transition: height .05s linear;
+    }
+
+    /* Each entry: year (sticky left) + content (right) */
+    .acet-tl__entry {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      column-gap: 56px;
+      padding-bottom: 104px;
+      position: relative;
+    }
+    .acet-tl__entry:last-child { padding-bottom: 80px; }
+
+    /* Dot on the track */
+    .acet-tl__dot {
+      position: absolute;
+      left: calc(128px + 28px - 7px); /* center on track */
+      top: 14px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid rgba(0,0,0,.15);
+      z-index: 2;
+      transition: background .35s, border-color .35s, box-shadow .35s;
+    }
+    .acet-tl__entry.is-passed .acet-tl__dot {
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(232,168,32,.2);
+    }
+
+    /* Year column: sticky */
+    .acet-tl__year-col {
+      position: sticky;
+      top: calc(var(--header-h) + 32px);
+      align-self: flex-start;
+      text-align: right;
+      padding-right: 14px;
+    }
+    .acet-tl__year {
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+      opacity: .18;
+      transition: opacity .4s;
+    }
+    .acet-tl__entry.is-passed .acet-tl__year { opacity: 1; }
+
+    /* Content column */
+    .acet-tl__content {
+      padding-top: 8px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .acet-tl__entry.is-passed .acet-tl__content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .acet-tl__entry-title {
+      font-size: clamp(18px, 2vw, 24px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .acet-tl__entry-text {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.78;
+      margin-bottom: 28px;
+      max-width: 560px;
+    }
+    .acet-tl__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .acet-tl__chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 13px;
+      border-radius: 100px;
+      background: rgba(43,75,62,.08);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .acet-tl__chip::before {
+      content: '✓';
+      font-size: 11px;
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .acet-tl__photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .acet-tl__photo {
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      box-shadow:
+        0 0 24px rgba(34,42,53,.06),
+        0 1px 1px rgba(0,0,0,.05),
+        0 0 0 1px rgba(34,42,53,.04),
+        0 16px 68px rgba(47,48,55,.05);
+    }
+    .acet-tl__photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform .5s ease;
+    }
+    .acet-tl__photo:hover img { transform: scale(1.04); }
+
+    /* Responsive timeline */
+    @media (max-width: 768px) {
+      .acet-tl__track { display: none; }
+      .acet-tl__entry {
+        grid-template-columns: 1fr;
+        padding-bottom: 56px;
+        border-left: 2px solid rgba(0,0,0,.08);
+        padding-left: 24px;
+        margin-left: 0;
+      }
+      .acet-tl__dot { display: none; }
+      .acet-tl__year-col {
+        position: static;
+        text-align: left;
+        padding-right: 0;
+        margin-bottom: 12px;
+      }
+      .acet-tl__year { font-size: 28px; opacity: 1; }
+      .acet-tl__content { padding-top: 0; opacity: 1; transform: none; }
+      .acet-tl__photos { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── PHOTO MOSAIC ───────────────────────────── */
+    .about-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 280px 280px;
+      gap: 4px;
+    }
+    .about-photos__item {
+      overflow: hidden;
+      position: relative;
+    }
+    .about-photos__item--tall {
+      grid-row: span 2;
+    }
+    .about-photos__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform .6s ease;
+    }
+    .about-photos__item:hover img { transform: scale(1.04); }
+
+    /* ── TEAM TEASER ────────────────────────────── */
+    .about-team {
+      background: var(--warm-bg);
+      padding: 100px var(--pad);
+      text-align: center;
+    }
+    .about-team__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .about-team__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .about-team__title {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .about-team__sub {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 52px;
+      line-height: 1.65;
+    }
+    .about-team__faces {
+      display: flex;
+      justify-content: center;
+      gap: -12px;
+      margin-bottom: 40px;
+    }
+    .about-team__face {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--warm-bg);
+      margin: 0 -8px;
+      box-shadow: 0 4px 14px rgba(0,0,0,.1);
+      flex-shrink: 0;
+      transition: transform .2s, z-index .2s;
+      position: relative;
+    }
+    .about-team__face:hover { transform: translateY(-6px) scale(1.08); z-index: 10; }
+    .about-team__face img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    .about-team__more {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 -8px;
+      border: 3px solid var(--warm-bg);
+      flex-shrink: 0;
+    }
+
+    /* ── CTA ────────────────────────────────────── */
+    .about-cta {
+      position: relative;
+      overflow: hidden;
+      background: var(--primary);
+      padding: 100px var(--pad);
+      text-align: center;
+    }
+    .about-cta::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background-image: url('Photos/VYLUK_COMANDA_STRUISKA3.JPG');
+      background-size: cover;
+      background-position: center;
+      filter: blur(8px) brightness(.25);
+      z-index: 0;
+    }
+    .about-cta__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .about-cta__title {
+      font-size: clamp(28px, 3.5vw, 46px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .about-cta__title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .about-cta__sub {
+      font-size: 16px;
+      color: rgba(255,255,255,.6);
+      margin-bottom: 36px;
+      line-height: 1.65;
+    }
+    .about-cta__btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── BREADCRUMB ─────────────────────────────── */
+    .breadcrumb {
+      background: var(--warm-bg);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      padding: 14px var(--pad);
+    }
+    .breadcrumb__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color .15s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb__sep { opacity: .4; }
+    .breadcrumb__current { color: var(--text); font-weight: 600; }
+
+    /* ── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 1024px) {
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-mission__inner { gap: 48px; }      .timeline { grid-template-columns: repeat(2, 1fr); gap: 48px 32px; }
+      .timeline::before { display: none; }
+      .tl-item__dot { margin-bottom: 14px; }
+    }
+
+    @media (max-width: 768px) {
+      .about-mission__inner { grid-template-columns: 1fr; }
+      .about-mission__photo-wrap { order: -1; }
+      .about-mission__photo-accent { display: none; }
+      .about-values__inner { grid-template-columns: 1fr; }
+      .about-values__photo-accent { display: none; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-stats__inner { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); }
+      .stat-item:nth-child(2n) { }
+      .about-photos { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px; }
+      .about-photos__item--tall { grid-row: span 1; }
+      .about-team__faces { flex-wrap: wrap; justify-content: center; }
+      .timeline { grid-template-columns: 1fr; gap: 32px; }
+      .about-mission, .about-values, .acet-tl, .about-team, .about-cta {
+        padding: 64px var(--pad);
+      }
+      .acet-tl { padding-bottom: 20px; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header class="header" id="siteHeader">
+  <div class="header__inner">
+
+    <a href="index.html" class="logo">
+      <img src="Вулик-лого.png" alt="ВУЛИК — сімейна амбулаторія" class="logo__img">
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Відкрити меню" aria-expanded="false">
+      <svg class="icon-open"  width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="11" x2="19" y2="11"/><line x1="3" y1="16" x2="19" y2="16"/></svg>
+      <svg class="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="display:none"><line x1="4" y1="4" x2="18" y2="18"/><line x1="18" y1="4" x2="4" y2="18"/></svg>
+    </button>
+
+    <nav class="nav" aria-label="Головне меню">
+      <ul class="nav__list">
+        <li><a href="about.html">Про нас</a></li>
+        <li class="nav__item--dropdown">
+          <a href="#">Напрями <svg class="nav__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="nav__dropdown nav__dropdown--dirs">
+            <li class="nav__has-sub"><a href="dir-pervynna.html">Первинна допомога <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-pediatriya.html">Педіатрія</a></li>
+                <li><a href="sub-simeyna-med.html">Сімейна медицина</a></li>
+                <li><a href="sub-terapiya.html">Терапія</a></li>
+                <li><a href="sub-lab-obs.html">Лабораторні обстеження</a></li>
+                <li><a href="sub-bazove-test.html">Базове тестування</a></li>
+                <li><a href="sub-vaktsinatsiya-derzh.html">Вакцинація державними вакцинами</a></li>
+                <li><a href="sub-funkts-diag.html">Функціональна діагностика</a></li>
+                <li><a href="sub-esoz.html">Послуги ЕСОЗ</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-rozshyrena.html">Розширена допомога <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-vaktsinatsiya.html">Вакцинація</a></li>
+                <li><a href="sub-dopologovi.html">Допологові консультації</a></li>
+                <li><a href="sub-grudne-vyg.html">Консультації з грудного вигодовування</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-psykhichne.html">Психічне здоров'я <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-psykhiatriya.html">Психіатрія</a></li>
+                <li><a href="sub-dyt-psykhiatriya.html">Дитяча психіатрія</a></li>
+                <li><a href="sub-psykhoterapiya.html">Психотерапія доросла та дитяча</a></li>
+                <li><a href="sub-casd.html">Діагностичний інструмент CASD</a></li>
+                <li><a href="sub-conners3.html">Діагностичний інструмент Conners-3</a></li>
+                <li><a href="sub-logopediya.html">Логопедія</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-spetsializovana.html">Спеціалізована допомога <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-kardiologiya.html">Кардіологія (доросла)</a></li>
+                <li><a href="sub-endokrynologiya.html">Ендокринологія (доросла)</a></li>
+                <li><a href="sub-gastroenterologiya.html">Гастроентерологія (доросла)</a></li>
+                <li><a href="sub-otolaringologiya.html">Отоларингологія (доросла та дитяча)</a></li>
+                <li><a href="sub-nevrologiya.html">Неврологія (дитяча)</a></li>
+                <li><a href="sub-ginekologiya.html">Гінекологія (доросла та дитяча)</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-uzi.html">Ультразвукова діагностика <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-uzi-dity.html">УЗД для дітей</a></li>
+                <li><a href="sub-neurosonografiya.html">Нейросонографія</a></li>
+                <li><a href="sub-uzi-sertse.html">УЗД серця</a></li>
+                <li><a href="sub-uzi-kulshovi.html">УЗД кульшових суглобів</a></li>
+                <li><a href="sub-uzi-vnutrishni.html">УЗД внутрішніх органів</a></li>
+                <li><a href="sub-uzi-shchytopodibna.html">УЗД щитоподібної залози</a></li>
+                <li><a href="sub-uzi-nyrky.html">УЗД нирок та сечовивідних шляхів</a></li>
+                <li><a href="sub-uzi-suglob.html">УЗД суглобів</a></li>
+                <li><a href="sub-uzi-vahitni.html">УЗД для вагітних жінок</a></li>
+                <li><a href="sub-uzi-dorosli.html">УЗД для дорослих</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-funktsionalna.html">Функціональна діагностика <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-tympanometriya.html">Тимпанометрія</a></li>
+                <li><a href="sub-holter.html">Холтерівський моніторинг</a></li>
+                <li><a href="sub-monit-at.html">Добовий моніторинг артеріального тиску</a></li>
+                <li><a href="sub-monit-glyukoza.html">Моніторинг рівня цукру в крові</a></li>
+                <li><a href="sub-tredmil.html">Тредміл</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-laboratorna.html">Лабораторна діагностика <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-lab-vulyk.html">У Вулику</a></li>
+                <li><a href="sub-lab-partnery.html">Партнерські лабораторії</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="team.html">Команда</a></li>
+        <li><a href="prices.html">Ціни</a></li>
+        <li><a href="vacancies.html">Вакансії</a></li>
+        <li><a href="blog.html">Блог</a></li>
+        <li class="nav__item--dropdown">
+          <a href="#">Локації <svg class="nav__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="nav__dropdown">
+            <li><a href="location-striyska.html">вул. Стрийська, 86В</a></li>
+            <li><a href="location-tychyny.html">вул. Тичини, 21</a></li>
+          </ul>
+        </li>
+        <li><a href="contacts.html">Контакти</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__right">
+      <div class="header__contact">
+        <a href="tel:+380962817338" class="header__phone">+38 (096) 281-73-38</a>
+        <span class="header__hours">Пн–Пт: 9:00–19:00 | Сб–Нд: 10:00–18:00</span>
+      </div>
+      <a href="#" class="btn btn--primary">Записатися</a>
+    </div>
+
+  </div>
+</header>
+
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="about-hero">
+  <div class="about-hero__bg"></div>
+  <div class="about-hero__overlay"></div>
+  <div class="about-hero__content">
+    <p class="about-hero__label">Сімейна амбулаторія у Львові</p>
+    <h1 class="about-hero__title">Медицина,<br>якій <em>довіряють</em></h1>
+    <p class="about-hero__sub">Ми будуємо клініку, де пацієнт отримує доступну, доказову та холістичну опіку, а лікар — гідне місце праці.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ STATS ═══════════════ -->
+<section class="about-stats" aria-label="Клініка у цифрах">
+  <div class="about-stats__inner">
+    <div class="stat-item">
+      <div class="stat-item__num">2019</div>
+      <div class="stat-item__label">рік заснування</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-item__num">38</div>
+      <div class="stat-item__label">спеціалістів у команді</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-item__num">2</div>
+      <div class="stat-item__label">локації у Львові</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-item__num">10 000+</div>
+      <div class="stat-item__label">пацієнтів нам довіряють</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ MISSION ═══════════════ -->
+<section class="about-mission">
+  <div class="about-mission__inner">
+
+    <div class="about-mission__text-col">
+      <p class="about-mission__label">Наша місія</p>
+      <h2 class="about-mission__title">Клініка, де кожна<br>сім'я має <em>свого лікаря</em></h2>
+      <p class="about-mission__text">
+        «Вулик» — це місце, де людина є найвищою цінністю. Пацієнт отримує доступну, доказову та холістичну медичну опіку, а лікар — гідне місце праці, простір для розвитку та команду, яка підтримує.
+      </p>
+      <p class="about-mission__text">
+        Ми будуємо відносини на довірі, відкритій комунікації та взаємній відповідальності — як між лікарем і пацієнтом, так і всередині команди. «Вулик» розвивається відповідно до потреб громади, дотримується принципів інклюзивності та веде соціально й екологічно відповідальний бізнес.
+      </p>
+      <a href="team.html" class="btn btn--primary">Познайомитись з командою</a>
+    </div>
+
+    <div class="about-mission__photo-wrap">
+      <img
+        class="about-mission__photo"
+        src="About page photos/8A5A3720.jpg"
+        alt="Команда клініки Вулик"
+      >
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ VALUES ═══════════════ -->
+<section class="about-values">
+  <div class="about-values__inner">
+
+    <div class="about-mission__photo-wrap">
+      <img
+        class="about-mission__photo"
+        src="About page photos/VYLUK_COMANDA_STRUISKA57.jpg"
+        alt="Команда клініки Вулик"
+      >
+    </div>
+
+    <div class="about-values__text-col">
+      <p class="about-values__label">Що нас визначає</p>
+      <h2 class="about-values__title">Наші цінності</h2>
+      <p class="about-values__sub">Чотири принципи, на яких тримається все, що ми робимо</p>
+
+      <div class="values-grid">
+
+        <div class="value-card">
+          <div class="value-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3 class="value-card__title">Довіра та відкритість</h3>
+          <p class="value-card__text">Відносини з пацієнтами будуємо на відкритій комунікації та взаємній відповідальності. Ми пояснюємо кожен крок лікування — без зайвого жаргону.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+          </div>
+          <h3 class="value-card__title">Доказова медицина</h3>
+          <p class="value-card__text">Кожне клінічне рішення ґрунтується на актуальних протоколах і наукових дослідженнях. Ми постійно навчаємось та слідкуємо за світовими стандартами.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+          </div>
+          <h3 class="value-card__title">Холістична опіка</h3>
+          <p class="value-card__text">Лікуємо не симптом, а людину — враховуємо фізичне, ментальне та соціальне здоров'я. Бачимо пацієнта в контексті його родини та способу життя.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <h3 class="value-card__title">Постійний розвиток</h3>
+          <p class="value-card__text">Клініка розвивається разом з потребами громади. Ми інвестуємо в навчання команди, нові технології та покращення сервісу для кожного пацієнта.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ═══════════════ TIMELINE ═══════════════ -->
+<section class="acet-tl" id="acetTlSection">
+
+  <div class="acet-tl__header">
+    <p class="acet-tl__label">Наша історія</p>
+    <h2 class="acet-tl__title">Як ми зростали</h2>
+    <p class="acet-tl__sub">Від маленької амбулаторії до мережі клінік, яким довіряють тисячі сімей у Львові</p>
+  </div>
+
+  <div class="acet-tl__body" id="acetTlBody">
+
+    <!-- Scrolling track -->
+    <div class="acet-tl__track" aria-hidden="true">
+      <div class="acet-tl__fill" id="acetTlFill"></div>
+    </div>
+
+    <!-- 2019 -->
+    <div class="acet-tl__entry" id="tlEntry0">
+      <div class="acet-tl__dot" aria-hidden="true"></div>
+      <div class="acet-tl__year-col">
+        <span class="acet-tl__year">2019</span>
+      </div>
+      <div class="acet-tl__content">
+        <h3 class="acet-tl__entry-title">Заснування «Вулика»</h3>
+        <p class="acet-tl__entry-text">Ярина Пікулицька відкрила першу локацію на вул. Тичини, 21 з невеличкою командою сімейних лікарів і педіатрів. З першого дня — фокус на доказовій медицині та людяному підході до кожного пацієнта.</p>
+        <div class="acet-tl__chips">
+          <span class="acet-tl__chip">Перша локація — вул. Тичини, 21</span>
+          <span class="acet-tl__chip">Сімейна медицина та педіатрія</span>
+          <span class="acet-tl__chip">Підписання декларацій НСЗУ</span>
+        </div>
+        <div class="acet-tl__photos" style="grid-template-columns: 1fr 1fr 1fr;">
+          <div class="acet-tl__photo"><img src="About page photos/Tychyny1.jpg" alt="Клініка Вулик — вул. Тичини 2019" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/Tychyny2.jpg" alt="Клініка Вулик — вул. Тичини 2019" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/Tychyny3.jpg" alt="Клініка Вулик — вул. Тичини 2019" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/Tychyny4.jpg" alt="Клініка Вулик — вул. Тичини 2019" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/Tychyny5.jpg" alt="Клініка Вулик — вул. Тичини 2019" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/Tychyny6.jpg" alt="Клініка Вулик — вул. Тичини 2019" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2021 -->
+    <div class="acet-tl__entry" id="tlEntry1">
+      <div class="acet-tl__dot" aria-hidden="true"></div>
+      <div class="acet-tl__year-col">
+        <span class="acet-tl__year">2022</span>
+      </div>
+      <div class="acet-tl__content">
+        <h3 class="acet-tl__entry-title">Друга локація та розширення спеціалізацій</h3>
+        <p class="acet-tl__entry-text">Відкриття клініки на вул. Стрийській, 86В у ЖК Park Tower. Поряд з сімейними лікарями — вузькі спеціалісти. «Вулик» стає повноцінним медичним центром для всієї родини.</p>
+        <div class="acet-tl__chips">
+          <span class="acet-tl__chip">Нова локація — вул. Стрийська, 86В</span>
+          <span class="acet-tl__chip">Кардіологія та ендокринологія</span>
+          <span class="acet-tl__chip">Психіатрія та психотерапія</span>
+          <span class="acet-tl__chip">УЗД та лабораторія</span>
+        </div>
+        <div class="acet-tl__photos" style="grid-template-columns: 1fr 1fr 1fr;">
+          <div class="acet-tl__photo"><img src="About page photos/Str.jpg" alt="Клініка Вулик — вул. Стрийська 2022" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/Str1.jpg" alt="Клініка Вулик — вул. Стрийська 2022" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/Str2.jpg" alt="Клініка Вулик — вул. Стрийська 2022" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/Str3.jpg" alt="Клініка Вулик — вул. Стрийська 2022" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/Str5.jpg" alt="Клініка Вулик — вул. Стрийська 2022" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/str66.jpg" alt="Клініка Вулик — вул. Стрийська 2022" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2025 -->
+    <div class="acet-tl__entry" id="tlEntry2">
+      <div class="acet-tl__dot" aria-hidden="true"></div>
+      <div class="acet-tl__year-col">
+        <span class="acet-tl__year">2025</span>
+      </div>
+      <div class="acet-tl__content">
+        <h3 class="acet-tl__entry-title">Зростання команди та нові програми</h3>
+        <p class="acet-tl__entry-text">Команда зросла до 30+ спеціалістів. Запуск програм вакцинації дорослих і дітей, партнерство з НСЗУ в рамках «Скринінг 40+», активний розвиток корпоративної медицини.</p>
+        <div class="acet-tl__chips">
+          <span class="acet-tl__chip">30+ спеціалістів</span>
+          <span class="acet-tl__chip">Програма вакцинації</span>
+          <span class="acet-tl__chip">Скринінг 40+</span>
+          <span class="acet-tl__chip">Корпоративна медицина</span>
+        </div>
+        <div class="acet-tl__photos" style="grid-template-columns: 1fr 1fr 1fr;">
+          <div class="acet-tl__photo"><img src="About page photos/team.jpg" alt="Команда Вулик 2025" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/team1.jpg" alt="Команда Вулик 2025" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/team2.jpg" alt="Команда Вулик 2025" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/team3.jpg" alt="Команда Вулик 2025" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/team4.jpg" alt="Команда Вулик 2025" loading="lazy"></div>
+          <div class="acet-tl__photo"><img src="About page photos/team5.jpg" alt="Команда Вулик 2025" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2026 -->
+    <div class="acet-tl__entry" id="tlEntry3">
+      <div class="acet-tl__dot" aria-hidden="true"></div>
+      <div class="acet-tl__year-col">
+        <span class="acet-tl__year">2026</span>
+      </div>
+      <div class="acet-tl__content">
+        <h3 class="acet-tl__entry-title">Плановий переїзд на вул. Лінкольна, 4 — новий розділ «Вулика»</h3>
+        <p class="acet-tl__entry-text">У 2026 році «Вулик» планує переїзд з локації на вул. Тичини до нового просторого двоповерхового приміщення на вул. Лінкольна, 4. Більший простір — це більше можливостей: плануємо відкрити нові медичні напрями, розширити команду спеціалістів та запропонувати ще зручніші умови для наших пацієнтів.</p>
+        <div class="acet-tl__chips">
+          <span class="acet-tl__chip">Переїзд з вул. Тичини</span>
+          <span class="acet-tl__chip">Нова локація — вул. Лінкольна, 4</span>
+          <span class="acet-tl__chip">Відкриття нових напрямів</span>
+          <span class="acet-tl__chip">Розширення команди</span>
+          <span class="acet-tl__chip">Відкриття восени 2026</span>
+        </div>
+        <div class="acet-tl__photos" style="grid-template-columns: 1fr;">
+          <div class="acet-tl__photo" style="aspect-ratio: 16/9;">
+            <img src="About page photos/Linkoln.jpg" alt="Нова локація Вулик — вул. Лінкольна, 4" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  var body    = document.getElementById('acetTlBody');
+  var fill    = document.getElementById('acetTlFill');
+  var entries = document.querySelectorAll('.acet-tl__entry');
+  if (!body || !fill) return;
+
+  /* ── Scroll-driven track fill ─────────────────── */
+  function updateFill() {
+    var rect = body.getBoundingClientRect();
+    var viewH = window.innerHeight;
+    /* progress: 0 when section top reaches viewport centre,
+       1 when section bottom leaves viewport centre */
+    var progress = (viewH * 0.55 - rect.top) / rect.height;
+    progress = Math.max(0, Math.min(1, progress));
+    fill.style.height = (progress * 100) + '%';
+  }
+
+  /* ── Entry reveal + dot/year activation ──────── */
+  function updateEntries() {
+    var viewMid = window.innerHeight * 0.6;
+    entries.forEach(function (entry) {
+      var dot = entry.querySelector('.acet-tl__dot');
+      if (!dot) return;
+      var dotRect = dot.getBoundingClientRect();
+      if (dotRect.top < viewMid) {
+        entry.classList.add('is-passed');
+      }
+    });
+  }
+
+  function onScroll() {
+    updateFill();
+    updateEntries();
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  /* fire once on load */
+  updateFill();
+  updateEntries();
+})();
+</script>
+
+<!-- ═══════════════ PHOTO MOSAIC ═══════════════ -->
+<div class="about-photos" aria-hidden="true">
+  <div class="about-photos__item about-photos__item--tall">
+    <img src="About page photos/VYLUK_COMANDA_STRUISKA3.jpg" alt="">
+  </div>
+  <div class="about-photos__item">
+    <img src="About page photos/VYLUK_COMANDA_STRUISKA1.jpg" alt="">
+  </div>
+  <div class="about-photos__item">
+    <img src="About page photos/8A5A3592.jpg" alt="">
+  </div>
+  <div class="about-photos__item">
+    <img src="About page photos/VYLUK_COMANDA_STRUISKA4.jpg" alt="">
+  </div>
+  <div class="about-photos__item">
+    <img src="About page photos/8A5A3611.jpg" alt="">
+  </div>
+</div>
+
+
+<!-- ═══════════════ TEAM TEASER ═══════════════ -->
+<section class="about-team">
+  <div class="about-team__inner">
+    <p class="about-team__label">Наші фахівці</p>
+    <h2 class="about-team__title">Команда, якій довіряють</h2>
+    <p class="about-team__sub">38 спеціалістів різних напрямів — досвідчених, уважних і відданих своїй справі</p>
+
+    <div class="about-team__faces">
+      <div class="about-team__face"><img src="Employees/Ярина Пікулицька.avif" alt="Ярина Пікулицька"></div>
+      <div class="about-team__face"><img src="Employees/Когут Маріанна.avif" alt="Маріанна Когут"></div>
+      <div class="about-team__face"><img src="Employees/Миронець Ольга.avif" alt="Ольга Миронець"></div>
+      <div class="about-team__face"><img src="Employees/Конечний Юліан.avif" alt="Юліан Конечний"></div>
+      <div class="about-team__face"><img src="Employees/Томащук Назарій.avif" alt="Назарій Томащук"></div>
+      <div class="about-team__face"><img src="Employees/Кравчук Станіслав.avif" alt="Станіслав Кравчук"></div>
+      <div class="about-team__face"><img src="Employees/Горон Катерина.avif" alt="Катерина Горон"></div>
+      <div class="about-team__more">+31</div>
+    </div>
+
+    <a href="team.html" class="btn btn--primary">Всі лікарі</a>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA ═══════════════ -->
+<section class="about-cta">
+  <div class="about-cta__inner">
+    <h2 class="about-cta__title">Стати пацієнтом<br><em>«Вулика»</em></h2>
+    <p class="about-cta__sub">Підпишіть декларацію з сімейним лікарем або запишіться до будь-якого спеціаліста. Перший крок — просто зателефонуйте.</p>
+    <div class="about-cta__btns">
+      <a href="#" class="btn btn--yellow">Записатися на прийом</a>
+      <a href="tel:+380962817338" class="btn" style="background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.3)">+38 (096) 281-73-38</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <div class="footer__inner">
+
+    <div class="footer__col footer__col--brand">
+      <a href="index.html" class="footer__footer-logo">
+        <img src="Вулик-лого.png" alt="ВУЛИК — сімейна амбулаторія" class="logo__img logo__img--light">
+      </a>
+      
+    </div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Локації</h3>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name"><a href="location-striyska.html" style="color:inherit;text-decoration:none">вул. Стрийська, 86В</a></div>
+          <div class="footer__loc-sub">ЖК Park Tower</div>
+        </div>
+      </div>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name"><a href="location-tychyny.html" style="color:inherit;text-decoration:none">вул. Тичини, 21</a></div>
+        </div>
+      </div>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name">вул. Лінкольна, 4</div>
+          <div class="footer__loc-sub">відкриття восени 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__col footer__col--schedule">
+      <h3 class="footer__col-title">Графік роботи</h3>
+      <div class="footer__loc-hours">Пн–Пт: 9:00–19:00<br>Сб–Нд: 10:00–18:00</div>
+    </div>
+
+    <div class="footer__col footer__col--contacts">
+      <h3 class="footer__col-title">Контакти</h3>
+      <a href="tel:+380962817338" class="footer__phone">+38 (096) 281-73-38</a>
+      <a href="mailto:info@vulyk.clinic" class="footer__email-link">info@vulyk.clinic</a>
+    </div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Відділ найму</h3>
+      <a href="mailto:hr@vulyk.clinic" class="footer__email-link">hr@vulyk.clinic</a>
+    </div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Соціальні мережі</h3>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/vulyk.clinic/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/vulyk.clinic" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@vulyk." target="_blank" rel="noopener" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer__bottom">
+    <div class="footer__bottom__inner">
+      <span>© 2026 ТОВ «Вулик-Львів». Всі права захищені.</span>
+      <span>Розроблено <a href="https://www.linkedin.com/in/zakhar-pikulytskyi-32629484/" target="_blank" rel="noopener">З. Пікулицький</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="nav.js"></script>
+
+<script src="booking-modal.js"></script>
+</body>
+</html>
+
+
+
+
+

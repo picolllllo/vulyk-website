@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Терапія — Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .wip { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 80px 24px; background: var(--warm-bg); }
+    .wip__icon { font-size: 56px; margin-bottom: 20px; }
+    .wip__title { font-size: clamp(22px, 3vw, 38px); font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+    .wip__sub { font-size: 16px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header__inner">
+    <a href="index.html" class="logo">
+      <img src="Вулик-лого.png" alt="ВУЛИК — сімейна амбулаторія" class="logo__img">
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Відкрити меню" aria-expanded="false">
+      <svg class="icon-open" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="11" x2="19" y2="11"/><line x1="3" y1="16" x2="19" y2="16"/></svg>
+      <svg class="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="display:none"><line x1="4" y1="4" x2="18" y2="18"/><line x1="18" y1="4" x2="4" y2="18"/></svg>
+    </button>
+    <nav class="nav" aria-label="Головне меню">
+      <ul class="nav__list">
+        <li><a href="about.html">Про нас</a></li>
+        <li class="nav__item--dropdown">
+          <a href="#">Напрями <svg class="nav__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="nav__dropdown nav__dropdown--dirs">
+            <li class="nav__has-sub"><a href="dir-pervynna.html">Первинна допомога <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-pediatriya.html">Педіатрія</a></li>
+                <li><a href="sub-simeyna-med.html">Сімейна медицина</a></li>
+                <li><a href="sub-terapiya.html">Терапія</a></li>
+                <li><a href="sub-lab-obs.html">Лабораторні обстеження</a></li>
+                <li><a href="sub-bazove-test.html">Базове тестування</a></li>
+                <li><a href="sub-vaktsinatsiya-derzh.html">Вакцинація державними вакцинами</a></li>
+                <li><a href="sub-funkts-diag.html">Функціональна діагностика</a></li>
+                <li><a href="sub-esoz.html">Послуги ЕСОЗ</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-rozshyrena.html">Розширена допомога <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-vaktsinatsiya.html">Вакцинація</a></li>
+                <li><a href="sub-dopologovi.html">Допологові консультації</a></li>
+                <li><a href="sub-grudne-vyg.html">Консультації з грудного вигодовування</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-psykhichne.html">Психічне здоров'я <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-psykhiatriya.html">Психіатрія</a></li>
+                <li><a href="sub-dyt-psykhiatriya.html">Дитяча психіатрія</a></li>
+                <li><a href="sub-psykhoterapiya.html">Психотерапія доросла та дитяча</a></li>
+                <li><a href="sub-casd.html">Діагностичний інструмент CASD</a></li>
+                <li><a href="sub-conners3.html">Діагностичний інструмент Conners-3</a></li>
+                <li><a href="sub-logopediya.html">Логопедія</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-spetsializovana.html">Спеціалізована допомога <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-kardiologiya.html">Кардіологія (доросла)</a></li>
+                <li><a href="sub-endokrynologiya.html">Ендокринологія (доросла)</a></li>
+                <li><a href="sub-gastroenterologiya.html">Гастроентерологія (доросла)</a></li>
+                <li><a href="sub-otolaringologiya.html">Отоларингологія (доросла та дитяча)</a></li>
+                <li><a href="sub-nevrologiya.html">Неврологія (дитяча)</a></li>
+                <li><a href="sub-ginekologiya.html">Гінекологія (доросла та дитяча)</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-uzi.html">Ультразвукова діагностика <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-uzi-dity.html">УЗД для дітей</a></li>
+                <li><a href="sub-neurosonografiya.html">Нейросонографія</a></li>
+                <li><a href="sub-uzi-sertse.html">УЗД серця</a></li>
+                <li><a href="sub-uzi-kulshovi.html">УЗД кульшових суглобів</a></li>
+                <li><a href="sub-uzi-vnutrishni.html">УЗД внутрішніх органів</a></li>
+                <li><a href="sub-uzi-shchytopodibna.html">УЗД щитоподібної залози</a></li>
+                <li><a href="sub-uzi-nyrky.html">УЗД нирок та сечовивідних шляхів</a></li>
+                <li><a href="sub-uzi-suglob.html">УЗД суглобів</a></li>
+                <li><a href="sub-uzi-vahitni.html">УЗД для вагітних жінок</a></li>
+                <li><a href="sub-uzi-dorosli.html">УЗД для дорослих</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-funktsionalna.html">Функціональна діагностика <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-tympanometriya.html">Тимпанометрія</a></li>
+                <li><a href="sub-holter.html">Холтерівський моніторинг</a></li>
+                <li><a href="sub-monit-at.html">Добовий моніторинг артеріального тиску</a></li>
+                <li><a href="sub-monit-glyukoza.html">Моніторинг рівня цукру в крові</a></li>
+                <li><a href="sub-tredmil.html">Тредміл</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="dir-laboratorna.html">Лабораторна діагностика <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-lab-vulyk.html">У Вулику</a></li>
+                <li><a href="sub-lab-partnery.html">Партнерські лабораторії</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="team.html">Команда</a></li>
+        <li><a href="prices.html">Ціни</a></li>
+        <li><a href="vacancies.html">Вакансії</a></li>
+        <li><a href="blog.html">Блог</a></li>
+        <li class="nav__item--dropdown">
+          <a href="#">Локації <svg class="nav__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="nav__dropdown">
+            <li><a href="location-striyska.html">вул. Стрийська, 86В</a></li>
+            <li><a href="location-tychyny.html">вул. Тичини, 21</a></li>
+          </ul>
+        </li>
+        <li><a href="contacts.html">Контакти</a></li>
+      </ul>
+    </nav>
+    <div class="header__right">
+      <div class="header__contact">
+        <a href="tel:+380962817338" class="header__phone">+38 (096) 281-73-38</a>
+        <span class="header__hours">Пн–Пт: 9:00–19:00 | Сб–Нд: 10:00–18:00</span>
+      </div>
+      <a href="#" class="btn btn--primary">Записатися</a>
+    </div>
+  </div>
+</header>
+
+<main class="wip">
+  <div>
+    <div class="wip__icon">🚧</div>
+    <h1 class="wip__title">Терапія</h1>
+    <p class="wip__sub">Ця сторінка на ремонті.<br>Незабаром тут з'явиться повна інформація.</p>
+    <a href="index.html" class="btn btn--primary">На головну</a>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__col footer__col--brand">
+      <a href="index.html" class="footer__footer-logo">
+        <img src="Вулик-лого.png" alt="ВУЛИК — сімейна амбулаторія" class="logo__img logo__img--light">
+      </a>
+    </div>
+    <div class="footer__col footer__col--contacts">
+      <h3 class="footer__col-title">Контакти</h3>
+      <a href="tel:+380962817338" class="footer__phone">+38 (096) 281-73-38</a>
+      <a href="mailto:info@vulyk.clinic" class="footer__email-link">info@vulyk.clinic</a>
+    </div>
+    <div class="footer__col footer__col--schedule">
+      <h3 class="footer__col-title">Графік роботи</h3>
+      <div class="footer__loc-hours">Пн–Пт: 9:00–19:00<br>Сб–Нд: 10:00–18:00</div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="footer__bottom__inner">
+      <span>© 2026 ТОВ «Вулик-Львів». Всі права захищені.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="nav.js"></script>
+<script src="booking-modal.js"></script>
+</body>
+</html>
