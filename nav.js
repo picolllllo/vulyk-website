@@ -1,3 +1,29 @@
+/* ── Highlight the current section in the header ── */
+(function () {
+  var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  var links = document.querySelectorAll('.nav__list > li > a');
+  if (!links.length) return;
+
+  var direct = { 'about.html':1, 'team.html':1, 'prices.html':1, 'vacancies.html':1, 'blog.html':1, 'contacts.html':1 };
+  var target = null, group = null;
+
+  if (direct[page]) target = page;
+  else if (/^team-/.test(page)) target = 'team.html';
+  else if (/^vacancy-/.test(page)) target = 'vacancies.html';
+  else if (/^news-/.test(page) || page === 'blog-index.json') target = 'blog.html';
+  else if (/^(dir-|sub-)/.test(page)) group = 'Напрями';
+  else if (/^location-/.test(page)) group = 'Локації';
+
+  links.forEach(function (a) {
+    var href = (a.getAttribute('href') || '').toLowerCase();
+    var txt = a.textContent.trim();
+    if ((target && href === target) || (group && txt.indexOf(group) === 0)) {
+      a.style.color = 'var(--accent)';
+      a.style.fontWeight = '700';
+    }
+  });
+})();
+
 (function () {
   var toggle = document.getElementById('navToggle');
   var nav    = document.querySelector('.nav');
