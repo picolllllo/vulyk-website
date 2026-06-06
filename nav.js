@@ -3,20 +3,45 @@
   var nav    = document.querySelector('.nav');
   if (!toggle || !nav) return;
 
-  toggle.addEventListener('click', function () {
-    var open = nav.classList.toggle('is-open');
+  var mq = window.matchMedia('(max-width: 1024px)');
+
+  function setOpen(open) {
+    nav.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.querySelector('.icon-open').style.display  = open ? 'none'  : 'block';
     toggle.querySelector('.icon-close').style.display = open ? 'block' : 'none';
+  }
+
+  toggle.addEventListener('click', function () {
+    setOpen(!nav.classList.contains('is-open'));
   });
 
-  /* close menu when a link is tapped */
+  /* Accordion: on mobile, tapping a section that has a submenu expands it
+     instead of navigating / showing everything at once */
+  var parents = nav.querySelectorAll(
+    '.nav__item--dropdown > a, .nav__has-sub > a, .nav__has-sub2 > a'
+  );
+  parents.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (!mq.matches) return;                 /* desktop: hover handles it */
+      var li = a.parentElement;
+      if (!li || !li.querySelector('ul')) return;
+      e.preventDefault();
+      li.classList.toggle('is-expanded');
+    });
+  });
+
+  /* Close the whole menu only when a real (leaf) link is tapped */
   nav.querySelectorAll('a').forEach(function (a) {
     a.addEventListener('click', function () {
-      nav.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.querySelector('.icon-open').style.display  = 'block';
-      toggle.querySelector('.icon-close').style.display = 'none';
+      var li = a.parentElement;
+      var isParent = li && li.querySelector('ul') && (
+        li.classList.contains('nav__item--dropdown') ||
+        li.classList.contains('nav__has-sub') ||
+        li.classList.contains('nav__has-sub2')
+      );
+      if (mq.matches && isParent) return;      /* expanding, keep menu open */
+      setOpen(false);
     });
   });
 })();

@@ -732,30 +732,30 @@ body:has(.hero-vid) { padding-top: 0; }
   .nav__list { flex-direction: column; gap: 0; }
   .nav__list > li { width: 100%; }
   .nav__list > li > a { padding: 11px var(--pad); }
-  .nav__chevron { display: none; }
+  /* ── Accordion: submenus collapsed by default, tap to expand ── */
+  .nav__chevron { display: inline-block; transition: transform .2s; }
+  .nav__item--dropdown.is-expanded > a .nav__chevron { transform: rotate(180deg); }
+
   .nav__dropdown {
-    position: static; display: block !important;
+    position: static; display: none;
     box-shadow: none; border: none; border-radius: 0;
     padding: 0 0 6px calc(var(--pad) + 10px); min-width: unset;
   }
+  .nav__item--dropdown.is-expanded > .nav__dropdown { display: block; }
   .nav__dropdown a { padding: 7px 14px; color: var(--muted); font-size: 13px; }
-  .nav__item--dropdown:hover .nav__dropdown { display: block; }
 
-  /* Make subdropdowns fully visible on mobile (hover doesn't exist on touch) */
-  .nav__chevron--right { display: none; }
+  .nav__chevron--right { display: inline-block; transition: transform .2s; opacity: .5; }
+  .nav__has-sub.is-expanded > a .nav__chevron--right,
+  .nav__has-sub2.is-expanded > a .nav__chevron--right { transform: rotate(-90deg); }
+
   .nav__subdropdown {
-    position: static;
-    opacity: 1 !important;
-    pointer-events: all;
-    transform: none !important;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
+    position: static; display: none;
+    opacity: 1; pointer-events: all; transform: none;
+    box-shadow: none; border: none; border-radius: 0;
     padding: 0 0 6px calc(var(--pad) + 20px);
-    min-width: unset;
-    background: transparent;
-    transition: none;
+    min-width: unset; background: transparent; transition: none;
   }
+  .nav__has-sub.is-expanded > .nav__subdropdown { display: block; }
   .nav__subdropdown li a {
     padding: 10px 14px;
     min-height: 44px;
@@ -769,18 +769,13 @@ body:has(.hero-vid) { padding-top: 0; }
   }
   .nav__subdropdown li.sub-child > a { padding-left: 14px; }
   .nav__subdropdown2 {
-    position: static;
-    opacity: 1 !important;
-    pointer-events: all;
-    transform: none !important;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
+    position: static; display: none;
+    opacity: 1; pointer-events: all; transform: none;
+    box-shadow: none; border: none; border-radius: 0;
     padding: 0 0 6px calc(var(--pad) + 30px);
-    min-width: unset;
-    background: transparent;
-    transition: none;
+    min-width: unset; background: transparent; transition: none;
   }
+  .nav__has-sub2.is-expanded > .nav__subdropdown2 { display: block; }
   .nav__subdropdown2 li a {
     padding: 10px 14px;
     min-height: 44px;
