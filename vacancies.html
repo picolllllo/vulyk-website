@@ -8,6 +8,80 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=1">
+  <style>
+    .careers {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 56px var(--pad) 96px;
+      display: grid; grid-template-columns: 340px 1fr; gap: 72px;
+      align-items: start;
+    }
+    .careers__aside { position: sticky; top: calc(var(--header-h) + 28px); }
+    .careers__title {
+      font-size: clamp(38px, 5vw, 60px); font-weight: 900;
+      color: var(--text); line-height: 1.04; letter-spacing: -.02em;
+    }
+    .careers__contact-label {
+      margin-top: 44px; font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+    }
+    .careers__contact-mail {
+      display: inline-block; margin-top: 10px; font-size: 18px; font-weight: 700;
+      color: var(--accent-deep); text-decoration: underline; text-underline-offset: 4px;
+    }
+
+    .roles { display: flex; flex-direction: column; }
+    .role { border-top: 1px solid rgba(0,0,0,.12); padding: 30px 0; }
+    .role:last-child { border-bottom: 1px solid rgba(0,0,0,.12); }
+    .role__top { display: flex; align-items: center; gap: 22px; }
+    .role__main { flex: 1; min-width: 0; }
+    .role__label {
+      font-size: 11px; font-weight: 800; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent-deep); margin-bottom: 9px;
+    }
+    .role__title {
+      font-size: clamp(22px, 2.6vw, 30px); font-weight: 800;
+      color: var(--text); line-height: 1.15; margin-bottom: 13px;
+    }
+    .role__meta {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 9px;
+      font-size: 14px; color: var(--muted);
+    }
+    .role__meta .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+    .role__toggle {
+      flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%;
+      border: 1.5px solid rgba(0,0,0,.15); background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text);
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .role__toggle:hover { border-color: var(--accent); color: var(--accent-deep); }
+    .role__toggle svg { transition: transform .25s; }
+    .role.is-open .role__toggle svg { transform: rotate(180deg); }
+    .role__apply {
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #1a1a1a; font-family: var(--font);
+      font-weight: 800; font-size: 15px; padding: 14px 24px; border-radius: 100px;
+      text-decoration: none; white-space: nowrap;
+      transition: background .15s, transform .15s, color .15s;
+    }
+    .role__apply:hover { background: var(--accent-deep); color: #fff; transform: translateY(-1px); }
+    .role__panel { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+    .role__panel-inner { padding-top: 18px; font-size: 15px; line-height: 1.7; color: #444; max-width: 680px; }
+    .role__more { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--accent-deep); text-decoration: none; }
+    .role__more:hover { text-decoration: underline; }
+    .role.is-open .role__panel { max-height: 260px; }
+
+    @media (max-width: 900px) {
+      .careers { grid-template-columns: 1fr; gap: 28px; padding: 32px var(--pad) 64px; }
+      .careers__aside { position: static; }
+      .careers__contact-label { margin-top: 24px; }
+    }
+    @media (max-width: 560px) {
+      .role__top { flex-wrap: wrap; gap: 16px; }
+      .role__main { flex-basis: 100%; }
+      .role__apply { order: 3; flex: 1; justify-content: center; }
+    }
+  </style>
 </head>
 <body>
 
@@ -130,99 +204,100 @@
   </div>
 </header>
 
-<!-- ═══════════════ HERO ═══════════════ -->
-<section class="vacancies-hero">
-  <h1 class="vacancies-hero__title">Вакансії</h1>
-  <p class="vacancies-hero__sub">Ми шукаємо небайдужих та фахових людей, що поділяють наші цінності: людино-орієнтованість, доказова медицина, професіоналізм.</p>
-</section>
+<!-- ═══════════════ CAREERS ═══════════════ -->
+<main class="careers">
 
-<!-- ═══════════════ VACANCY CARDS ═══════════════ -->
-<main class="vacancies-body">
-  <div class="vacancies-grid">
+  <aside class="careers__aside">
+    <h1 class="careers__title">Наші відкриті вакансії</h1>
+    <p class="careers__contact-label">Або напишіть нам</p>
+    <a href="mailto:hr@vulyk.clinic" class="careers__contact-mail">hr@vulyk.clinic</a>
+  </aside>
+
+  <div class="roles">
 
     <!-- 008 -->
-    <a href="vacancy-008.html" class="vac-card">
-      <div class="vac-card__num">Вакансія № 008</div>
-      <div class="vac-card__title">Сімейний лікар</div>
-      <div class="vac-card__tags">
-        <span class="vac-card__tag">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-          вул. Стрийська, 86В
-        </span>
-        <span class="vac-card__tag">Повна зайнятість</span>
+    <div class="role">
+      <div class="role__top">
+        <div class="role__main">
+          <div class="role__label">Відкрита вакансія</div>
+          <h2 class="role__title">Сімейний лікар</h2>
+          <div class="role__meta"><span>Повна зайнятість</span><span class="dot"></span><span>вул. Стрийська, 86В</span></div>
+        </div>
+        <button class="role__toggle" aria-label="Деталі вакансії" aria-expanded="false">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="vacancy-008.html" class="role__apply">Подати заявку
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M11 5H6M11 5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-      <div class="vac-card__foot">
-        <span class="vac-card__cta">
-          Переглянути вакансію
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-    </a>
+      <div class="role__panel"><div class="role__panel-inner">
+        <p>Прийом і супровід пацієнтів усіх вікових груп за принципами доказової медицини.</p>
+        <a href="vacancy-008.html" class="role__more">Детальніше про вакансію →</a>
+      </div></div>
+    </div>
 
     <!-- 009 -->
-    <a href="vacancy-009.html" class="vac-card">
-      <div class="vac-card__num">Вакансія № 009</div>
-      <div class="vac-card__title">Лікар-педіатр</div>
-      <div class="vac-card__tags">
-        <span class="vac-card__tag">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-          вул. Стрийська, 86В / Тичини, 21
-        </span>
-        <span class="vac-card__tag">Повна зайнятість</span>
+    <div class="role">
+      <div class="role__top">
+        <div class="role__main">
+          <div class="role__label">Відкрита вакансія</div>
+          <h2 class="role__title">Лікар-педіатр</h2>
+          <div class="role__meta"><span>Повна зайнятість</span><span class="dot"></span><span>вул. Стрийська, 86В / Тичини, 21</span></div>
+        </div>
+        <button class="role__toggle" aria-label="Деталі вакансії" aria-expanded="false">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="vacancy-009.html" class="role__apply">Подати заявку
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M11 5H6M11 5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-      <div class="vac-card__foot">
-        <span class="vac-card__cta">
-          Переглянути вакансію
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-    </a>
+      <div class="role__panel"><div class="role__panel-inner">
+        <p>Профілактичні огляди, супровід і лікування дітей від народження до 18 років.</p>
+        <a href="vacancy-009.html" class="role__more">Детальніше про вакансію →</a>
+      </div></div>
+    </div>
 
     <!-- 010 -->
-    <a href="vacancy-010.html" class="vac-card">
-      <div class="vac-card__num">Вакансія № 010</div>
-      <div class="vac-card__title">Бухгалтер</div>
-      <div class="vac-card__tags">
-        <span class="vac-card__tag">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-          вул. Стрийська, 86В
-        </span>
-        <span class="vac-card__tag">Повна зайнятість</span>
+    <div class="role">
+      <div class="role__top">
+        <div class="role__main">
+          <div class="role__label">Відкрита вакансія</div>
+          <h2 class="role__title">Бухгалтер</h2>
+          <div class="role__meta"><span>Повна зайнятість</span><span class="dot"></span><span>вул. Стрийська, 86В</span></div>
+        </div>
+        <button class="role__toggle" aria-label="Деталі вакансії" aria-expanded="false">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="vacancy-010.html" class="role__apply">Подати заявку
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M11 5H6M11 5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-      <div class="vac-card__foot">
-        <span class="vac-card__cta">
-          Переглянути вакансію
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-    </a>
+      <div class="role__panel"><div class="role__panel-inner">
+        <p>Ведення бухгалтерського обліку клініки та супутня фінансова звітність.</p>
+        <a href="vacancy-010.html" class="role__more">Детальніше про вакансію →</a>
+      </div></div>
+    </div>
 
     <!-- 011 -->
-    <a href="vacancy-011.html" class="vac-card">
-      <div class="vac-card__num">Вакансія № 011</div>
-      <div class="vac-card__title">Лікар УЗД-діагностики</div>
-      <div class="vac-card__tags">
-        <span class="vac-card__tag">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-          вул. Стрийська, 86В
-        </span>
-        <span class="vac-card__tag">Часткова зайнятість</span>
+    <div class="role">
+      <div class="role__top">
+        <div class="role__main">
+          <div class="role__label">Відкрита вакансія</div>
+          <h2 class="role__title">Лікар УЗД-діагностики</h2>
+          <div class="role__meta"><span>Часткова зайнятість</span><span class="dot"></span><span>вул. Стрийська, 86В</span></div>
+        </div>
+        <button class="role__toggle" aria-label="Деталі вакансії" aria-expanded="false">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="vacancy-011.html" class="role__apply">Подати заявку
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11L11 5M11 5H6M11 5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-      <div class="vac-card__foot">
-        <span class="vac-card__cta">
-          Переглянути вакансію
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </div>
-    </a>
+      <div class="role__panel"><div class="role__panel-inner">
+        <p>Проведення ультразвукових досліджень та інтерпретація результатів.</p>
+        <a href="vacancy-011.html" class="role__more">Детальніше про вакансію →</a>
+      </div></div>
+    </div>
 
   </div>
 </main>
@@ -309,6 +384,18 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  document.querySelectorAll('.role__toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var role = btn.closest('.role');
+      var open = role.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  });
+})();
+</script>
 
 <script src="nav.js?v=1"></script>
 
