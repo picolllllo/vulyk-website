@@ -82,6 +82,18 @@
     .team-card__name { font-size:15px; font-weight:700; color:var(--text); margin-bottom:4px; line-height:1.3; transition:color .2s; }
     .team-card:hover .team-card__name { color:var(--accent); }
     .team-card__role { font-size:13px; color:var(--muted); line-height:1.5; }
+    .doc-info__actions { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .doc-info__exp { font-size:13px; color:var(--muted); }
+    .doc-info__exp strong { display:block; font-size:22px; font-weight:900; color:var(--text); line-height:1; margin-bottom:2px; }
+    .doc-about__cols { display:grid; grid-template-columns:1.2fr 1fr; gap:80px; align-items:start; }
+    .doc-edu-list { list-style:none; display:flex; flex-direction:column; gap:20px; }
+    .doc-edu-item { display:flex; gap:16px; align-items:flex-start; }
+    .doc-edu-item__icon { width:40px; height:40px; border-radius:12px; background:rgba(232,168,32,.12); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--accent); }
+    .doc-edu-item__title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:3px; line-height:1.3; }
+    .doc-edu-item__sub { font-size:13px; color:var(--muted); line-height:1.5; }
+    .doc-spec-item { display:flex; align-items:center; gap:12px; font-size:15px; color:var(--text); line-height:1.4; }
+    .doc-spec-item::before { content:''; width:8px; height:8px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+    @media (max-width:900px) { .doc-about__cols { grid-template-columns:1fr; gap:40px; } }
     @media (max-width:900px) { .doc-hero__inner { flex-direction:column; gap:36px; } .doc-photo { width:100%; max-width:320px; aspect-ratio:1/1; } .doc-others__grid { grid-template-columns:repeat(3,1fr); } }
     @media (max-width:600px) { .doc-hero { padding:32px var(--pad) 48px; } .doc-others__grid { grid-template-columns:repeat(2,1fr); } }
   </style>
@@ -209,41 +221,106 @@
   </div>
 </nav>
 
+<!-- ═══════════════ HERO ═══════════════ -->
 <section class="doc-hero">
   <div class="doc-hero__inner">
-    <div class="doc-photo"><img src="Employees/Лехоцінська Ірина.avif" alt="Ірина Лехоцінська"></div>
+
+    <div class="doc-photo">
+      <img src="Employees/Лехоцінська Ірина.avif" alt="Ірина Лехоцінська">
+    </div>
+
     <div class="doc-info">
       <div class="doc-info__cat">Педіатри</div>
       <h1 class="doc-info__name">Ірина<br>Лехоцінська</h1>
+
       <div class="doc-info__tags">
-        <span class="doc-tag">Педіатр</span>
-        <span class="doc-tag">Лікар УЗД</span>
-        <span class="doc-tag doc-tag--location"><svg width="10" height="12" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true"><path d="M4.5 0A3.5 3.5 0 001 3.5C1 6.125 4.5 11 4.5 11S8 6.125 8 3.5A3.5 3.5 0 004.5 0zm0 5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>Всі локації</span>
+        <span class="doc-tag">Лікар-педіатр</span>
+        <span class="doc-tag">Лікар ультразвукової діагностики</span>
+        <span class="doc-tag doc-tag--location">
+          <svg width="10" height="12" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true"><path d="M4.5 0A3.5 3.5 0 001 3.5C1 6.125 4.5 11 4.5 11S8 6.125 8 3.5A3.5 3.5 0 004.5 0zm0 5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>
+          Всі локації
+        </span>
       </div>
+
       <hr class="doc-info__divider">
-      <p class="doc-info__lead">Лікарка-педіатр та лікарка ультразвукової діагностики. Поєднує педіатричний прийом із УЗД-діагностикою для дітей.</p>
-      <div><a href="#" class="btn btn--primary">Записатися на прийом</a></div>
+
+      <p class="doc-info__lead">
+        Лікар-педіатр та лікар ультразвукової діагностики. Приймає на вул. Стрийській, 86В та вул. Тичини, 21.
+      </p>
+
+      <div class="doc-info__actions">
+        <a href="#" class="btn btn--primary">Записатися на прийом</a>
+        <div class="doc-info__exp">
+          <strong>8</strong>
+          років у педіатрії
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
+<!-- ═══════════════ ABOUT + EDUCATION ═══════════════ -->
 <section class="doc-section">
   <div class="doc-section__inner">
-    <p class="doc-section__title">Про спеціаліста</p>
-    <div class="doc-about__text">
-      <p><strong>Чому обрала цю професію.</strong> Хотіла стати лікаркою ще з дитинства. Обрала педіатрію, бо діти милі та завжди кажуть правду — більше, ніж дорослі.</p>
-      <p><strong>Про себе.</strong> Люблю подорожувати та гори, люблю Францію і все, що з нею пов'язано. Обожнюю каву з апельсиновим фрешем, ціную спокій, тишу та добру книжку. Мій ідеальний день — неділя в колі сім'ї, коли інколи цілий день навіть не беру телефон у руки.</p>
+    <div class="doc-about__cols">
+
+      <!-- About text -->
+      <div class="doc-about__text">
+        <p class="doc-section__title">Про лікаря</p>
+        <p>
+          <strong>Чому обрала цю професію.</strong> Вибрала професію, бо завжди хотіла бути стоматологом — ще з 5 років, коли почала їздити лікувати зубки: відтоді завжди пхала братові в зуби вату і паличками їх лікувала. А потім, з 8 класу, мріяла вчитися зі стипендією і бути незалежною від батьків, тому вступила на лікувальну справу і педіатрію на державне. А педіатрію вибрала, бо діти більш милі і завжди кажуть правду, ніж дорослі. Працюю в педіатрії 8 років і вважаю, що основне завдання педіатра — трішки полегшити батькам їхнє батьківство та додати до нього спокою і насолоди.
+        </p>
+        <p>
+          <strong>Про себе.</strong> Люблю подорожувати, гори. Люблю Францію і все, що з нею пов'язано. Люблю каву з апельсиновим фрешем. Також дуже люблю спокій, тишу і книжку. Ще хотіла додати, що хотіла б, щоб пацієнти знали: мій улюблений, ідеальний день — неділя, день, коли я проводжу його з близькими та сім'єю; інколи в цей день я телефон у руки не беру весь день.
+        </p>
+      </div>
+
+      <!-- Education -->
+      <div>
+        <p class="doc-section__title">Освіта</p>
+        <ul class="doc-edu-list">
+          <li class="doc-edu-item">
+            <div class="doc-edu-item__icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3.53 1.6 8.47 1.6 12 0v-5"/></svg>
+            </div>
+            <div class="doc-edu-item__body">
+              <div class="doc-edu-item__title">ЛНМУ ім. Данила Галицького (2012–2018)</div>
+              <div class="doc-edu-item__sub">Факультет «Педіатрія»</div>
+            </div>
+          </li>
+          <li class="doc-edu-item">
+            <div class="doc-edu-item__icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3.53 1.6 8.47 1.6 12 0v-5"/></svg>
+            </div>
+            <div class="doc-edu-item__body">
+              <div class="doc-edu-item__title">Спеціалізація «Педіатрія» — інтернатура (2018–2020)</div>
+              <div class="doc-edu-item__sub">Кафедра педіатрії та неонатології ФПДО ЛНМУ ім. Данила Галицького; КНП ЛОР «Західноукраїнський спеціалізований дитячий медичний центр»</div>
+            </div>
+          </li>
+          <li class="doc-edu-item">
+            <div class="doc-edu-item__icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            </div>
+            <div class="doc-edu-item__body">
+              <div class="doc-edu-item__title">Спеціалізація «Ультразвукова діагностика» (2021)</div>
+              <div class="doc-edu-item__sub">Кафедра променевої діагностики ФПДО ЛНМУ ім. Данила Галицького; КНП ЛОР «Львівська обласна клінічна лікарня»</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
     </div>
   </div>
 </section>
 
+<!-- ═══════════════ SPECIALTIES ═══════════════ -->
 <section class="doc-section doc-section--alt">
   <div class="doc-section__inner">
-    <p class="doc-section__title">Освіта</p>
-    <div class="doc-about__text">
-      <p>2012–2018 — Львівський національний медичний університет імені Данила Галицького, факультет «Педіатрія».</p>
-      <p>2018–2020 — спеціалізація «Педіатрія» (інтернатура) на базі кафедри педіатрії та неонатології ФПДО ЛНМУ імені Данила Галицького і КНП ЛОР «Західноукраїнський спеціалізований дитячий медичний центр».</p>
-      <p>2021 — спеціалізація «Ультразвукова діагностика» на базі кафедри променевої діагностики ФПДО ЛНМУ імені Данила Галицького та КНП ЛОР «Львівська обласна клінічна лікарня».</p>
+    <p class="doc-section__title">Напрями роботи</p>
+    <div style="display:grid; grid-template-columns: repeat(3,1fr); gap: 10px 40px; max-width: 700px;">
+      <div class="doc-spec-item">Педіатрія</div>
+      <div class="doc-spec-item">Ультразвукова діагностика</div>
     </div>
   </div>
 </section>
