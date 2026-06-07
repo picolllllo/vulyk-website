@@ -79,7 +79,16 @@
       "Bash(git commit -q -m '@ *)",
       "Bash(git push *)",
       "Bash(git commit *)",
-      "Bash(git ls-remote *)"
+      "Bash(git ls-remote *)",
+      "WebFetch(domain:vulyk-website.pages.dev)",
+      "WebFetch(domain:echoglobal.tech)",
+      "mcp__Claude_in_Chrome__list_connected_browsers",
+      "mcp__Claude_in_Chrome__select_browser",
+      "Bash(grep -n '\\\\.__TRACKED_VAR__' styles.css)",
+      "Bash(sed -n '212,216p' team-denysenko.html)",
+      "Bash(sed -n '470,476p' team-denysenko.html)",
+      "Bash(sed -n '210,234p' team-tavrydzka.html)",
+      "Bash(sed -n '570,577p' team.html)"
     ]
   }
 }
