@@ -90,7 +90,9 @@
       "Bash(sed -n '210,234p' team-tavrydzka.html)",
       "Bash(sed -n '570,577p' team.html)",
       "Bash(sed -n '490,497p' team-lisovska.html)",
-      "Bash(sed -n '606,616p' team-lisovska.html)"
+      "Bash(sed -n '606,616p' team-lisovska.html)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(echo \"exit $?\")"
     ]
   }
 }
