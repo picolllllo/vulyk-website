@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="stylesheet" href="styles.css?v=3">
   <style>
     .lp-hero { position: relative; min-height: 480px; display: flex; align-items: flex-end; overflow: hidden; }
     .lp-hero__bg { position: absolute; inset: 0; background-image: url('Locations/tychyny3.jpg'); background-size: cover; background-position: center 55%; }
@@ -51,6 +51,17 @@
     @media (max-width: 768px) { .lp-gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 160px 160px 160px; } .lp-gallery__item--wide { grid-column: span 1; } .lp-info-grid { grid-template-columns: 1fr; } .lp-doctors { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); } }
     .lp-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
   </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L73SKQ7F1J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-L73SKQ7F1J');
+  </script>
 </head>
 <body>
 <header class="header">
@@ -316,5 +327,6 @@
   });
 })();
 </script>
+  <script src="cookie-consent.js?v=1"></script>
 </body>
 </html>

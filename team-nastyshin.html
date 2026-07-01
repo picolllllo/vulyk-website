@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="stylesheet" href="styles.css?v=3">
   <style>
     .breadcrumb { background:var(--warm-bg); border-bottom:1px solid rgba(0,0,0,.06); padding:14px var(--pad); }
     .breadcrumb__inner { max-width:var(--max-w); margin:0 auto; display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); }
@@ -61,6 +61,17 @@
     @media (max-width:900px) { .doc-hero__inner { flex-direction:column; gap:36px; } .doc-photo { width:100%; max-width:320px; aspect-ratio:1/1; } .doc-others__grid { grid-template-columns:repeat(3,1fr); } }
     @media (max-width:600px) { .doc-hero { padding:32px var(--pad) 48px; } .doc-others__grid { grid-template-columns:repeat(2,1fr); } }
   </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L73SKQ7F1J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-L73SKQ7F1J');
+  </script>
 </head>
 <body>
 
@@ -352,6 +363,7 @@
 
 <script src="nav.js?v=3"></script>
 <script src="booking-modal.js?v=1"></script>
+  <script src="cookie-consent.js?v=1"></script>
 </body>
 </html>
 

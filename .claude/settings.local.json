@@ -92,7 +92,9 @@
       "Bash(sed -n '490,497p' team-lisovska.html)",
       "Bash(sed -n '606,616p' team-lisovska.html)",
       "Bash(echo \"exit: $?\")",
-      "Bash(echo \"exit $?\")"
+      "Bash(echo \"exit $?\")",
+      "Bash(git commit -q -m ' *)",
+      "Bash(powershell -Command \"Stop-Process -Id 34108 -Force\")"
     ]
   }
 }

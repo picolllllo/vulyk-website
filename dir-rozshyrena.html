@@ -7,13 +7,24 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="stylesheet" href="styles.css?v=3">
   <style>
     .wip { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 80px 24px; background: var(--warm-bg); }
     .wip__icon { font-size: 56px; margin-bottom: 20px; }
     .wip__title { font-size: clamp(22px, 3vw, 38px); font-weight: 800; color: var(--primary); margin-bottom: 12px; }
     .wip__sub { font-size: 16px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
   </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L73SKQ7F1J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-L73SKQ7F1J');
+  </script>
 </head>
 <body>
 <header class="header">
@@ -164,5 +175,6 @@
 
 <script src="nav.js?v=3"></script>
 <script src="booking-modal.js?v=1"></script>
+  <script src="cookie-consent.js?v=1"></script>
 </body>
 </html>

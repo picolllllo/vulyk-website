@@ -2219,3 +2219,65 @@ body:has(.hero-vid) { padding-top: 0; }
   .article-author__photo-link { width: 64px; height: 64px; flex-shrink: 0; margin-bottom: 0; }
   .article-author__name, .article-author__role { margin-bottom: 2px; }
 }
+
+/* ═══════════════ COOKIE CONSENT BANNER ═══════════════ */
+.cookie-consent {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  padding: 16px;
+  transform: translateY(120%);
+  transition: transform .35s ease;
+}
+.cookie-consent.is-visible { transform: translateY(0); }
+.cookie-consent__box {
+  max-width: 980px;
+  margin: 0 auto;
+  background: var(--warm-bg, #fffef9);
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.18);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.cookie-consent__text {
+  flex: 1 1 auto;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text, #1A1A1A);
+  margin: 0;
+}
+.cookie-consent__actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.cookie-consent__btn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 7px;
+  padding: 7px 14px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: opacity .2s ease;
+}
+.cookie-consent__btn:hover { opacity: .85; }
+.cookie-consent__btn--decline {
+  background: transparent;
+  border-color: rgba(0,0,0,.2);
+  color: var(--text, #1A1A1A);
+}
+.cookie-consent__btn--accept {
+  background: var(--accent, #E8A820);
+  color: #1A1A1A;
+}
+@media (max-width: 640px) {
+  .cookie-consent__box { flex-direction: column; align-items: stretch; text-align: center; }
+  .cookie-consent__actions { justify-content: center; }
+}
