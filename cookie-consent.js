@@ -31,8 +31,8 @@
         'Продовжуючи користуватися сайтом, ви погоджуєтесь з їх використанням.',
       '</p>',
       '<div class="cookie-consent__actions">',
-        '<button type="button" class="cookie-consent__btn cookie-consent__btn--decline">Відхилити</button>',
         '<button type="button" class="cookie-consent__btn cookie-consent__btn--accept">Прийняти</button>',
+        '<button type="button" class="cookie-consent__btn cookie-consent__btn--decline">Відхилити</button>',
       '</div>',
     '</div>'
   ].join('');
