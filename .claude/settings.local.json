@@ -94,7 +94,16 @@
       "Bash(echo \"exit: $?\")",
       "Bash(echo \"exit $?\")",
       "Bash(git commit -q -m ' *)",
-      "Bash(powershell -Command \"Stop-Process -Id 34108 -Force\")"
+      "Bash(powershell -Command \"Stop-Process -Id 34108 -Force\")",
+      "Bash(sort -u -t: -k2)",
+      "Bash(awk -F: '{print $2}')",
+      "Bash(python3 seo-phase-0/apply_seo.py)",
+      "Bash(rm bad_titles.txt)",
+      "Bash(cd \"C:/.My computer/Vulyk Clinic Website\" && find / -iname \"*nunito*\" 2>/dev/null | head -5; find /c/Windows/Fonts -iname \"*arial*\" 2>/dev/null | head -5)",
+      "Bash(mkdir -p \"C:/.My computer/Vulyk Clinic Website/assets\")",
+      "Bash(python3 -c \"import openlocationcode\")",
+      "Bash(pip show *)",
+      "Bash(python3 -m pip install openlocationcode)"
     ]
   }
 }

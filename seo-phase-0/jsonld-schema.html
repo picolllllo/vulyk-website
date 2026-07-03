@@ -1,0 +1,140 @@
+<!--
+  =====================================================================
+  JSON-LD СТРУКТУРОВАНІ ДАНІ для сайту Вулик
+  =====================================================================
+  ЯК ВИКОРИСТАТИ:
+  1. Вставте блок №1 (Головна) у <head> ТІЛЬКИ на index.html.
+  2. Вставте відповідний блок філії у <head> кожної location-*.html.
+  3. Поля, позначені  <!-- ЗАПОВНИТИ -->  треба уточнити реальними даними
+     (координати з Google Maps, кількість/оцінка Google-відгуків, фото).
+  4. Перевірте результат: https://validator.schema.org/  та
+     https://search.google.com/test/rich-results
+  ПРИМІТКА: aggregateRating показуйте ЛИШЕ з реальними цифрами з Google.
+  Вигадані оцінки порушують політику Google і призводять до санкцій.
+  =====================================================================
+-->
+
+
+<!-- ============ БЛОК 1: ГОЛОВНА (index.html) — бренд + 2 філії ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalOrganization",
+  "@id": "https://www.vulyk.clinic/#organization",
+  "name": "Вулик — сімейна амбулаторія",
+  "alternateName": "Клініка Вулик",
+  "url": "https://www.vulyk.clinic/",
+  "logo": "https://www.vulyk.clinic/assets/logo.png",
+  "foundingDate": "2019",
+  "slogan": "Медицина, де людина — найвища цінність",
+  "description": "Приватна сімейна амбулаторія у Львові: педіатрія, сімейна медицина, вузькі спеціалісти, УЗД, психічне здоров'я, лабораторна та функціональна діагностика. Партнер НСЗУ.",
+  "email": "info@vulyk.clinic",
+  "telephone": "+380962817338",
+  "sameAs": [
+    "https://www.instagram.com/vulyk.clinic/",
+    "https://www.facebook.com/vulyk.clinic",
+    "https://www.youtube.com/@vulyk."
+  ],
+  "medicalSpecialty": [
+    "PrimaryCare",
+    "Pediatric",
+    "Psychiatric",
+    "Cardiovascular",
+    "Endocrine",
+    "Gastroenterologic",
+    "Otolaryngologic",
+    "Gynecologic"
+  ],
+  "location": [
+    { "@id": "https://www.vulyk.clinic/location-striyska.html#clinic" },
+    { "@id": "https://www.vulyk.clinic/location-tychyny.html#clinic" }
+  ]
+}
+</script>
+
+
+<!-- ============ БЛОК 2: ФІЛІЯ Стрийська (location-striyska.html) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  "@id": "https://www.vulyk.clinic/location-striyska.html#clinic",
+  "name": "Вулик — сімейна амбулаторія (Стрийська)",
+  "url": "https://www.vulyk.clinic/location-striyska.html",
+  "parentOrganization": { "@id": "https://www.vulyk.clinic/#organization" },
+  "image": "https://www.vulyk.clinic/assets/location-striyska.jpg",
+  "telephone": "+380962817338",
+  "email": "info@vulyk.clinic",
+  "priceRange": "₴₴",
+  "currenciesAccepted": "UAH",
+  "foundingDate": "2019",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "вул. Стрийська, 86В",
+    "addressLocality": "Львів",
+    "addressRegion": "Львівська область",
+    "postalCode": "79026",
+    "addressCountry": "UA"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "ЗАПОВНИТИ",
+    "longitude": "ЗАПОВНИТИ"
+  },
+  "hasMap": "https://maps.app.goo.gl/mGA3NH64M6bjr83EA",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "19:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday","Sunday"], "opens": "10:00", "closes": "18:00" }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/vulyk.clinic/",
+    "https://www.facebook.com/vulyk.clinic"
+  ]
+  ,"aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "ЗАПОВНИТИ (напр. 4.9)",
+    "reviewCount": "ЗАПОВНИТИ (к-ть відгуків Google)"
+  }
+}
+</script>
+
+
+<!-- ============ БЛОК 3: ФІЛІЯ Тичини (location-tychyny.html) ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  "@id": "https://www.vulyk.clinic/location-tychyny.html#clinic",
+  "name": "Вулик — сімейна амбулаторія (Тичини)",
+  "url": "https://www.vulyk.clinic/location-tychyny.html",
+  "parentOrganization": { "@id": "https://www.vulyk.clinic/#organization" },
+  "image": "https://www.vulyk.clinic/assets/location-tychyny.jpg",
+  "telephone": "+380962817338",
+  "email": "info@vulyk.clinic",
+  "priceRange": "₴₴",
+  "currenciesAccepted": "UAH",
+  "foundingDate": "2019",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "вул. Тичини, 21",
+    "addressLocality": "Львів",
+    "addressRegion": "Львівська область",
+    "postalCode": "79000",
+    "addressCountry": "UA"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "ЗАПОВНИТИ",
+    "longitude": "ЗАПОВНИТИ"
+  },
+  "hasMap": "https://maps.app.goo.gl/QdEUmnLxCDCLChsVA",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "19:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday","Sunday"], "opens": "10:00", "closes": "18:00" }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/vulyk.clinic/",
+    "https://www.facebook.com/vulyk.clinic"
+  ]
+}
+</script>

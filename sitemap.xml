@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  sitemap.xml для https://www.vulyk.clinic/
+  Згенеровано в межах SEO Фази 0. Містить лише реально існуючі сторінки (65 URL).
+  Після завантаження у корінь сайту подайте його в Google Search Console:
+  Індексування → Файли Sitemap → https://www.vulyk.clinic/sitemap.xml
+  lastmod оновлюйте при зміні сторінки. Дати новин відповідають даті публікації.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Головна -->
+  <url><loc>https://www.vulyk.clinic/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+
+  <!-- Основні сторінки -->
+  <url><loc>https://www.vulyk.clinic/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/team.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.vulyk.clinic/prices.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.vulyk.clinic/vacancies.html</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.vulyk.clinic/blog.html</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/contacts.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.vulyk.clinic/location-striyska.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.vulyk.clinic/location-tychyny.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.vulyk.clinic/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+
+  <!-- Напрями -->
+  <url><loc>https://www.vulyk.clinic/dir-pervynna.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.vulyk.clinic/dir-rozshyrena.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.vulyk.clinic/dir-psykhichne.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.vulyk.clinic/dir-spetsializovana.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.vulyk.clinic/dir-uzi.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.vulyk.clinic/dir-funktsionalna.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.vulyk.clinic/dir-laboratorna.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Послуги: первинна допомога -->
+  <url><loc>https://www.vulyk.clinic/sub-pediatriya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-simeyna-med.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-terapiya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-lab-obs.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-bazove-test.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-vaktsinatsiya-derzh.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-funkts-diag.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-esoz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- Послуги: розширена ПМД -->
+  <url><loc>https://www.vulyk.clinic/sub-vaktsinatsiya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-dopologovi.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-grudne-vyg.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Послуги: психічне здоровʼя -->
+  <url><loc>https://www.vulyk.clinic/sub-psykhiatriya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-dyt-psykhiatriya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-psykhoterapiya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-casd.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-conners3.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-logopediya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Послуги: спеціалізована допомога -->
+  <url><loc>https://www.vulyk.clinic/sub-kardiologiya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-endokrynologiya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-gastroenterologiya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-otolaringologiya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-nevrologiya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-ginekologiya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Послуги: УЗД -->
+  <url><loc>https://www.vulyk.clinic/sub-uzi-dity.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-neurosonografiya.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-uzi-kulshovi.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-uzi-vnutrishni.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-uzi-nyrky.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-uzi-vahitni.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-uzi-dorosli.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-uzi-sertse.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-uzi-shchytopodibna.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-uzi-suglob.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- Послуги: функціональна діагностика -->
+  <url><loc>https://www.vulyk.clinic/sub-tympanometriya.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-holter.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-monit-at.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-monit-glyukoza.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-tredmil.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- Послуги: лабораторна діагностика -->
+  <url><loc>https://www.vulyk.clinic/sub-lab-vulyk.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-lab-partnery.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- Новини / блог -->
+  <url><loc>https://www.vulyk.clinic/news-001.html</loc><lastmod>2026-05-19</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.vulyk.clinic/news-002.html</loc><lastmod>2026-05-20</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.vulyk.clinic/news-003.html</loc><lastmod>2026-05-20</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.vulyk.clinic/news-004.html</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.vulyk.clinic/news-005.html</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.vulyk.clinic/news-006.html</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.vulyk.clinic/news-007.html</loc><lastmod>2026-06-05</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.vulyk.clinic/news-008.html</loc><lastmod>2026-06-26</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.vulyk.clinic/news-009.html</loc><lastmod>2026-07-01</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+
+</urlset>
