@@ -1,0 +1,74 @@
+<!--
+  =====================================================================
+  ВІДСТЕЖЕННЯ ЗАПИСІВ (конверсій) для GA4 — сайт Вулик
+  =====================================================================
+  GA4 вже встановлено (gtag.js, ID G-L73SKQ7F1J). Цей код НЕ додає GA4 повторно —
+  він лише надсилає події, коли відвідувач тисне кнопки запису.
+
+  КУДИ ВСТАВИТИ:
+  Вставте цей блок ОДИН раз перед закривним тегом </body>.
+  Якщо у сайту є спільний партіал футера — додайте туди, щоб працювало на всіх сторінках.
+
+  ЯКІ ПОДІЇ НАДСИЛАЄ:
+  - booking_open   : натиснули кнопку «Записатися» (відкрили вибір месенджера)
+  - booking_click  : обрали конкретний месенджер — ЦЕ ГОЛОВНА КОНВЕРСІЯ (лід),
+                     з параметром method = telegram|viber|whatsapp|messenger|instagram
+  - phone_click    : натиснули на номер телефону
+
+  ПІСЛЯ ВСТАНОВЛЕННЯ — власник робить у GA4 (див. інструкцію в .md файлі):
+  позначає booking_click і phone_click як «Ключові події» (Key events / конверсії).
+  =====================================================================
+-->
+<script>
+(function () {
+  function track(name, params) {
+    if (typeof gtag === 'function') {
+      gtag('event', name, params || {});
+    } else if (window.dataLayer) {
+      window.dataLayer.push(Object.assign({ event: name }, params || {}));
+    }
+  }
+
+  function messengerMethod(a) {
+    var href = a.getAttribute('href') || '';
+    if (a.classList.contains('book-modal__item--tg') || href.indexOf('t.me') > -1)   return 'telegram';
+    if (a.classList.contains('book-modal__item--vb') || href.indexOf('viber') > -1)  return 'viber';
+    if (a.classList.contains('book-modal__item--wa') || href.indexOf('wa.me') > -1)  return 'whatsapp';
+    if (a.classList.contains('book-modal__item--fb') || href.indexOf('m.me') > -1)   return 'messenger';
+    if (a.classList.contains('book-modal__item--ig') || href.indexOf('ig.me') > -1)  return 'instagram';
+    return null;
+  }
+
+  // Делегування на весь документ — працює і для кнопок у модалці, що зʼявляється динамічно.
+  // Фаза capture (true), щоб подія встигла надіслатись до переходу на месенджер.
+  document.addEventListener('click', function (e) {
+    var el = e.target;
+
+    // 1) Клік по месенджеру = реальний запис (лід)
+    var msg = el.closest('a.book-modal__item, a[href*="t.me"], a[href*="wa.me"], a[href*="viber"], a[href*="m.me"], a[href*="ig.me"]');
+    if (msg) {
+      var method = messengerMethod(msg);
+      if (method) {
+        track('booking_click', {
+          method: method,
+          page_path: window.location.pathname
+        });
+        return;
+      }
+    }
+
+    // 2) Клік по телефону
+    var tel = el.closest('a[href^="tel:"]');
+    if (tel) {
+      track('phone_click', { page_path: window.location.pathname });
+      return;
+    }
+
+    // 3) Кнопка «Записатися» (відкриття вибору месенджера)
+    var book = el.closest('a.btn--primary, button.btn--primary');
+    if (book && /запис/i.test(book.textContent || '')) {
+      track('booking_open', { page_path: window.location.pathname });
+    }
+  }, true);
+})();
+</script>
