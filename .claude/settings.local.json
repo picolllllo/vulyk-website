@@ -103,7 +103,8 @@
       "Bash(mkdir -p \"C:/.My computer/Vulyk Clinic Website/assets\")",
       "Bash(python3 -c \"import openlocationcode\")",
       "Bash(pip show *)",
-      "Bash(python3 -m pip install openlocationcode)"
+      "Bash(python3 -m pip install openlocationcode)",
+      "Bash(grep -n \"^h1\\\\|^h2\\\\|^h1,\\\\|^h2,\\\\| h2 {\\\\|^h1, h2\\\\|h2 {\" styles.css)"
     ]
   }
 }
