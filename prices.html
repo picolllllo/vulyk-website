@@ -48,7 +48,7 @@
       border-bottom: 1px solid rgba(0,0,0,.06);
     }
     .prices-hero__title { font-size: clamp(36px,4vw,56px); font-weight: 800; color: var(--text); margin-bottom: 14px; }
-    .prices-hero__sub { font-size: 16px; color: var(--muted); max-width: 560px; margin: 0 auto; line-height: 1.65; }
+    .prices-hero__sub { font-size: 16px; color: var(--muted); max-width: 560px; margin: 0 auto 24px; line-height: 1.65; }
 
     .prices-tabs {
       background: #fff;
@@ -169,6 +169,16 @@
       text-decoration: none; transition: background .15s;
     }
     .lab-link:hover { background: rgba(232,168,32,.2); }
+
+    .prices-cta {
+      text-align: center;
+      background: var(--warm-bg);
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 20px;
+      padding: 40px var(--pad);
+    }
+    .prices-cta__title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .prices-cta__text { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto 20px; line-height: 1.6; }
 
     @media (max-width: 768px) {
       .prices-hero { padding: 48px var(--pad) 36px; }
@@ -323,6 +333,7 @@
 <section class="prices-hero">
   <h1 class="prices-hero__title">Ціни на послуги</h1>
   <p class="prices-hero__sub">Консультації лікарів, УЗД, аналізи та діагностика в амбулаторії «Вулик» у Львові. Багато послуг доступні безоплатно за декларацією з НСЗУ.</p>
+  <a href="#" class="btn btn--primary">Записатися</a>
 </section>
 
 <!-- ═══════════════ TAB NAVIGATION ═══════════════ -->
@@ -577,6 +588,13 @@
       <div class="price-row"><div class="price-row__name">Швидкий тест на рівень феритину</div><div class="price-row__price">350 грн</div></div>
       <div class="price-row"><div class="price-row__name">Швидкий тест на ВІЛ, гепатит В, гепатит С, сифіліс</div><div class="price-row__price">300 грн</div></div>
     </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="prices-cta">
+    <p class="prices-cta__title">Не знайшли потрібну послугу?</p>
+    <p class="prices-cta__text">Напишіть нам у месенджер або зателефонуйте — підкажемо вартість і запишемо на зручний час.</p>
+    <a href="#" class="btn btn--primary">Записатися</a>
   </section>
 
 </main>
