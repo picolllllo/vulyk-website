@@ -87,6 +87,30 @@
 
     .svc-cta-inline { text-align: center; margin: 28px 0 8px; }
 
+    .svc-vac { margin: 4px 0 18px; }
+    .svc-vac summary {
+      cursor: pointer; font-size: 15px; font-weight: 700; color: var(--accent-deep);
+      list-style: none; display: inline-flex; align-items: center; gap: 8px;
+      padding: 4px 0;
+    }
+    .svc-vac summary::-webkit-details-marker { display: none; }
+    .svc-vac summary::before {
+      content: '+'; font-size: 18px; line-height: 1; color: var(--accent-deep);
+    }
+    .svc-vac[open] summary::before { content: '–'; }
+    .svc-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 15px; }
+    .svc-table th, .svc-table td {
+      text-align: left; padding: 10px 14px; border-bottom: 1px solid rgba(0,0,0,.08);
+      line-height: 1.5; vertical-align: top;
+    }
+    .svc-table th {
+      font-weight: 700; color: var(--text); background: var(--warm-bg);
+      border-bottom: 2px solid rgba(0,0,0,.12);
+    }
+    .svc-table td:first-child { font-weight: 700; color: var(--text); white-space: nowrap; }
+    .svc-table td { color: #333; }
+    .svc-table tr:last-child td { border-bottom: none; }
+
     .svc-decl {
       background: linear-gradient(135deg, #f0f8f4 0%, #e6f2ec 100%);
       border: 1px solid rgba(43,75,62,.15);
@@ -160,6 +184,9 @@
     @media (max-width: 640px) {
       .svc-price-grid { grid-template-columns: 1fr; }
       .svc-team { flex-direction: column; align-items: flex-start; }
+      .svc-table { font-size: 14px; }
+      .svc-table th, .svc-table td { padding: 9px 10px; }
+      .svc-table td:first-child { white-space: normal; }
     }
   </style>
 </head>
@@ -343,7 +370,46 @@
   <h2>Вакцинація дітей у «Вулику»</h2>
   <p>Проводимо вакцинацію всіма вакцинами, зареєстрованими в Україні — державними та приватними, з Календаря щеплень і поза ним.</p>
   <p><strong>Державними вакцинами (безкоштовно за декларацією) — від:</strong> туберкульозу, дифтерії, кашлюка, правця, гемофільної інфекції, поліомієліту, гепатиту В, кору, паротиту, краснухи, папіломавірусної інфекції (дівчата).</p>
-  <p><strong>Приватні вакцини (доступні у клініці):</strong> Бустрикс, Бустрикс Поліо, Бексеро, Варілрикс, Варівакс, Ваксньюванс, Гексаксим, Гардасил 9, Енджерикс (дитячий/дорослий), Інфанрикс ІПВ, Інфанрикс ІПВ ХІБ, Інфанрикс Гекса, Менактра, Німенрикс, Пентаксим, Превенар 13, Пріорикс, ММР Вакспро, Ротарикс, Ротатек, Синфлорикс, Тетраксим, Твінрикс, Тіковак і Тіковак Джуніор (кліщовий енцефаліт), Хаврикс 720/1440 (гепатит А), Церварикс, Джи Сі Флю Квадривалент і Ваксігрип Тетра (грип).</p>
+  <p><strong>Приватні вакцини — від чого захищають.</strong> У клініці доступні всі зареєстровані в Україні вакцини з Календаря щеплень і поза ним:</p>
+  <details class="svc-vac">
+    <summary>Показати всі приватні вакцини (від чого захищають)</summary>
+    <table class="svc-table">
+      <thead><tr><th>Вакцина</th><th>Захищає від</th></tr></thead>
+      <tbody>
+        <tr><td>Бустрикс</td><td>дифтерії, кашлюка, правця</td></tr>
+        <tr><td>Бустрикс Поліо</td><td>дифтерії, кашлюка, правця, поліомієліту</td></tr>
+        <tr><td>Бексеро</td><td>менінгококу типу В</td></tr>
+        <tr><td>Варілрикс</td><td>вітряної віспи</td></tr>
+        <tr><td>Варівакс</td><td>вітряної віспи</td></tr>
+        <tr><td>Ваксньюванс</td><td>пневмококу (15 штамів)</td></tr>
+        <tr><td>Гексаксим</td><td>дифтерії, кашлюка, правця, гемофільної інфекції, поліомієліту, гепатиту В</td></tr>
+        <tr><td>Гардасил 9</td><td>папіломавірусу (9 штамів)</td></tr>
+        <tr><td>Енджерикс дитячий</td><td>гепатиту В</td></tr>
+        <tr><td>Енджерикс дорослий</td><td>гепатиту В</td></tr>
+        <tr><td>Інфанрикс ІПВ</td><td>дифтерії, кашлюка, правця, поліомієліту</td></tr>
+        <tr><td>Інфанрикс ІПВ ХІБ</td><td>дифтерії, кашлюка, правця, поліомієліту, гемофільної інфекції</td></tr>
+        <tr><td>Інфанрикс Гекса</td><td>дифтерії, кашлюка, правця, гемофільної інфекції, поліомієліту, гепатиту В</td></tr>
+        <tr><td>Менактра</td><td>менінгококу (штами A, C, W, Y)</td></tr>
+        <tr><td>Німенрикс</td><td>менінгококу (штами A, C, W, Y)</td></tr>
+        <tr><td>Пентаксим</td><td>дифтерії, кашлюка, правця, поліомієліту, гемофільної інфекції</td></tr>
+        <tr><td>Превенар 13</td><td>пневмококової інфекції (13 штамів)</td></tr>
+        <tr><td>Пріорикс</td><td>кору, паротиту, краснухи</td></tr>
+        <tr><td>ММР Вакспро</td><td>кору, паротиту, краснухи</td></tr>
+        <tr><td>Ротарикс</td><td>ротавірусної інфекції</td></tr>
+        <tr><td>Ротатек</td><td>ротавірусної інфекції</td></tr>
+        <tr><td>Синфлорикс</td><td>пневмококової інфекції (10 штамів)</td></tr>
+        <tr><td>Тетраксим</td><td>дифтерії, кашлюка, правця, поліомієліту</td></tr>
+        <tr><td>Твінрикс</td><td>гепатиту типів А та В</td></tr>
+        <tr><td>Тіковак</td><td>кліщового енцефаліту</td></tr>
+        <tr><td>Тіковак Джуніор</td><td>кліщового енцефаліту (для дітей)</td></tr>
+        <tr><td>Хаврикс 720</td><td>гепатиту А (для дітей)</td></tr>
+        <tr><td>Хаврикс 1440</td><td>гепатиту А (для дорослих)</td></tr>
+        <tr><td>Церварикс</td><td>папіломавірусної інфекції (2 штами)</td></tr>
+        <tr><td>Джи Сі Флю Квадривалент</td><td>грипу</td></tr>
+        <tr><td>Ваксігрип Тетра</td><td>грипу</td></tr>
+      </tbody>
+    </table>
+  </details>
   <p><a href="sub-vaktsinatsiya.html">Детальніше про вакцинацію поза календарем щеплень →</a></p>
 
   <h2>Наша команда педіатрів</h2>
