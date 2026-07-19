@@ -121,7 +121,9 @@
       "Bash(python \"C:/Users/picol/AppData/Local/Temp/claude/C---My-computer-Vulyk-Clinic-Website/4e789d3f-4069-434d-babb-d815ad49b162/scratchpad/fix_news_refs.py\")",
       "Bash(python \"C:/Users/picol/AppData/Local/Temp/claude/C---My-computer-Vulyk-Clinic-Website/4e789d3f-4069-434d-babb-d815ad49b162/scratchpad/make_article.py\")",
       "Bash(python \"C:/Users/picol/AppData/Local/Temp/claude/C---My-computer-Vulyk-Clinic-Website/4e789d3f-4069-434d-babb-d815ad49b162/scratchpad/make_location.py\")",
-      "Bash(python \"C:/Users/picol/AppData/Local/Temp/claude/C---My-computer-Vulyk-Clinic-Website/4e789d3f-4069-434d-babb-d815ad49b162/scratchpad/register_article.py\")"
+      "Bash(python \"C:/Users/picol/AppData/Local/Temp/claude/C---My-computer-Vulyk-Clinic-Website/4e789d3f-4069-434d-babb-d815ad49b162/scratchpad/register_article.py\")",
+      "Bash(python \"C:/Users/picol/AppData/Local/Temp/claude/C---My-computer-Vulyk-Clinic-Website/4e789d3f-4069-434d-babb-d815ad49b162/scratchpad/edits.py\")",
+      "Bash(iconv -f utf-8 -t utf-8)"
     ]
   }
 }
