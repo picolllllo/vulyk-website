@@ -2215,9 +2215,14 @@ body:has(.hero-vid) { padding-top: 0; }
     gap: 16px;
     flex-wrap: wrap;
   }
+  .article-author { row-gap: 10px; }
   .article-author__label { width: 100%; margin-bottom: 4px; }
   .article-author__photo-link { width: 64px; height: 64px; flex-shrink: 0; margin-bottom: 0; }
   .article-author__name, .article-author__role { margin-bottom: 2px; }
+  /* посада й дата мають бути кожна на своєму рядку: інакше дата тулиться
+     праворуч від посади й через власний margin-top з'їжджає нижче */
+  .article-author__role { width: 100%; margin-bottom: 0; }
+  .article-author .news-article__date { width: 100%; margin-top: 0; }
 }
 
 /* ═══════════════ COOKIE CONSENT BANNER ═══════════════ */
