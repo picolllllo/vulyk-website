@@ -80,6 +80,16 @@
     .loc-specs { border-top: 1px solid rgba(0,0,0,.10); margin-top: 46px; padding-top: 34px; }
 
     @media (max-width: 768px) {
+      /* у колонковому напрямку блок авторки опинявся після першої частини
+         тексту (тобто посеред статті) — піднімаємо його одразу під обкладинку */
+      .article-author {
+        order: -1;
+        border-top: none;
+        border-bottom: 1px solid rgba(0,0,0,.08);
+        padding-top: 0;
+        padding-bottom: 22px;
+        margin-bottom: 26px;
+      }
       .news-article-wrap--cont { padding-right: 0; }
       /* у колонковому напрямку align-items:flex-start стискає блок
          до ширини вмісту — тримаємо повну ширину */
@@ -216,9 +226,9 @@
 <main class="news-article">
 <div class="news-article__top">
 
-  <a href="/index.html" class="news-article__back">
+  <a href="/blog.html" class="news-article__back">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    На головну
+    Всі новини
   </a>
   <h1 class="news-article__title"><em>«Це закритий гештальт від 2021 року»</em>: засновниця «Вулика» — про нову амбулаторію на Лінкольна</h1>
   <span class="news-article__tag">Інтерв'ю</span>
