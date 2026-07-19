@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>«Це закритий гештальт від 2021 року» — нова амбулаторія на Лінкольна — Вулик</title>
+
+  <!-- SEO meta -->
+  <meta name="description" content="Засновниця «Вулика» Ярина Пікулицька — про нову амбулаторію на вул. Лінкольна, 4 у Львові: відкриття восени 2026, нові напрями, безбар'єрність, переїзд з Тичини та що це означає для пацієнтів.">
+  <link rel="canonical" href="https://www.vulyk.clinic/news/ambulatoriya-na-linkolna">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Вулик — сімейна амбулаторія">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:title" content="«Це закритий гештальт від 2021 року» — нова амбулаторія на Лінкольна — Вулик">
+  <meta property="og:description" content="Засновниця «Вулика» Ярина Пікулицька — про нову амбулаторію на вул. Лінкольна, 4 у Львові: відкриття восени 2026, нові напрями, безбар'єрність, переїзд з Тичини та що це означає для пацієнтів.">
+  <meta property="og:url" content="https://www.vulyk.clinic/news/ambulatoriya-na-linkolna">
+  <meta property="og:image" content="https://www.vulyk.clinic/assets/og-default.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- /SEO meta -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=3">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L73SKQ7F1J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied'
+    });
+    gtag('js', new Date());
+    gtag('config', 'G-L73SKQ7F1J');
+  </script>
+  <style>
+    /* повний full-bleed вимагає прибрати горизонтальний скрол
+       (шапка position:fixed — не постраждає) */
+    body { overflow-x: hidden; }
+
+    /* продовження тексту без блоку автора — тримає ту саму колонку
+       (220px автор + 56px gap = 276px) */
+    .news-article-wrap--cont { padding-right: 276px; }
+
+    .news-article__body h3 {
+      font-size: 19px; font-weight: 700; color: var(--text);
+      line-height: 1.5; margin: 32px 0 12px;
+    }
+
+    /* запитання інтерв'ю */
+    .loc-q {
+      font-size: 17px; font-weight: 700; color: var(--text);
+      line-height: 1.6; margin: 34px 0 14px;
+    }
+    .loc-q:first-child { margin-top: 0; }
+
+    .loc-lead { font-size: 18px; line-height: 1.7; color: var(--text); margin-bottom: 8px; }
+
+    /* ВЕЛИКЕ фото — справжній full-bleed на всю ширину екрана.
+       --sbw = ширина скролбара (ставить скрипт), бо 100vw її враховує
+       і без цього фото вилазить за край на ~8px з кожного боку */
+    .loc-big {
+      --vw: calc(100vw - var(--sbw, 0px));
+      width: var(--vw); max-width: var(--vw);
+      margin-left: calc(50% - var(--vw) / 2);
+      margin-right: calc(50% - var(--vw) / 2);
+      margin-top: 52px; margin-bottom: 52px;
+    }
+    .loc-big img { display: block; width: 100%; height: auto; }
+
+    /* СЕРЕДНЄ («мале») фото — на ширину контейнера сторінки */
+    .loc-mid { margin: 52px 0; }
+    .loc-mid img { display: block; width: 100%; height: auto; border-radius: 14px; }
+
+    .loc-big figcaption, .loc-mid figcaption {
+      font-size: 13px; color: var(--muted); line-height: 1.5;
+      margin-top: 12px; padding: 0 var(--pad); text-align: center;
+    }
+
+    /* блок деталей проєкту в кінці */
+    .loc-specs { border-top: 1px solid rgba(0,0,0,.10); margin-top: 46px; padding-top: 34px; }
+
+    @media (max-width: 768px) {
+      .news-article-wrap--cont { padding-right: 0; }
+      /* у колонковому напрямку align-items:flex-start стискає блок
+         до ширини вмісту — тримаємо повну ширину */
+      .news-article-wrap .news-article__body { width: 100%; }
+      .loc-big { margin-top: 32px; margin-bottom: 32px; }
+      .loc-mid { margin: 32px 0; }
+      .loc-q { font-size: 16px; }
+      .loc-lead { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header class="header">
+  <div class="header__inner">
+    <a href="/index.html" class="logo">
+      <img src="/Вулик-лого.png" alt="ВУЛИК — сімейна амбулаторія" class="logo__img">
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Відкрити меню" aria-expanded="false">
+      <svg class="icon-open"  width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="11" x2="19" y2="11"/><line x1="3" y1="16" x2="19" y2="16"/></svg>
+      <svg class="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="display:none"><line x1="4" y1="4" x2="18" y2="18"/><line x1="18" y1="4" x2="4" y2="18"/></svg>
+    </button>
+    <nav class="nav" aria-label="Головне меню">
+      <ul class="nav__list">
+        <li><a href="/about.html">Про нас</a></li>
+        <li class="nav__item--dropdown">
+          <a href="#">Напрями <svg class="nav__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="nav__dropdown nav__dropdown--dirs">
+            <li class="nav__has-sub"><a href="/dir-pervynna.html">Первинна допомога <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="/sub-pediatriya.html">Педіатрія</a></li>
+                <li><a href="/sub-simeyna-med.html">Сімейна медицина</a></li>
+                <li><a href="/sub-terapiya.html">Терапія</a></li>
+                <li><a href="/sub-lab-obs.html">Лабораторні обстеження</a></li>
+                <li><a href="/sub-bazove-test.html">Базове тестування</a></li>
+                <li><a href="/sub-vaktsinatsiya-derzh.html">Вакцинація державними вакцинами</a></li>
+                <li><a href="/sub-funkts-diag.html">Функціональна діагностика</a></li>
+                <li><a href="/sub-esoz.html">Послуги ЕСОЗ</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="/dir-rozshyrena.html">Розширена первинна медична допомога <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="/sub-vaktsinatsiya.html">Вакцинація поза календарем щеплень</a></li>
+                <li><a href="/sub-dopologovi.html">Допологові консультації</a></li>
+                <li><a href="/sub-grudne-vyg.html">Консультації з грудного вигодовування</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="/dir-psykhichne.html">Психічне здоров'я <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="/sub-psykhiatriya.html">Психіатрія</a></li>
+                <li><a href="/sub-dyt-psykhiatriya.html">Дитяча психіатрія</a></li>
+                <li><a href="/sub-psykhoterapiya.html">Психотерапія доросла та дитяча</a></li>
+                <li><a href="/sub-casd.html">Діагностичний інструмент CASD</a></li>
+                <li><a href="/sub-conners3.html">Діагностичний інструмент Conners-3</a></li>
+                <li><a href="/sub-logopediya.html">Логопедія</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="/dir-spetsializovana.html">Спеціалізована допомога <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="/sub-kardiologiya.html">Кардіологія (доросла)</a></li>
+                <li><a href="/sub-endokrynologiya.html">Ендокринологія (доросла)</a></li>
+                <li><a href="/sub-gastroenterologiya.html">Гастроентерологія (доросла)</a></li>
+                <li><a href="/sub-otolaringologiya.html">Отоларингологія (доросла та дитяча)</a></li>
+                <li><a href="/sub-nevrologiya.html">Неврологія (дитяча)</a></li>
+                <li><a href="/sub-ginekologiya.html">Гінекологія (доросла та дитяча)</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="/dir-uzi.html">Ультразвукова діагностика <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li class="nav__has-sub2"><a href="/sub-uzi-dity.html">УЗД для дітей <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <ul class="nav__subdropdown2">
+                  <li><a href="/sub-neurosonografiya.html">Нейросонографія</a></li>
+                  <li><a href="/sub-uzi-kulshovi.html">УЗД кульшових суглобів</a></li>
+                  <li><a href="/sub-uzi-vnutrishni.html">УЗД внутрішніх органів</a></li>
+                  <li><a href="/sub-uzi-nyrky.html">УЗД нирок та сечовивідних шляхів</a></li>
+                </ul></li>
+                <li><a href="/sub-uzi-vahitni.html">УЗД для вагітних жінок</a></li>
+                <li class="nav__has-sub2"><a href="/sub-uzi-dorosli.html">УЗД для дорослих <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                <ul class="nav__subdropdown2">
+                  <li><a href="/sub-uzi-sertse.html">УЗД серця</a></li>
+                  <li><a href="/sub-uzi-shchytopodibna.html">УЗД щитоподібної залози</a></li>
+                  <li><a href="/sub-uzi-suglob.html">УЗД суглобів</a></li>
+                  <li><a href="/sub-uzi-vnutrishni.html">УЗД внутрішніх органів</a></li>
+                  <li><a href="/sub-uzi-nyrky.html">УЗД нирок та сечовивідних шляхів</a></li>
+                  <li><a href="/sub-uzi-elastografiya.html">Еластографія</a></li>
+                  <li><a href="/sub-uzi-kyshkivnyk.html">УЗД кишківника</a></li>
+                </ul></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="/dir-funktsionalna.html">Функціональна діагностика <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="/sub-tympanometriya.html">Тимпанометрія</a></li>
+                <li><a href="/sub-holter.html">Холтерівський моніторинг</a></li>
+                <li><a href="/sub-monit-at.html">Добовий моніторинг артеріального тиску</a></li>
+                <li><a href="/sub-monit-glyukoza.html">Моніторинг рівня цукру в крові</a></li>
+                <li><a href="/sub-tredmil.html">Тредміл</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="/dir-laboratorna.html">Лабораторна діагностика <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="/sub-lab-vulyk.html">У Вулику</a></li>
+                <li><a href="/sub-lab-partnery.html">Партнерські лабораторії</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="/team.html">Команда</a></li>
+        <li><a href="/prices.html">Ціни</a></li>
+        <li><a href="/vacancies.html">Вакансії</a></li>
+        <li><a href="/blog.html">Блог</a></li>
+        <li class="nav__item--dropdown">
+          <a href="#">Локації <svg class="nav__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <ul class="nav__dropdown">
+            <li><a href="/location-striyska.html">вул. Стрийська, 86В</a></li>
+            <li><a href="/location-tychyny.html">вул. Тичини, 21</a></li>
+            <li><a href="/location-lincolna.html">вул. Лінкольна, 4</a></li>
+          </ul>
+        </li>
+        <li><a href="/contacts.html">Контакти</a></li>
+      </ul>
+    </nav>
+    <div class="header__right">
+      <div class="header__contact">
+        <a href="tel:+380962817338" class="header__phone">+38 (096) 281-73-38</a>
+        <span class="header__hours">Пн–Пт: 9:00–19:00 | Сб–Нд: 10:00–18:00</span>
+      </div>
+      <a href="#" class="btn btn--primary">Записатися</a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ ARTICLE ═══════════════ -->
+<main class="news-article">
+<div class="news-article__top">
+
+  <a href="/index.html" class="news-article__back">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    На головну
+  </a>
+  <h1 class="news-article__title"><em>«Це закритий гештальт від 2021 року»</em>: засновниця «Вулика» — про нову амбулаторію на Лінкольна</h1>
+  <span class="news-article__tag">Інтерв'ю</span>
+
+  <div class="news-article__cover">
+    <img src="/news/vulyk-recepcia-render.avif" alt="Нова амбулаторія «Вулик» на вул. Лінкольна, 4 у Львові">
+  </div>
+
+</div><!-- /.news-article__top -->
+
+<div class="news-article-wrap">
+  <div class="news-article__body">
+
+    <p class="loc-lead">Восени 2026 року «Вулик» відкриває третю локацію — на вулиці Лінкольна, 4. Туди переїде амбулаторія з вулиці Тичини. Про те, що чекає на пацієнтів у новому просторі, розмовляємо із засновницею клініки, лікаркою-педіатром Яриною Пікулицькою.</p>
+
+    <p class="loc-q">— Яка точна адреса й орієнтири? Як легко знайти?</p>
+    <p>Лінкольна, 4 — це біля церкви Йосафата на Замарстинівській, поруч із будівлею Рахункової палати на Лінкольна.</p>
+
+    <p class="loc-q">— Коли відкриття?</p>
+    <p>Плануємо листопад 2026 року. Ризик, що дата зсунеться, звісно, завжди є.</p>
+
+    <p class="loc-q">— Чому саме Лінкольна?</p>
+    <p>Це була найближча до Тичини, 21 локація, яка вразила своєю площею. Тобто нам вона підійшла найбільше: і близько, і з потрібною площею. До того ж приміщення має вікна з трьох сторін — це допомагає зберегти освітленість у всьому просторі.</p>
+  </div>
+  <aside class="article-author">
+    <p class="article-author__label">Написала</p>
+    <a href="/team-pikulytska.html" class="article-author__photo-link">
+      <img src="/Employees/Ярина Пікулицька.avif" alt="Ярина Пікулицька" class="article-author__photo">
+    </a>
+    <a href="/team-pikulytska.html" class="article-author__name">Ярина Пікулицька</a>
+    <p class="article-author__role">Засновниця клініки «Вулик»</p>
+    <time class="news-article__date">19 липня 2026</time>
+  </aside>
+</div>
+<figure class="loc-big">
+  <a href="/news/Linc.project1.avif" target="_blank" rel="noopener"><img src="/news/Linc.project1.avif" alt="План першого поверху — 132,80 м²"></a>
+  <figcaption>План першого поверху — 132,80 м²</figcaption>
+</figure>
+<div class="news-article-wrap news-article-wrap--cont">
+  <div class="news-article__body">
+    <p class="loc-q">— Які напрями та послуги там працюватимуть?</p>
+    <p>Первинна медична допомога — сімейні лікарі, педіатри й терапевти. Також УЗД-діагностика та лабораторна діагностика.</p>
+    <p>Напрям психічного здоров'я, який включатиме психіатрів, психотерапевтів і діагностику розладів спектру аутизму та розладу дефіциту уваги з гіперактивністю.</p>
+    <p>Гінекологія, отоларингологія, дитяча неврологія, кардіологія.</p>
+    <p>Сподіваюся, що запустимо також повноцінну функціональну діагностику — холтерівське обстеження, тимпанометрію, тредміл. Тредміл — це функціональний метод, який оцінює роботу серцево-судинної системи при фізичному навантаженні за допомогою бігової доріжки.</p>
+
+    <p class="loc-q">— Що нового з'явиться, чого зараз немає на Тичини?</p>
+    <p>Це вузькі спеціалісти: ЛОРи, неврологи, кардіологи, гінекологи, фахівці психічного здоров'я. Також добове холтерівське моніторування та функціональні методи обстеження.</p>
+
+    <p class="loc-q">— Який масштаб нової амбулаторії?</p>
+    <p>В амбулаторії два поверхи. На першому буде маніпуляційний кабінет і два кабінети лікарів. На другому — ще один маніпуляційний кабінет і дев'ять кабінетів лікарів. Тобто одночасно зможуть приймати 11 лікарів у першу зміну і 11 лікарів у другу.</p>
+  </div>
+</div>
+<figure class="loc-mid">
+  <a href="/news/Linc100.avif" target="_blank" rel="noopener"><img src="/news/Linc100.avif" alt="Перший поверх"></a>
+  <figcaption>Перший поверх</figcaption>
+</figure>
+<div class="news-article-wrap news-article-wrap--cont">
+  <div class="news-article__body">
+    <p class="loc-q">— Чи закривається Тичини?</p>
+    <p>Поки що ні. Насправді це буде для «Вулика» функціональне приміщення для адміністрування. Зокрема, думаю про те, щоб обладнати там кол-центр, посадити адміністративний персонал, який займається кадровими та бухгалтерськими питаннями. А далі будемо дивитися — у 2026 році Тичини поки що залишається за «Вуликом».</p>
+
+    <p class="loc-q">— Чи переїжджають ті самі лікарі?</p>
+    <p>Так, з Тичини переїжджають ті самі лікарі й надаватимуть ті самі послуги. Це робиться для того, щоб пацієнтам, які давно з нами, було зручніше, просторіше й новіше в новій амбулаторії. І саме тому я обирала приміщення поблизу — щоб цей переїзд був якнайменш болючим для тих, хто з нами вже багато років.</p>
+
+    <p class="loc-q">— Що робити пацієнтам із декларацією? Чи треба щось переоформлювати?</p>
+    <p>Не потрібно нічого переоформлювати. Достатньо просто почути адміністратора, коли він скаже, що ваш візит відтепер відбувається на Лінкольна, а не на Тичини.</p>
+
+    <p class="loc-q">— Чи зміняться телефон і графік роботи?</p>
+    <p>Ні, телефон і графік роботи не зміняться.</p>
+
+    <p class="loc-q">— Як плануєте повідомляти пацієнтів про переїзд?</p>
+    <p>SMS-інформуванням, розсилками на електронні пошти, а також за допомогою наших онлайн-ресурсів — сайту, сторінок в Instagram і Facebook. І посиленим інформуванням при зверненні пацієнта, коли вже знатимемо точну дату відкриття.</p>
+  </div>
+</div>
+<figure class="loc-big">
+  <a href="/news/Linc102.avif" target="_blank" rel="noopener"><img src="/news/Linc102.avif" alt="Перший поверх"></a>
+  <figcaption>Перший поверх</figcaption>
+</figure>
+<div class="news-article-wrap news-article-wrap--cont">
+  <div class="news-article__body">
+    <p class="loc-q">— Чи є парковка?</p>
+    <p>Парковка є збоку, біля церкви Йосафата. Це не наша парковка, а звичайна публічна, однак там можна запаркуватися. Разом з тим вестимемо перемовини з тими, хто може виділити кілька паркомісць для пацієнтів «Вулика».</p>
+
+    <p class="loc-q">— Як щодо безбар'єрності?</p>
+    <p>Ми дуже плекаємо безбар'єрність у «Вулику». Оскільки це перший поверх, пандус у принципі не потрібен. У приміщенні амбулаторії буде підйомник, яким зможуть користуватися і маломобільні особи, і люди з дітьми, щоб заїхати на перший поверх безбар'єрно.</p>
+
+    <p class="loc-q">— Що передбачено для дітей?</p>
+    <p>На Лінкольна заплановані два невеличкі куточки для годування, які закриватимуться шторою, — один на першому поверсі, другий на другому. Там же будуть пеленальні столики. Пеленальні столики будуть також у вбиральнях на обох поверхах, а самих вбиралень буде дві.</p>
+    <p>Плануємо обладнати місце для маломобільних осіб — особливо це стосується дітей, які вже або ще не на кріслі колісному, щоб їх було де переодягнути. Також буде окремий куток для дітей, яких треба роздягнути, коли вони приходять з вулиці.</p>
+    <p>Щодо дитячої зони: на першому і на другому поверхах у зонах очікування будуть бізіборди та столики, де діти зможуть бавитися, малювати, просто провести час. Додатково на другому поверсі плануємо розташувати екран, на якому без звуку показуватимуть мультфільми.</p>
+  </div>
+</div>
+<figure class="loc-mid">
+  <a href="/news/Linc99.avif" target="_blank" rel="noopener"><img src="/news/Linc99.avif" alt="Нова амбулаторія «Вулик» на вул. Лінкольна, 4 у Львові"></a>
+  <figcaption>Нова амбулаторія «Вулик» на вул. Лінкольна, 4 у Львові</figcaption>
+</figure>
+<div class="news-article-wrap news-article-wrap--cont">
+  <div class="news-article__body">
+    <p class="loc-q">— Чи будуть окремі потоки для здорових і хворих пацієнтів?</p>
+    <p>Ми розводимо здорових і хворих відповідно до розкладу — тобто зонуємо графік роботи. Наприклад, перші дві-три години прийому — це здорові пацієнти, наступні дві години — хворі. Але ми завжди відштовхуємося від сезонності: влітку більше часу виділяємо здоровим пацієнтам і менше хворим, а в осінньо-зимовий період навпаки.</p>
+    <p>Разом з тим ми розуміємо, що тут у нас два поверхи, і, можливо, нам вдасться зонувати пацієнтів так, щоб хворі потрапляли на перший поверх, а здорові — на другий. Але поки що мені важко сказати напевно. Зараз ми маємо схему зонування за часом, яку продумали настільки добре, наскільки могли, і поки що її й дотримуватимемось. Не виключено, що будемо щось міняти відповідно до можливостей, які матимемо на Лінкольна.</p>
+
+    <p class="loc-q">— Чи можна вже зараз записатися на Лінкольна наперед?</p>
+    <p>Ні, зараз не можна — ми працюємо у звичному режимі: амбулаторія на Тичини та амбулаторія на Стрийській.</p>
+    <p>Скажу зі свого боку, що крім ремонту ми також готуємо й шукаємо лікарів та команду, яка працюватиме на Лінкольна. Імовірно, ті нові люди, які приєднаються до нас на Тичини, вже прийматимуть пацієнтів з розрахунку, що згодом працюватимуть на Лінкольна.</p>
+
+    <p class="loc-q">— Чи планується щось на відкриття?</p>
+    <p>Думаю, що так. Це буде дуже гарний момент для наших пацієнтів — прийти, подивитися, сказати одне одному, що тепер ми не на Тичини, а на Лінкольна.</p>
+    <p>Як саме це виглядатиме, поки важко сказати, оскільки якщо це буде листопад, то багато залежатиме від погодних умов. Але біля Лінкольна є дуже гарна велика непрохідна територія, тож я б дуже хотіла, щоб на відкритті люди були і на вулиці, і заходили всередину, і виходили — щоб це було максимально живе спілкування, де люди могли б комунікувати між собою. Напевно, будуть якісь перекуси й легка музика.</p>
+  </div>
+</div>
+<figure class="loc-big">
+  <a href="/news/Linc.project2.avif" target="_blank" rel="noopener"><img src="/news/Linc.project2.avif" alt="План другого поверху — 162,85 м²"></a>
+  <figcaption>План другого поверху — 162,85 м²</figcaption>
+</figure>
+<div class="news-article-wrap news-article-wrap--cont">
+  <div class="news-article__body">
+    <p class="loc-q">— Чи є речі, які ви зробили на Лінкольна, але яких пацієнти не побачать?</p>
+    <p>Перед тим, як робити Лінкольна, крім власного бачення, я мала комунікацію з лікарями стосовно цієї локації, а також ми робили публічну комунікацію з пацієнтами. І фактично я думаю, що немає жодної хорошої конструктивної ідеї, якої б ми не врахували.</p>
+    <p>Наприклад, я знаю, що на Тичини дуже бракувало кімнати для годування, місця для переодягання, питної води в холі — усе це на Лінкольна буде. Так само багато хто писав, що добре було б мати більше вбиралень — їх буде більше. Тобто з позиції зручності для пацієнта ми врахували все, що пропонували пацієнти і що говорили лікарі зі свого боку як надавачі медичних послуг.</p>
+
+    <p class="loc-q">— Чи набираєте нових пацієнтів, нові декларації на Лінкольна?</p>
+    <p>Так, набираємо. Думаю, якщо, наприклад, у жовтні в нас будуть нові лікарі на Тичини, то пацієнти, які захочуть підписати з ними декларації, вже будуть повідомлені: зараз прийом на Тичини, але за місяць — уже на Лінкольна. Тобто це буде приблизно за місяць до відкриття.</p>
+    <p>Так само ті лікарі, які вже є в команді на Тичини і мають вільні місця, декларуватимуть нових пацієнтів. Скажу відразу: ми часто зупиняли декларування через обмеження в місці — розуміли, що не можемо прийняти більше пацієнтів, ніж дозволяє приміщення. Тут приміщення втричі більше, тому думаю, що ми зможемо не зупиняти тих пацієнтів, які до нас ідуть.</p>
+
+    <p class="loc-q">— Чи зміняться ціни на новій локації?</p>
+    <p>Думаю, що ціни, які зараз є у «Вулику» на всі послуги, залишаться такими ж. Ми на ринку, відповідно завжди аналізуємо ціни згідно з ринком. Якщо на ринку ціни змінюватимуться — змінюватимуться і в нас. Якщо вони залишаються стабільними — так і залишаються. Але якщо питання в тому, чи зміниться ціна через те, що ми переїхали у більше приміщення, — ні, вона не зміниться.</p>
+  </div>
+</div>
+<figure class="loc-mid">
+  <a href="/news/Linc200.avif" target="_blank" rel="noopener"><img src="/news/Linc200.avif" alt="Другий поверх"></a>
+  <figcaption>Другий поверх</figcaption>
+</figure>
+<div class="news-article-wrap news-article-wrap--cont">
+  <div class="news-article__body">
+    <p class="loc-q">— Чи шукаєте нових лікарів?</p>
+    <p>Так, шукаємо. Первинно це будуть лікарі первинної ланки — їм ми будемо раді.</p>
+    <p>Також зараз обговорюватимемо з лікарями, які працюють на вторинній ланці, тобто з лікарями вузького профілю, хто хотів би й міг поєднувати роботу на двох локаціях. Хто матиме змогу — працюватиме. А ті напрями, які ми хотіли б мати у «Вулику» і не закриємо наявною командою, закриватимемо новими фахівцями, яких шукатимемо.</p>
+
+    <p class="loc-q">— Чи хочете ще чимось поділитися — про Лінкольна й розвиток «Вулика» загалом?</p>
+    <p>Для мене особисто цей переїзд — це, напевно, закритий гештальт від 2021 року. Ще з 2021-го я чітко розуміла, що нам треба переїжджати.</p>
+    <p>Мені важко сказати, помилка це чи ні, що ми відкрилися спершу на Стрийській і тільки тепер — на Лінкольна. Можливо, логічніше було відкритися спочатку на Лінкольна, а потім на Стрийській. А з іншого боку, я розумію, що завдяки відкриттю на Стрийській ми зробили дуже великий стрибок у розвитку. І, можливо, саме той досвід — дуже болючий, дуже складний, який я отримала після відкриття Стрийської, — і послужив цим кроком, щоб тепер відкритися на Лінкольна.</p>
+    <p>Я дуже вдячна тим пацієнтам, які з нами від самого початку. Попри якісь моменти із сервісом, можливо, незадоволеність чи речі, які не завжди до кінця подобалися, вони все одно залишалися з нами. Для мене це великий кредит довіри, який я стараюся виправдати тим, що ми зараз відкриваємо Лінкольна.</p>
+  </div>
+</div>
+<figure class="loc-big">
+  <a href="/news/Linc201.avif" target="_blank" rel="noopener"><img src="/news/Linc201.avif" alt="Другий поверх"></a>
+  <figcaption>Другий поверх</figcaption>
+</figure>
+<div class="news-article-wrap news-article-wrap--cont">
+  <div class="news-article__body">
+    <div class="loc-specs">
+      <h2>Про проєкт</h2>
+      <ul>
+        <li><strong>Статус:</strong> робочий проєкт (РП), виданий 03.07.2026</li>
+        <li><strong>Виконавець:</strong> архітектурне бюро «Сулик Архітектура»</li>
+        <li><strong>Загальна площа:</strong> 295,65 м² на двох поверхах</li>
+      </ul>
+
+      <h2>Планування та експлікація</h2>
+      <p>Проєкт охоплює два поверхи — з розділенням потоків пацієнтів і окремими функціональними зонами на кожному рівні.</p>
+
+      <h3>Перший поверх — 132,80 м²</h3>
+      <ul>
+        <li>рецепція та зона очікування;</li>
+        <li>кабінет ультразвукової діагностики;</li>
+        <li>кабінет психотерапевта;</li>
+        <li>маніпуляційна;</li>
+        <li>сан-гігієнічна кімната;</li>
+        <li>кімната годування;</li>
+        <li>кімната персоналу;</li>
+        <li>WC.</li>
+      </ul>
+
+      <h3>Другий поверх — 162,85 м²</h3>
+      <ul>
+        <li>5 кабінетів;</li>
+        <li>кабінет психотерапевта;</li>
+        <li>гінекологічний кабінет;</li>
+        <li>кабінет щеплень;</li>
+        <li>хол із зоною очікування;</li>
+        <li>кімната годування;</li>
+        <li>WC.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="news-article__cta">
+    <span class="news-article__cta-text">Маєте питання про нову локацію?</span>
+    <a href="tel:+380962817338" class="btn btn--primary">+38 (096) 281-73-38</a>
+  </div>
+</main>
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <div class="footer__inner">
+
+    <div class="footer__col footer__col--brand">
+      <a href="/index.html" class="footer__footer-logo">
+        <img src="/Вулик-лого.png" alt="ВУЛИК — сімейна амбулаторія" class="logo__img logo__img--light">
+      </a>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/vulyk.clinic/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/vulyk.clinic" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@vulyk." target="_blank" rel="noopener" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Локації</h3>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name"><a href="/location-striyska.html" style="color:inherit;text-decoration:none">вул. Стрийська, 86В</a></div>
+          <div class="footer__loc-sub">ЖК Park Tower</div>
+        </div>
+      </div>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><div class="footer__loc-name"><a href="/location-tychyny.html" style="color:inherit;text-decoration:none">вул. Тичини, 21</a></div></div>
+      </div>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name"><a href="/location-lincolna.html" style="color:inherit;text-decoration:none">вул. Лінкольна, 4</a></div>
+          <div class="footer__loc-sub">відкриття восени 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__col footer__col--schedule">
+      <h3 class="footer__col-title">Графік роботи</h3>
+      <div class="footer__loc-hours">Пн–Пт: 9:00–19:00<br>Сб–Нд: 10:00–18:00</div>
+    </div>
+
+    <div class="footer__col footer__col--contacts">
+      <h3 class="footer__col-title">Контакти</h3>
+      <a href="tel:+380962817338" class="footer__phone">+38 (096) 281-73-38</a>
+      <a href="mailto:info@vulyk.clinic" class="footer__email-link">info@vulyk.clinic</a>
+    </div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Відділ найму</h3>
+      <a href="mailto:hr@vulyk.clinic" class="footer__email-link">hr@vulyk.clinic</a>
+    </div>
+    <div class="footer__col">
+      <h3 class="footer__col-title">Для партнерів</h3>
+      <a href="mailto:partner@vulyk.clinic" class="footer__email-link">partner@vulyk.clinic</a>
+    </div>
+
+
+
+  </div>
+  <div class="footer__bottom">
+    <div class="footer__bottom__inner">
+      <span>© 2026 ТОВ «Вулик-Львів». Всі права захищені.</span>
+      <span><a href="/privacy.html">Політика конфіденційності</a></span>
+      <span>Розроблено <a href="https://www.linkedin.com/in/zakhar-pikulytskyi-32629484/" target="_blank" rel="noopener">З. Пікулицький</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="/nav.js?v=3"></script>
+<script src="/booking-modal.js?v=1"></script>
+  <script src="/cookie-consent.js?v=1"></script>
+  <script src="/ga-tracking.js?v=1"></script>
+<script>
+(function () {
+  function setSbw() {
+    document.documentElement.style.setProperty(
+      '--sbw', (window.innerWidth - document.documentElement.clientWidth) + 'px');
+  }
+  setSbw();
+  window.addEventListener('resize', setSbw);
+})();
+</script>
+</body>
+</html>
