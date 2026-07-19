@@ -123,7 +123,13 @@
       "Bash(python \"C:/Users/picol/AppData/Local/Temp/claude/C---My-computer-Vulyk-Clinic-Website/4e789d3f-4069-434d-babb-d815ad49b162/scratchpad/make_location.py\")",
       "Bash(python \"C:/Users/picol/AppData/Local/Temp/claude/C---My-computer-Vulyk-Clinic-Website/4e789d3f-4069-434d-babb-d815ad49b162/scratchpad/register_article.py\")",
       "Bash(python \"C:/Users/picol/AppData/Local/Temp/claude/C---My-computer-Vulyk-Clinic-Website/4e789d3f-4069-434d-babb-d815ad49b162/scratchpad/edits.py\")",
-      "Bash(iconv -f utf-8 -t utf-8)"
+      "Bash(iconv -f utf-8 -t utf-8)",
+      "Bash(python -c \"import PIL, pillow_avif\")",
+      "Bash(python -c \"from PIL import Image, features; print\\('avif:', features.check\\('avif'\\)\\)\")",
+      "Bash(magick -version)",
+      "Bash(ffmpeg -version)",
+      "Bash(python \"C:/Users/picol/AppData/Local/Temp/claude/C---My-computer-Vulyk-Clinic-Website/4e789d3f-4069-434d-babb-d815ad49b162/scratchpad/og.py\")",
+      "Bash(curl -s -o /dev/null -w \"og-jpg: %{http_code} %{content_type} %{size_download}b\\\\n\" \"http://localhost:3000/assets/og-ambulatoriya-na-linkolna.jpg\")"
     ]
   }
 }
