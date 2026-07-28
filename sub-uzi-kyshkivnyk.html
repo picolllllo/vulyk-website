@@ -6,13 +6,13 @@
   <title>УЗД кишківника у Львові — Вулик</title>
 
   <!-- SEO meta -->
-  <meta name="description" content="УЗД кишківника у Львові в амбулаторії «Вулик»: досвідчені лікарі, сучасне обладнання. Партнер НСЗУ. Запис на прийом онлайн у месенджері.">
+  <meta name="description" content="УЗД кишківника у Львові в клініці «Вулик»: оцінка запалення при хворобі Крона, коліті, дивертикуліті. Безболісно, без складної підготовки. Записатися.">
   <link rel="canonical" href="https://www.vulyk.clinic/sub-uzi-kyshkivnyk.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Вулик — сімейна амбулаторія">
   <meta property="og:locale" content="uk_UA">
   <meta property="og:title" content="УЗД кишківника у Львові — Вулик">
-  <meta property="og:description" content="УЗД кишківника у Львові в амбулаторії «Вулик»: досвідчені лікарі, сучасне обладнання. Партнер НСЗУ. Запис на прийом онлайн у месенджері.">
+  <meta property="og:description" content="УЗД кишківника у Львові в клініці «Вулик»: оцінка запалення при хворобі Крона, коліті, дивертикуліті. Безболісно, без складної підготовки. Записатися.">
   <meta property="og:url" content="https://www.vulyk.clinic/sub-uzi-kyshkivnyk.html">
   <meta property="og:image" content="https://www.vulyk.clinic/assets/og-default.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -22,10 +22,92 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=4">
   <style>
-    .wip { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 80px 24px; background: var(--warm-bg); }
-    .wip__icon { font-size: 56px; margin-bottom: 20px; }
-    .wip__title { font-size: clamp(22px, 3vw, 38px); font-weight: 800; color: var(--primary); margin-bottom: 12px; }
-    .wip__sub { font-size: 16px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
+    .svc-hero {
+      background: var(--warm-bg);
+      text-align: center;
+      padding: 64px var(--pad) 40px;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .svc-hero__label {
+      font-size: 11px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .svc-hero__title { font-size: clamp(28px,3.4vw,44px); font-weight: 800; color: var(--text); margin-bottom: 16px; line-height: 1.15; }
+    .svc-hero__sub { font-size: 16px; color: var(--muted); max-width: 680px; margin: 0 auto 28px; line-height: 1.7; }
+
+    .svc-body {
+      max-width: 816px; margin: 0 auto; padding: 56px var(--pad) 8px;
+    }
+    .svc-body h2 { font-size: 24px; font-weight: 700; line-height: 1.8; color: #333; margin: 44px 0 16px; }
+    .svc-body h2:first-child { margin-top: 0; }
+    .svc-body p { font-size: 16px; line-height: 1.8; color: #333; margin-bottom: 18px; }
+    .svc-body ul {
+      list-style: none; padding-left: 0; margin-bottom: 18px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .svc-body li { font-size: 16px; line-height: 1.65; color: #333; padding-left: 22px; position: relative; }
+    .svc-body li::before {
+      content: ''; position: absolute; left: 0; top: 9px;
+      width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+    }
+    .svc-body strong { font-weight: 700; color: var(--text); }
+    .svc-note { font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7;
+      border-left: 3px solid var(--accent); padding-left: 16px; margin: 4px 0 18px; }
+
+    .svc-cta-inline { text-align: center; margin: 28px 0 8px; }
+
+    .svc-price-card {
+      background: var(--warm-bg); border: 1px solid rgba(0,0,0,.08);
+      border-radius: 14px; padding: 20px 22px; margin: 20px 0 8px; max-width: 560px;
+    }
+    .svc-price-card__title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 12px; }
+    .svc-price-card ul { padding-left: 0; list-style: none; margin-bottom: 0; display: flex; flex-direction: column; gap: 10px; }
+    .svc-price-card li { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; line-height: 1.4; color: var(--text); padding-left: 0; margin-bottom: 0; position: static; }
+    .svc-price-card li::before { display: none; }
+    .svc-price-card li span:last-child { font-weight: 700; color: var(--accent-deep); white-space: nowrap; }
+
+    .svc-faq { width: 100%; max-width: 816px; margin: 0 auto; padding: 8px var(--pad) 0; }
+    .svc-faq h2 { font-size: 24px; font-weight: 700; line-height: 1.8; color: #333; margin-bottom: 20px; }
+    .svc-faq details {
+      border: 1px solid rgba(0,0,0,.08); border-radius: 12px;
+      padding: 16px 20px; margin-bottom: 12px; background: #fff;
+    }
+    .svc-faq summary {
+      font-size: 15px; font-weight: 700; color: var(--text); cursor: pointer;
+      list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    }
+    .svc-faq summary::-webkit-details-marker { display: none; }
+    .svc-faq summary::after {
+      content: '+'; font-size: 20px; color: var(--accent-deep); flex-shrink: 0; transition: transform .2s;
+    }
+    .svc-faq details[open] summary::after { transform: rotate(45deg); }
+    .svc-faq p { font-size: 14.5px; color: var(--muted); line-height: 1.65; margin-top: 10px; }
+
+    .svc-author {
+      width: 100%; max-width: 816px; margin: 44px auto 0; padding: 24px var(--pad);
+      display: flex; align-items: center; gap: 16px;
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+    .svc-author__photo { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+    .svc-author__photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    .svc-author__label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+    .svc-author__name { font-size: 15px; font-weight: 700; color: var(--text); text-decoration: none; }
+    .svc-author__role { font-size: 13px; color: var(--muted); }
+
+    .svc-links {
+      max-width: 816px; margin: 0 auto; padding: 24px var(--pad) 56px;
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .svc-links a {
+      font-size: 13px; font-weight: 600; color: var(--text); text-decoration: none;
+      padding: 8px 16px; border: 1px solid rgba(0,0,0,.12); border-radius: 100px;
+      transition: border-color .15s, color .15s;
+    }
+    .svc-links a:hover { border-color: var(--accent); color: var(--accent-deep); }
+
+    @media (max-width: 640px) {
+      .svc-table td:first-child { white-space: normal; }
+    }
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-L73SKQ7F1J"></script>
@@ -38,6 +120,14 @@
     gtag('js', new Date());
     gtag('config', 'G-L73SKQ7F1J');
   </script>
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"Чи може УЗД кишківника замінити колоноскопію?","acceptedAnswer":{"@type":"Answer","text":"Не завжди. УЗД добре показує товщину стінки кишки та ознаки запалення, але не дає змоги детально оглянути слизову оболонку або взяти біопсію."}},
+  {"@type":"Question","name":"Чи боляче робити УЗД кишківника?","acceptedAnswer":{"@type":"Answer","text":"Зазвичай ні. При запаленні окремі ділянки живота можуть бути чутливими під час натискання датчиком."}},
+  {"@type":"Question","name":"Чи потрібно приходити натще на УЗД кишківника?","acceptedAnswer":{"@type":"Answer","text":"У більшості випадків спеціальна підготовка не потрібна. За потреби лікар окремо повідомить, чи потрібно утриматися від їжі або випити воду."}}]}
+  </script>
+  <!-- /JSON-LD -->
 </head>
 <body>
 <header class="header">
@@ -100,7 +190,7 @@
                 <ul class="nav__subdropdown2">
                   <li><a href="sub-neurosonografiya.html">Нейросонографія</a></li>
                   <li><a href="sub-uzi-kulshovi.html">УЗД кульшових суглобів</a></li>
-                  <li><a href="sub-uzi-vnutrishni.html">УЗД внутрішніх органів</a></li>
+                  <li><a href="sub-uzi-vnutrishni.html">УЗД органів черевної порожнини</a></li>
                   <li><a href="sub-uzi-nyrky.html">УЗД нирок та сечовивідних шляхів</a></li>
                 </ul></li>
                 <li><a href="sub-uzi-vahitni.html">УЗД для вагітних жінок</a></li>
@@ -109,7 +199,7 @@
                   <li><a href="sub-uzi-sertse.html">УЗД серця</a></li>
                   <li><a href="sub-uzi-shchytopodibna.html">УЗД щитоподібної залози</a></li>
                   <li><a href="sub-uzi-suglob.html">УЗД суглобів</a></li>
-                  <li><a href="sub-uzi-vnutrishni.html">УЗД внутрішніх органів</a></li>
+                  <li><a href="sub-uzi-vnutrishni.html">УЗД органів черевної порожнини</a></li>
                   <li><a href="sub-uzi-nyrky.html">УЗД нирок та сечовивідних шляхів</a></li>
                   <li><a href="sub-uzi-elastografiya.html">Еластографія</a></li>
                   <li><a href="sub-uzi-kyshkivnyk.html">УЗД кишківника</a></li>
@@ -158,14 +248,103 @@
   </div>
 </header>
 
-<main class="wip">
-  <div>
-    <div class="wip__icon">🚧</div>
-    <h1 class="wip__title">УЗД кишківника</h1>
-    <p class="wip__sub">Ця сторінка на ремонті.<br>Незабаром тут з'явиться повна інформація.</p>
-    <a href="index.html" class="btn btn--primary">На головну</a>
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="svc-hero">
+  <p class="svc-hero__label">Ультразвукова діагностика</p>
+  <h1 class="svc-hero__title">УЗД кишківника у Львові</h1>
+  <p class="svc-hero__sub">Ультразвукове дослідження стінок тонкої та товстої кишки — допомагає оцінити запалення при хворобі Крона, виразковому коліті чи дивертикуліті. Безболісно та без складної підготовки. Проводимо на вул. Стрийська, 86В у Львові.</p>
+  <a href="#" class="btn btn--primary">Записатися на УЗД</a>
+</section>
+
+<main class="svc-body">
+
+  <h2>Що це і навіщо</h2>
+  <p>УЗД кишківника допомагає оцінити стан стінок тонкої та товстої кишки й побачити зміни, які можуть свідчити про запалення. Лікар звертає увагу на потовщення стінки кишки, стан навколишніх тканин і кровопостачання. Дослідження може бути корисним при підозрі на хворобу Крона, виразковий коліт, дивертикуліт та інші запальні процеси.</p>
+  <div class="svc-cta-inline"><a href="#" class="btn btn--primary">Записатися на УЗД</a></div>
+
+  <h2>Коли варто зробити</h2>
+  <p>Лікар може рекомендувати УЗД кишківника, якщо є:</p>
+  <ul>
+    <li>підозра на хворобу Крона або виразковий коліт;</li>
+    <li>біль у животі незрозумілого походження;</li>
+    <li>підозра на апендицит;</li>
+    <li>підозра на дивертикуліт;</li>
+    <li>тривала діарея;</li>
+    <li>домішки крові у випорожненнях;</li>
+    <li>підвищені показники запалення в аналізах;</li>
+    <li>потреба оцінити активність уже діагностованого запального захворювання кишківника.</li>
+  </ul>
+
+  <h2>Як підготуватися</h2>
+  <p>У більшості випадків спеціальна підготовка не потрібна. Іноді лікар може попросити перед дослідженням випити воду, щоб краще оглянути окремі відділи кишківника. Точні рекомендації залежать від мети обстеження.</p>
+
+  <h2>Як проходить дослідження</h2>
+  <p>УЗД кишківника зазвичай триває близько 15–30 хвилин. Потрібно оголити живіт і лягти на кушетку. Лікар наносить гель і поступово оглядає різні відділи кишківника ультразвуковим датчиком. У деяких ділянках лікар може трохи натискати датчиком на живіт, тому при вираженому запаленні може виникати легкий дискомфорт.</p>
+
+  <h2>Що можна побачити</h2>
+  <p>Під час УЗД кишківника можна виявити:</p>
+  <ul>
+    <li>потовщення стінки тонкої або товстої кишки;</li>
+    <li>ознаки запалення;</li>
+    <li>посилене кровопостачання стінки кишки;</li>
+    <li>зміни судинного рисунка;</li>
+    <li>дивертикули та ознаки їх запалення;</li>
+    <li>зміни навколишньої жирової тканини;</li>
+    <li>збільшені лімфатичні вузли;</li>
+    <li>рідину або запальні утворення поруч із кишківником;</li>
+    <li>непрямі ознаки апендициту;</li>
+    <li>ускладнення запальних захворювань кишківника.</li>
+  </ul>
+  <p class="svc-note">УЗД не завжди може замінити колоноскопію, але часто допомагає швидко оцінити наявність і вираженість запалення.</p>
+
+  <h2>Вік та особливості</h2>
+  <p>Дослідження можна проводити дорослим у будь-якому віці. Воно не має променевого навантаження, тому підходить і для повторного контролю перебігу захворювання. Інформативність УЗД може залежати від розташування кишки, кількості газів і вираженості змін.</p>
+
+  <h2>Ціна</h2>
+  <div class="svc-price-card">
+    <ul>
+      <li><span>УЗД кишківника</span><span>1&nbsp;000 грн</span></li>
+    </ul>
   </div>
+  <div class="svc-cta-inline"><a href="#" class="btn btn--primary">Записатися на УЗД</a></div>
+
 </main>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<section class="svc-faq">
+  <h2>Часті запитання</h2>
+  <details>
+    <summary>Чи може УЗД кишківника замінити колоноскопію?</summary>
+    <p>Не завжди. УЗД добре показує товщину стінки кишки та ознаки запалення, але не дає змоги детально оглянути слизову оболонку або взяти біопсію.</p>
+  </details>
+  <details>
+    <summary>Чи боляче робити УЗД кишківника?</summary>
+    <p>Зазвичай ні. При запаленні окремі ділянки живота можуть бути чутливими під час натискання датчиком.</p>
+  </details>
+  <details>
+    <summary>Чи потрібно приходити натще?</summary>
+    <p>У більшості випадків спеціальна підготовка не потрібна. За потреби лікар окремо повідомить, чи потрібно утриматися від їжі або випити воду.</p>
+  </details>
+</section>
+
+<!-- ═══════════════ АВТОР ═══════════════ -->
+<aside class="svc-author">
+  <a href="team-kravchuk.html" class="svc-author__photo">
+    <img src="Employees/Кравчук Станіслав.avif" alt="Станіслав Кравчук">
+  </a>
+  <div>
+    <p class="svc-author__label">Автор і медичний рецензент</p>
+    <a href="team-kravchuk.html" class="svc-author__name">Станіслав Кравчук</a>
+    <p class="svc-author__role">Лікар-гастроентеролог, лікар ультразвукової діагностики</p>
+  </div>
+</aside>
+
+<nav class="svc-links" aria-label="Пов'язані сторінки">
+  <a href="sub-uzi-vnutrishni.html">УЗД органів черевної порожнини</a>
+  <a href="sub-uzi-elastografiya.html">Еластографія печінки</a>
+  <a href="sub-gastroenterologiya.html">Консультація гастроентеролога</a>
+  <a href="prices.html">Ціни</a>
+</nav>
 
 <footer class="footer">
   <div class="footer__inner">
@@ -173,21 +352,67 @@
       <a href="index.html" class="footer__footer-logo">
         <img src="Вулик-лого.png" alt="ВУЛИК — сімейна амбулаторія" class="logo__img logo__img--light">
       </a>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/vulyk.clinic/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/vulyk.clinic" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@vulyk." target="_blank" rel="noopener" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+      </div>
     </div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Локації</h3>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name"><a href="location-striyska.html" style="color:inherit;text-decoration:none">вул. Стрийська, 86В</a></div>
+          <div class="footer__loc-sub">ЖК Park Tower</div>
+        </div>
+      </div>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><div class="footer__loc-name"><a href="location-tychyny.html" style="color:inherit;text-decoration:none">вул. Тичини, 21</a></div></div>
+      </div>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name"><a href="location-lincolna.html" style="color:inherit;text-decoration:none">вул. Лінкольна, 4</a></div>
+          <div class="footer__loc-sub">відкриття восени 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__col footer__col--schedule">
+      <h3 class="footer__col-title">Графік роботи</h3>
+      <div class="footer__loc-hours">Пн–Пт: 9:00–19:00<br>Сб–Нд: 10:00–18:00</div>
+    </div>
+
     <div class="footer__col footer__col--contacts">
       <h3 class="footer__col-title">Контакти</h3>
       <a href="tel:+380962817338" class="footer__phone">+38 (096) 281-73-38</a>
       <a href="mailto:info@vulyk.clinic" class="footer__email-link">info@vulyk.clinic</a>
     </div>
-    <div class="footer__col footer__col--schedule">
-      <h3 class="footer__col-title">Графік роботи</h3>
-      <div class="footer__loc-hours">Пн–Пт: 9:00–19:00<br>Сб–Нд: 10:00–18:00</div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Відділ найму</h3>
+      <a href="mailto:hr@vulyk.clinic" class="footer__email-link">hr@vulyk.clinic</a>
     </div>
+    <div class="footer__col">
+      <h3 class="footer__col-title">Для партнерів</h3>
+      <a href="mailto:partner@vulyk.clinic" class="footer__email-link">partner@vulyk.clinic</a>
+    </div>
+
   </div>
   <div class="footer__bottom">
     <div class="footer__bottom__inner">
       <span>© 2026 ТОВ «Вулик-Львів». Всі права захищені.</span>
       <span><a href="privacy.html">Політика конфіденційності</a></span>
+      <span>Розроблено <a href="https://www.linkedin.com/in/zakhar-pikulytskyi-32629484/" target="_blank" rel="noopener">З. Пікулицький</a></span>
     </div>
   </div>
 </footer>
