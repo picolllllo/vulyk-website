@@ -6,7 +6,7 @@
   --primary:      #E8A820;
   --text:         #1A1A1A;
   --muted:        #7A736A;
-  --footer-bg:    #505050;
+  --footer-bg:    #1A1A1A;
   --warm-bg:      #fffef9;
   --hero-bg:      #fffef9;
   --font:         'Nunito Sans', system-ui, -apple-system, sans-serif;
@@ -15,7 +15,7 @@
   --header-h:     64px;
 }
 
-html { font-family: var(--font); color: var(--text); -webkit-font-smoothing: antialiased; }
+html { font-family: var(--font); color: var(--text); background: var(--warm-bg); -webkit-font-smoothing: antialiased; }
 body { min-height: 100vh; display: flex; flex-direction: column; padding-top: var(--header-h); }
 body:has(.hero-vid) { padding-top: 0; }
 
@@ -244,16 +244,16 @@ body:has(.hero-vid) { padding-top: 0; }
 /* Buttons */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
-  padding: 11px 22px; border-radius: 100px;
+  padding: 11px 22px; border-radius: 3px;
   font-family: var(--font); font-size: 15px; font-weight: 600;
   text-decoration: none; cursor: pointer; border: none;
   transition: opacity .15s, box-shadow .15s;
   white-space: nowrap; line-height: 1.2;
 }
 .btn:hover { opacity: .9; }
-.btn--primary { background: var(--accent); color: #fff; font-weight: 600; min-width: 160px; border-radius: 10px; }
+.btn--primary { background: var(--accent); color: #fff; font-weight: 600; min-width: 160px; border-radius: 3px; }
 .btn--dark    { background: #1C1C1C; color: #fff; }
-.btn--yellow  { background: var(--accent); color: #1A1A1A; font-weight: 600; }
+.btn--yellow  { background: var(--accent); color: #fff; font-weight: 600; }
 
 /* ── HERO / CAROUSEL ────────────────────────────────────── */
 .hero {
@@ -341,7 +341,7 @@ body:has(.hero-vid) { padding-top: 0; }
 
 /* ── BLOG PREVIEW — MagicUI style (homepage) ───────────── */
 .blog-preview {
-  background: #fff;
+  background: var(--warm-bg);
   padding: 72px 0 88px;
 }
 
@@ -382,7 +382,7 @@ body:has(.hero-vid) { padding-top: 0; }
   background: transparent;
   color: var(--text);
   border: 1.5px solid rgba(0,0,0,.15);
-  border-radius: 20px;
+  border-radius: 3px;
   padding: 5px 14px;
   cursor: pointer;
   display: flex;
@@ -422,7 +422,7 @@ body:has(.hero-vid) { padding-top: 0; }
 
 /* ── Doctor articles section ── */
 .doc-articles {
-  background: #fff;
+  background: var(--warm-bg);
   padding: 72px 0 88px;
   border-top: 1px solid rgba(0,0,0,.07);
 }
@@ -445,6 +445,27 @@ body:has(.hero-vid) { padding-top: 0; }
   color: var(--text);
   margin-bottom: 36px;
 }
+
+/* ── «Читайте також» у кінці статей ── */
+.related {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 44px var(--pad) 88px;
+}
+.related__line {
+  height: 1px;
+  background: #1A1A1A;           /* сірий, як футер */
+  margin-bottom: 22px;
+}
+.related__label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+.related__more { text-align: center; margin-top: 34px; }
 
 /* ── Card ── */
 .bp-card {
@@ -599,7 +620,7 @@ body:has(.hero-vid) { padding-top: 0; }
 }
 
 /* ── FOOTER ─────────────────────────────────────────────── */
-.footer { background: var(--footer-bg); color: rgba(255,255,255,.85); }
+.footer { background: var(--footer-bg); color: rgba(255,255,255,.85); border-top: 1px solid rgba(255,255,255,.14); }
 
 .footer__inner {
   max-width: var(--max-w); margin: 0 auto; padding: 56px var(--pad) 48px;
@@ -943,7 +964,7 @@ body:has(.hero-vid) { padding-top: 0; }
 .blog-main {
   flex: 1; max-width: 1200px; margin: 0 auto;
   width: 100%; padding: 56px var(--pad) 80px;
-  background: #fff;
+  background: var(--warm-bg);
 }
 .blog-main__heading { font-size: 34px; font-weight: 800; margin-bottom: 12px; }
 .blog-main__sub { font-size: 16px; color: var(--muted); margin-bottom: 28px; }
@@ -957,7 +978,7 @@ body:has(.hero-vid) { padding-top: 0; }
 
 .blog-filter__btn {
   padding: 7px 18px;
-  border-radius: 100px;
+  border-radius: 3px;
   border: 1.5px solid rgba(0,0,0,.12);
   background: #fff;
   font-family: var(--font);
@@ -1397,47 +1418,74 @@ body:has(.hero-vid) { padding-top: 0; }
   background: var(--accent);
   flex-shrink: 0;
 }
+/* ── Apply block: темна секція на всю ширину, ліворуч CTA / праворуч форма ──
+   Блок винесено з <main class="vac-detail"> назовні (сусід main перед footer),
+   тому width:auto сам займає всю ширину сторінки — без 100vw і компенсації
+   скролбара. Внутрішній контент центрується до ~1160px великими бічними полями. */
 .vac-apply {
-  margin-top: 52px;
-  background: #f0ede6;
-  border: 1px solid rgba(0,0,0,.09);
-  border-radius: 16px;
-  padding: 40px 44px;
-  color: var(--text);
-  text-align: center;
+  background: #1A1A1A;
+  border-radius: 0;
+  padding: 56px max(96px, calc((100% - 1160px) / 2));
+  color: #fff;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 0.735fr 1.265fr;
+  gap: 0;
+  align-items: stretch;
 }
-.vac-apply__title {
-  font-size: 22px;
-  font-weight: 800;
+/* ліва колонка: зверху горизонтальна жовта лінія, справа — вертикальний сірий роздільник */
+.vac-apply__cta {
+  min-width: 0;
+  padding-top: 4px;
+  padding-right: 56px;
+  border-right: 1px solid rgba(255,255,255,.14);
+}
+.vac-apply__cta::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--accent);
   margin-bottom: 8px;
-  color: var(--text);
+}
+.vac-apply__eyebrow {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+.vac-apply__form-wrap { min-width: 0; padding-left: 56px; }
+.vac-apply__title {
+  font-size: clamp(30px, 3.4vw, 42px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: #fff;
 }
 .vac-apply__sub {
   font-size: 15px;
-  color: var(--muted);
-  margin-bottom: 26px;
-  line-height: 1.6;
+  color: rgba(255,255,255,.72);
+  margin-bottom: 22px;
+  line-height: 1.65;
 }
-.vac-apply__btn {
+.vac-apply__hint {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: var(--accent);
-  color: #1a1a1a;
-  font-family: var(--font);
-  font-weight: 700;
-  font-size: 15px;
-  padding: 13px 30px;
-  border-radius: 10px;
+  gap: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
   text-decoration: none;
-  transition: background .2s, transform .15s;
+  transition: color .15s;
 }
-.vac-apply__btn:hover { background: var(--accent-deep); color: #fff; transform: translateY(-1px); }
+.vac-apply__hint:hover { color: #fff; }
 
-/* ── Application form ── */
+/* ── Application form (темна тема на var(--primary)) ── */
 .apply-form {
-  max-width: 620px;
-  margin: 32px auto 0;
+  max-width: none;
+  margin: 0;
   text-align: left;
 }
 .apply-form__row {
@@ -1445,35 +1493,37 @@ body:has(.hero-vid) { padding-top: 0; }
   grid-template-columns: 1fr 1fr;
   gap: 14px;
 }
-.apply-form__field { margin-bottom: 14px; }
+.apply-form__field { margin-bottom: 16px; }
 .apply-form__label {
   display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--muted);
-  margin-bottom: 6px;
-  letter-spacing: .02em;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,.5);
+  margin-bottom: 7px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
 }
 .apply-form__input,
 .apply-form__textarea {
   width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid rgba(0,0,0,.14);
-  border-radius: 10px;
+  padding: 12px 15px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 7px;
   font-family: var(--font);
   font-size: 14px;
-  color: var(--text);
-  background: #fff;
+  color: #fff;
+  background: rgba(255,255,255,.06);
   outline: none;
-  transition: border-color .15s, box-shadow .15s;
+  transition: border-color .15s, box-shadow .15s, background .15s;
   box-sizing: border-box;
 }
 .apply-form__input::placeholder,
-.apply-form__textarea::placeholder { color: rgba(26,26,26,.3); }
+.apply-form__textarea::placeholder { color: rgba(255,255,255,.35); }
 .apply-form__input:focus,
 .apply-form__textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(232,168,32,.15);
+  background: rgba(255,255,255,.09);
+  box-shadow: 0 0 0 3px rgba(232,168,32,.18);
 }
 .apply-form__textarea { resize: vertical; min-height: 96px; }
 .apply-form__file-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -1481,23 +1531,23 @@ body:has(.hero-vid) { padding-top: 0; }
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 11px 16px;
-  border: 1.5px dashed rgba(0,0,0,.2);
-  border-radius: 10px;
-  color: var(--muted);
+  padding: 12px 15px;
+  border: 1.5px dashed rgba(255,255,255,.28);
+  border-radius: 7px;
+  color: rgba(255,255,255,.7);
   cursor: pointer;
   transition: border-color .15s, background .15s, color .15s;
   font-size: 14px;
-  background: #fff;
+  background: rgba(255,255,255,.06);
 }
 .apply-form__file-label:hover {
   border-color: var(--accent);
-  color: var(--text);
+  color: #fff;
 }
 .apply-form__file-name {
   margin-left: auto;
   font-size: 12px;
-  color: rgba(26,26,26,.35);
+  color: rgba(255,255,255,.4);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1506,24 +1556,36 @@ body:has(.hero-vid) { padding-top: 0; }
 .apply-form__submit {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  width: 160px;               /* така сама ширина, як кнопка «Записатися» в меню */
   margin-top: 8px;
-  padding: 13px 30px;
+  padding: 11px 20px;
   background: var(--accent);
-  color: #1a1a1a;
+  color: #fff;                /* текст на жовтому — лише білий */
   font-family: var(--font);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
+  white-space: nowrap;
   border: none;
-  border-radius: 100px;
+  border-radius: 3px;
   cursor: pointer;
   transition: background .15s, transform .15s;
 }
+.apply-form__submit svg { display: none; }
 .apply-form__submit:hover { background: var(--accent-deep); color: #fff; transform: translateY(-1px); }
 
 @media (max-width: 768px) {
   .vac-detail { padding: 28px var(--pad) 64px; }
-  .vac-apply { padding: 28px 24px; }
+  .vac-apply { grid-template-columns: 1fr; gap: 0; padding: 44px 26px; }
+  .vac-apply__cta {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,.14);
+    padding-right: 0;
+    padding-bottom: 26px;
+    margin-bottom: 26px;
+  }
+  .vac-apply__form-wrap { padding-left: 0; }
   .apply-form__row { grid-template-columns: 1fr; }
   .vacancy-row { padding: 18px 20px; gap: 16px; }
   .vacancy-row__num { min-width: 40px; font-size: 18px; }
@@ -2108,7 +2170,7 @@ body:has(.hero-vid) { padding-top: 0; }
   align-items: center;
   gap: 14px;
   padding: 13px 18px;
-  border-radius: 14px;
+  border-radius: 3px;
   text-decoration: none;
   font-size: 15px;
   font-weight: 600;
@@ -2285,4 +2347,75 @@ body:has(.hero-vid) { padding-top: 0; }
 @media (max-width: 640px) {
   .cookie-consent__box { flex-direction: column; align-items: stretch; text-align: center; }
   .cookie-consent__actions { justify-content: center; }
+}
+
+
+/* ── Booking CTA (темний блок на всю ширину: лікарі, «Про нас», «Контакти») ── */
+.doc-cta {
+  background: #1A1A1A;
+  color: #fff;
+  padding: 76px max(96px, calc((100% - 1160px) / 2));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: stretch;
+  text-align: left;
+}
+.doc-cta__text { min-width: 0; padding-right: 56px; display: flex; flex-direction: column; justify-content: center; }
+.doc-cta__text:only-child { padding-right: 0; grid-column: 1 / -1; }
+.doc-cta__text::before {
+  content: ''; display: block; height: 1px;
+  background: var(--accent); margin-bottom: 8px; max-width: 260px;
+}
+.doc-cta__eyebrow {
+  display: block; font-size: 9px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+}
+.doc-cta__title {
+  font-family: var(--font); font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 800; line-height: 1.15; color: #fff; margin-bottom: 12px;
+}
+.doc-cta__sub {
+  font-size: 15px; color: rgba(255,255,255,.72);
+  line-height: 1.6; margin-bottom: 0;
+}
+.doc-cta__action {
+  display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 14px;
+  border-left: 1px solid rgba(255,255,255,.14);
+}
+.doc-cta__phone {
+  font-size: 15px; font-weight: 700; color: #fff; text-decoration: none;
+  transition: color .15s;
+}
+.doc-cta__phone:hover { color: var(--accent); }
+.doc-cta .btn { position: static; }
+@media (max-width: 768px) {
+  .doc-cta { grid-template-columns: 1fr; padding: 40px 26px; }
+  .doc-cta__text { padding-right: 0; }
+  .doc-cta__action {
+    padding-left: 0; border-left: none;
+    border-top: 1px solid rgba(255,255,255,.14);
+    padding-top: 24px; margin-top: 24px;
+  }
+}
+
+/* ── Жовтий варіант CTA («Про нас», «Контакти») ── */
+.doc-cta--amber { background: var(--accent); }
+.doc-cta--amber .doc-cta__text::before { background: #1A1A1A; }   /* лінія сіра */
+.doc-cta--amber .doc-cta__eyebrow { color: #1A1A1A; }             /* помітка сіра */
+.doc-cta--amber .doc-cta__title { color: #1A1A1A; }
+.doc-cta--amber .doc-cta__sub { color: rgba(0,0,0,.68); }
+.doc-cta--amber .doc-cta__action {
+  flex-direction: row; flex-wrap: wrap; gap: 14px;
+  border-left-color: rgba(0,0,0,.18);
+}
+/* основна кнопка: біла з жовтим текстом */
+.doc-cta--amber .btn--yellow { background: #fff; color: var(--accent-deep); }
+.doc-cta--amber .btn--yellow:hover { background: #fff; color: var(--accent-deep); opacity: .88; }
+/* телефон: кнопка з білою рамкою поруч */
+.doc-cta__phone-btn { background: transparent; color: #fff; border: 1.5px solid #fff; }
+.doc-cta__phone-btn:hover { background: #fff; color: var(--accent-deep); opacity: 1; }
+@media (max-width: 768px) {
+  .doc-cta--amber .doc-cta__action { border-top-color: rgba(0,0,0,.18); }
 }

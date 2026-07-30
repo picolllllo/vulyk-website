@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
   <style>
     .breadcrumb { background:var(--warm-bg); border-bottom:1px solid rgba(0,0,0,.06); padding:14px var(--pad); }
     .breadcrumb__inner { max-width:var(--max-w); margin:0 auto; display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); }
@@ -45,43 +45,6 @@
     .doc-section__inner { max-width:var(--max-w); margin:0 auto; }
     .doc-section__title { font-size:13px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.08em; margin-bottom:20px; }
     .doc-about__text p { font-size:17px; line-height:1.8; color:#333; margin-bottom:20px; }
-    /* ── CTA BLOCK ──────────────────────────────── */
-    .doc-cta {
-      position: relative;
-      overflow: hidden;
-      background: #1a2535;
-      padding: 56px var(--pad);
-      text-align: center;
-    }
-    .doc-cta::before {
-      content: '';
-      position: absolute;
-      inset: -20px;
-      background-image: var(--cta-img);
-      background-size: cover;
-      background-position: center top;
-      filter: blur(10px) brightness(.35);
-      z-index: 0;
-    }
-    .doc-cta__title {
-      position: relative;
-      z-index: 1;
-      font-size: clamp(22px, 3vw, 34px);
-      font-weight: 900;
-      color: #fff;
-      margin-bottom: 12px;
-    }
-    .doc-cta__sub {
-      position: relative;
-      z-index: 1;
-      font-size: 16px;
-      color: rgba(255,255,255,.65);
-      margin-bottom: 32px;
-    }
-    .doc-cta .btn {
-      position: relative;
-      z-index: 1;
-    }
     .doc-others { padding:64px var(--pad); background:var(--warm-bg); border-top:1px solid rgba(0,0,0,.06); }
     .doc-others__inner { max-width:var(--max-w); margin:0 auto; }
     .doc-others__head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:32px; }
@@ -330,10 +293,16 @@
 })();
 </script>
 
-<section class="doc-cta" style="--cta-img: url('Employees/Ярина Пікулицька.avif')">
-  <h2 class="doc-cta__title">Хочете записатись до Михайло?</h2>
-  <p class="doc-cta__sub">Оберіть зручний час — ми підберемо найближчий прийом</p>
-  
+<section class="doc-cta">
+  <div class="doc-cta__text">
+    <span class="doc-cta__eyebrow">Стати пацієнтом «Вулика»</span>
+    <h2 class="doc-cta__title">Хочете записатись до Михайло?</h2>
+    <p class="doc-cta__sub">Оберіть зручний час — ми підберемо найближчий прийом</p>
+  </div>
+  <div class="doc-cta__action">
+    <a href="#" class="btn btn--yellow">Записатися на прийом</a>
+    <a href="tel:+380962817338" class="btn doc-cta__phone-btn">+38 (096) 281-73-38</a>
+  </div>
 </section>
 
 <section class="doc-others">

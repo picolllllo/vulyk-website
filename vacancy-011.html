@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-L73SKQ7F1J"></script>
   <script>
@@ -253,12 +253,22 @@
       <li>Первинне інтерв'ю з медичною директоркою, де ви дізнаєтесь більше про роботу і зможете задати всі питання, що вас цікавлять</li>
       <li>Фінальне інтерв'ю з керівником Вулика, детальне обговорення вашої ролі в компанії та подальших кроків</li>
     </ul>
-  </div>
+</div>
 
-  <!-- Apply Form -->
-  <div class="vac-apply">
-    <h2 class="vac-apply__title">Готові приєднатися до команди?</h2>
-    <p class="vac-apply__sub">Заповніть форму — ми зв'яжемося з вами якнайшвидше.</p>
+</main>
+
+<!-- Apply Form -->
+<div class="vac-apply">
+    <div class="vac-apply__cta">
+      <span class="vac-apply__eyebrow">стати частиною Вулика</span>
+      <h2 class="vac-apply__title">Готові приєднатися до команди?</h2>
+      <p class="vac-apply__sub">Заповніть форму — ми зв'яжемося з вами якнайшвидше, або надішліть резюме на пошту.</p>
+      <a href="mailto:hr@vulyk.clinic" class="vac-apply__hint">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        hr@vulyk.clinic
+      </a>
+    </div>
+    <div class="vac-apply__form-wrap">
 
     <form class="apply-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="vacancy" value="Лікар УЗД-діагностики">
@@ -299,9 +309,8 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
     </form>
+    </div>
   </div>
-
-</main>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
 <footer class="footer">
