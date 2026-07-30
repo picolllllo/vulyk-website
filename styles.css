@@ -343,6 +343,7 @@ body:has(.hero-vid) { padding-top: 0; }
 .blog-preview {
   background: var(--warm-bg);
   padding: 72px 0 88px;
+  border-top: 1px solid rgba(0,0,0,.06);
 }
 
 .blog-preview__inner {
@@ -351,6 +352,11 @@ body:has(.hero-vid) { padding-top: 0; }
   padding: 0 var(--pad);
 }
 
+.blog-preview__lbl {
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+  text-align: center;
+}
 .blog-preview__title {
   font-size: 34px;
   font-weight: 800;
@@ -872,9 +878,13 @@ body:has(.hero-vid) { padding-top: 0; }
   text-align: center;
   margin-bottom: 48px;
 }
+.doctors-section__lbl {
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+}
 .doctors-section__title {
   font-size: clamp(26px, 3vw, 40px);
-  font-weight: 400;
+  font-weight: 700;
   color: var(--text);
   margin-bottom: 10px;
 }
