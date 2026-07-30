@@ -2411,8 +2411,8 @@ body:has(.hero-vid) { padding-top: 0; }
   border-left-color: rgba(0,0,0,.18);
 }
 /* основна кнопка: біла з жовтим текстом */
-.doc-cta--amber .btn--yellow { background: #fff; color: var(--accent-deep); }
-.doc-cta--amber .btn--yellow:hover { background: #fff; color: var(--accent-deep); opacity: .88; }
+.doc-cta--amber .btn--yellow { background: #fff; color: #1A1A1A; }
+.doc-cta--amber .btn--yellow:hover { background: #fff; color: #1A1A1A; opacity: .88; }
 /* телефон: кнопка з білою рамкою поруч */
 .doc-cta__phone-btn { background: transparent; color: #fff; border: 1.5px solid #fff; }
 .doc-cta__phone-btn:hover { background: #fff; color: var(--accent-deep); opacity: 1; }
