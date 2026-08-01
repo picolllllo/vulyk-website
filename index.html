@@ -203,18 +203,30 @@
   .gv-banner {
     position: absolute; top: calc(var(--header-h) + 14px); left: 50%; transform: translateX(-50%);
     z-index: 3; width: min(1080px, calc(100% - 28px));
-    display: flex; align-items: center; justify-content: center; gap: 8px 18px; flex-wrap: wrap;
-    background: var(--accent); color: #fff; text-decoration: none;
-    padding: 13px 24px; border-radius: 12px; box-shadow: 0 8px 28px rgba(0,0,0,.22);
-    font-size: 15px; line-height: 1.45; text-align: center;
+    background: var(--accent); border-radius: 12px; box-shadow: 0 8px 28px rgba(0,0,0,.22);
     transition: transform .15s ease, box-shadow .15s ease;
   }
   .gv-banner:hover { transform: translateX(-50%) translateY(-1px); box-shadow: 0 10px 32px rgba(0,0,0,.28); }
+  .gv-banner[hidden] { display: none; }
+  .gv-banner__link {
+    display: flex; align-items: center; justify-content: center; gap: 8px 18px; flex-wrap: wrap;
+    color: #fff; text-decoration: none; padding: 13px 44px; border-radius: 12px;
+    font-size: 15px; line-height: 1.45; text-align: center;
+  }
   .gv-banner__text { color: #fff; }
   .gv-banner__text strong { font-weight: 800; }
   .gv-banner__cta { font-weight: 800; white-space: nowrap; color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+  .gv-banner__close {
+    position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
+    width: 26px; height: 26px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255,255,255,.18); color: #fff; font-size: 14px; line-height: 1;
+    display: flex; align-items: center; justify-content: center; padding: 0;
+    transition: background .15s ease;
+  }
+  .gv-banner__close:hover { background: rgba(255,255,255,.34); }
   @media (max-width: 768px) {
-    .gv-banner { top: calc(var(--header-h) + 10px); padding: 11px 16px; font-size: 13.5px; gap: 6px 12px; border-radius: 10px; }
+    .gv-banner { top: calc(var(--header-h) + 10px); border-radius: 10px; }
+    .gv-banner__link { padding: 11px 40px; font-size: 13.5px; gap: 6px 12px; }
   }
 </style>
 <section class="hero-vid">
@@ -222,10 +234,20 @@
     <source src="Video/VYLUK_STRUISKA_web.mp4" type="video/mp4">
   </video>
   <div class="hero-vid__overlay"></div>
-  <a href="gv.html" class="gv-banner" aria-label="Акція: знижка 15% для гостей Дня грудного вигодовування">
-    <span class="gv-banner__text">🤱 Гості Дня грудного вигодовування! Знижка <strong>15%</strong> на консультації педіатра, з грудного вигодовування та допологову.</span>
-    <span class="gv-banner__cta">Дізнатися більше →</span>
-  </a>
+  <div class="gv-banner" id="gvBanner">
+    <a href="gv.html" class="gv-banner__link" aria-label="Акція: знижка 15% для гостей Дня грудного вигодовування">
+      <span class="gv-banner__text">🤱 Гості Дня грудного вигодовування! Знижка <strong>15%</strong> на консультації педіатра, з грудного вигодовування та допологову.</span>
+      <span class="gv-banner__cta">Дізнатися більше →</span>
+    </a>
+    <button type="button" class="gv-banner__close" id="gvBannerClose" aria-label="Закрити банер">✕</button>
+  </div>
+  <script>
+    (function(){
+      var b = document.getElementById('gvBanner');
+      var c = document.getElementById('gvBannerClose');
+      if (c) c.addEventListener('click', function(){ b.hidden = true; });
+    })();
+  </script>
   <div class="hero-vid__content">
     <h1 class="hero-vid__title">Медицина,<br>де <em>людина</em> — найвища цінність</h1>
     <p class="hero-vid__sub">Любов, повага та доказова медицина, щоб Ви були здорові.</p>
