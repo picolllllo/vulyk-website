@@ -2,8 +2,13 @@
 
 :root {
   --accent:       #E8A820;
-  --accent-deep:  #C8900A;
+  --accent-deep:  #8C6006;
   --primary:      #E8A820;
+  /* ── WCAG AA gold tokens ── */
+  --gold:         #E8A820;   /* декоративні заливки: кнопки, зірки, смужки, іконки */
+  --gold-text:    #8C6006;   /* золото для ТЕКСТУ на світлому (AA) */
+  --gold-text-lg: #A8730A;   /* яскравіше золото для великих заголовків >=24px */
+  --on-gold:      #241F19;   /* текст/іконка поверх золотої кнопки */
   --text:         #1A1A1A;
   --muted:        #7A736A;
   --footer-bg:    #1A1A1A;
@@ -251,9 +256,9 @@ body:has(.hero-vid) { padding-top: 0; }
   white-space: nowrap; line-height: 1.2;
 }
 .btn:hover { opacity: .9; }
-.btn--primary { background: var(--accent); color: #fff; font-weight: 600; min-width: 160px; border-radius: 3px; }
+.btn--primary { background: var(--accent); color: var(--on-gold); font-weight: 600; min-width: 160px; border-radius: 3px; }
 .btn--dark    { background: #1C1C1C; color: #fff; }
-.btn--yellow  { background: var(--accent); color: #fff; font-weight: 600; }
+.btn--yellow  { background: var(--accent); color: var(--on-gold); font-weight: 600; }
 
 /* ── HERO / CAROUSEL ────────────────────────────────────── */
 .hero {
@@ -354,7 +359,7 @@ body:has(.hero-vid) { padding-top: 0; }
 
 .blog-preview__lbl {
   font-size: 11px; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+  text-transform: uppercase; color: var(--gold-text); margin-bottom: 14px;
   text-align: center;
 }
 .blog-preview__title {
@@ -442,7 +447,7 @@ body:has(.hero-vid) { padding-top: 0; }
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--gold-text);
   margin-bottom: 10px;
 }
 .doc-articles__title {
@@ -572,7 +577,7 @@ body:has(.hero-vid) { padding-top: 0; }
   text-decoration: none;
   transition: color .2s;
 }
-.bp-card__link:hover { color: var(--accent); }
+.bp-card__link:hover { color: var(--gold-text); }
 
 /* footer link */
 .blog-preview__foot {
@@ -880,7 +885,7 @@ body:has(.hero-vid) { padding-top: 0; }
 }
 .doctors-section__lbl {
   font-size: 11px; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+  text-transform: uppercase; color: var(--gold-text); margin-bottom: 14px;
 }
 .doctors-section__title {
   font-size: clamp(26px, 3vw, 40px);
@@ -1059,7 +1064,7 @@ body:has(.hero-vid) { padding-top: 0; }
 .blog-card__desc { font-size: 14px; color: var(--muted); line-height: 1.65; flex: 1; margin-bottom: 20px; }
 .blog-card__foot { display: flex; align-items: center; justify-content: space-between; }
 .blog-card__date { font-size: 13px; color: var(--muted); }
-.blog-card__link { font-size: 14px; font-weight: 600; color: var(--primary); text-decoration: none; }
+.blog-card__link { font-size: 14px; font-weight: 600; color: var(--gold-text); text-decoration: none; }
 .blog-card__link:hover { text-decoration: underline; }
 
 /* ── NEWS ARTICLE PAGE ───────────────────────────────────── */
@@ -1716,7 +1721,7 @@ body:has(.hero-vid) { padding-top: 0; }
   font-weight: 600;
   letter-spacing: .10em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--gold-text);
   margin: 0 0 6px;
 }
 
@@ -1786,7 +1791,7 @@ body:has(.hero-vid) { padding-top: 0; }
 .loc-item__link {
   font-size: 12px;
   font-weight: 500;
-  color: var(--accent);
+  color: var(--gold-text);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -2161,7 +2166,7 @@ body:has(.hero-vid) { padding-top: 0; }
 .book-modal__title {
   font-size: 22px;
   font-weight: 800;
-  color: var(--primary);
+  color: var(--gold-text);
   margin-bottom: 6px;
 }
 .book-modal__sub {
@@ -2257,7 +2262,7 @@ body:has(.hero-vid) { padding-top: 0; }
   display: block;
   font-size: 15px;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--gold-text);
   text-decoration: none;
   margin-bottom: 6px;
   line-height: 1.3;

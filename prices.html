@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=7">
   <style>
     .breadcrumb {
       background: var(--warm-bg);
@@ -555,10 +555,10 @@
     <div class="price-group">
       <div class="price-group__title">Безкоштовно для задекларованих пацієнтів</div>
       <div class="price-list">
-        <div class="price-row"><div class="price-row__name">Загальний аналіз крові</div><div class="price-row__price" style="color:var(--primary)">Безкоштовно</div></div>
-        <div class="price-row"><div class="price-row__name">Загальний аналіз сечі</div><div class="price-row__price" style="color:var(--primary)">Безкоштовно</div></div>
-        <div class="price-row"><div class="price-row__name">Аналіз на рівень глюкози</div><div class="price-row__price" style="color:var(--primary)">Безкоштовно</div></div>
-        <div class="price-row"><div class="price-row__name">Аналіз на рівень холестерину</div><div class="price-row__price" style="color:var(--primary)">Безкоштовно</div></div>
+        <div class="price-row"><div class="price-row__name">Загальний аналіз крові</div><div class="price-row__price" style="color:var(--gold-text)">Безкоштовно</div></div>
+        <div class="price-row"><div class="price-row__name">Загальний аналіз сечі</div><div class="price-row__price" style="color:var(--gold-text)">Безкоштовно</div></div>
+        <div class="price-row"><div class="price-row__name">Аналіз на рівень глюкози</div><div class="price-row__price" style="color:var(--gold-text)">Безкоштовно</div></div>
+        <div class="price-row"><div class="price-row__name">Аналіз на рівень холестерину</div><div class="price-row__price" style="color:var(--gold-text)">Безкоштовно</div></div>
       </div>
     </div>
 
@@ -840,7 +840,7 @@
       freeRows.push(r);
     }
     var freeHTML = freeRows.map(function (r) {
-      var pStyle = /Безкоштовно/i.test(r[1]) ? ' style="color:var(--primary)"' : '';
+      var pStyle = /Безкоштовно/i.test(r[1]) ? ' style="color:var(--gold-text)"' : '';
       return '<div class="price-row"><div class="price-row__name">' + r[0] + '</div>'
            + '<div class="price-row__price"' + pStyle + '>' + (r[1] || '') + '</div></div>';
     }).join('');
