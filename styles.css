@@ -2393,6 +2393,35 @@ body:has(.hero-vid) { padding-top: 0; }
   .cookie-consent__actions { justify-content: center; }
 }
 
+/* ═══════════════ MOBILE STICKY BOOKING CTA ═══════════════ */
+/* Injected by booking-modal.js on every page; visible only on phones. */
+.sticky-cta { display: none; }
+@media (max-width: 768px) {
+  .sticky-cta {
+    display: block;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 90;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: rgba(255,254,249,.94);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(0,0,0,.08);
+    box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+  }
+  .sticky-cta__btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; box-sizing: border-box;
+    padding: 15px 20px; border-radius: 12px;
+    background: var(--accent); color: var(--on-gold);
+    font-weight: 800; font-size: 16px; text-decoration: none;
+    box-shadow: 0 4px 14px rgba(232,168,32,.4);
+  }
+  .sticky-cta__btn:active { transform: translateY(1px); }
+  /* keep last page content clear of the fixed bar */
+  body { padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px)); }
+}
+
 
 /* ── Booking CTA (темний блок на всю ширину: лікарі, «Про нас», «Контакти») ── */
 .doc-cta {

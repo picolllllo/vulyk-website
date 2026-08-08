@@ -55,6 +55,13 @@
 
   document.body.appendChild(modal);
 
+  /* ── Mobile sticky booking CTA (shown via CSS only on small screens) ── */
+  var stickyCta = document.createElement('div');
+  stickyCta.className = 'sticky-cta';
+  stickyCta.innerHTML =
+    '<a href="#" class="sticky-cta__btn">Записатися на прийом</a>';
+  document.body.appendChild(stickyCta);
+
   /* ── Open / Close ── */
   function openModal() {
     modal.classList.add('is-open');

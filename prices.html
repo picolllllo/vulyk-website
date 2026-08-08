@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=8">
+  <link rel="stylesheet" href="styles.css?v=9">
   <style>
     .breadcrumb {
       background: var(--warm-bg);
@@ -53,7 +53,12 @@
     .prices-tabs {
       background: var(--warm-bg);
       border-bottom: 1px solid rgba(0,0,0,.07);
-      position: sticky; top: 0; z-index: 10;
+      /* stick just below the fixed site header instead of behind it */
+      position: sticky; top: var(--header-h); z-index: 10;
+    }
+    /* jump targets clear the fixed header + sticky tabs bar */
+    #declarations, #consultations, #uzd, #vaccination, #lab, #extra {
+      scroll-margin-top: calc(var(--header-h) + 58px);
     }
     .prices-tabs__inner {
       max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad);
@@ -66,6 +71,7 @@
       border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
     }
     .prices-tab:hover { color: var(--text); }
+    .prices-tab--active { color: var(--text); border-bottom-color: var(--accent); }
 
     .prices-body {
       max-width: var(--max-w); margin: 0 auto;
@@ -313,6 +319,7 @@
           </ul>
         </li>
         <li><a href="contacts.html">Контакти</a></li>
+        
       </ul>
     </nav>
 
@@ -690,7 +697,7 @@
 </footer>
 
 <script src="nav.js?v=3"></script>
-<script src="booking-modal.js?v=1"></script>
+<script src="booking-modal.js?v=2"></script>
 
 <!-- ═══ Google Sheets → Ціни ═══
   Вкладки:
@@ -872,6 +879,67 @@
   });
 })();
 </script>
+  <!-- ── Scroll-spy: highlight the tab of the section currently in view ── -->
+  <script>
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.prices-tab'));
+    if (!tabs.length) return;
+
+    /* map section id → tab element */
+    var map = {};
+    var sections = [];
+    tabs.forEach(function (t) {
+      var id = (t.getAttribute('href') || '').replace('#', '');
+      var sec = id && document.getElementById(id);
+      if (sec) { map[id] = t; sections.push(sec); }
+    });
+    if (!sections.length) return;
+
+    var barEl = document.querySelector('.prices-tabs');
+
+    function setActive(id) {
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('href') === '#' + id;
+        t.classList.toggle('prices-tab--active', on);
+        if (on) {
+          /* keep the active tab visible in the horizontally-scrolling bar */
+          var inner = t.parentElement;
+          var left = t.offsetLeft - inner.offsetWidth / 2 + t.offsetWidth / 2;
+          inner.scrollTo({ left: left, behavior: 'smooth' });
+        }
+      });
+    }
+
+    /* A section is "current" once its top passes just under the sticky bar. */
+    function offset() {
+      var headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64;
+      return headerH + barEl.offsetHeight + 8;
+    }
+
+    function onScroll() {
+      var line = offset();
+      var currentId = sections[0].id;
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].getBoundingClientRect().top <= line) currentId = sections[i].id;
+        else break;
+      }
+      /* near page bottom → force last section active */
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+        currentId = sections[sections.length - 1].id;
+      }
+      setActive(currentId);
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { onScroll(); ticking = false; });
+    }, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+  })();
+  </script>
   <script src="cookie-consent.js?v=1"></script>
   <script src="ga-tracking.js?v=1"></script>
 </body>
