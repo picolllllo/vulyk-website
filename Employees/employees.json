@@ -157,9 +157,21 @@
   },
   {
     "first": "Ірина",
+    "last": "Ярема",
+    "designation": "Педіатр",
+    "email": "i.yarema@vulyk.clinic"
+  },
+  {
+    "first": "Ірина",
     "last": "Маркіна",
     "designation": "Бухгалтер",
     "email": "markina@vulyk.clinic"
+  },
+  {
+    "first": "Ольга",
+    "last": "Демчук",
+    "designation": "Адміністратор",
+    "email": "demchuk@vulyk.clinic"
   },
   {
     "first": "Наталія",
