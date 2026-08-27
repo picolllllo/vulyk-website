@@ -39,6 +39,7 @@
   <url><loc>https://www.vulyk.clinic/sub-lab-obs.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.vulyk.clinic/sub-bazove-test.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.vulyk.clinic/sub-vaktsinatsiya-derzh.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-vaktsinatsiya-pryvatni.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.vulyk.clinic/sub-funkts-diag.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.vulyk.clinic/sub-esoz.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 

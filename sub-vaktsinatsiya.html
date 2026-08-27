@@ -1,18 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вакцинація поза календарем щеплень — Вулик, Львів</title>
+  <title>Вакцинація у Львові — щеплення дітей і дорослих | Вулик</title>
 
   <!-- SEO meta -->
-  <meta name="description" content="Вакцинація у Львові в амбулаторії «Вулик»: досвідчені лікарі, сучасне обладнання. Партнер НСЗУ. Запис на прийом онлайн у месенджері.">
+  <meta name="description" content="Вакцинація у клініці «Вулик»: державні (безкоштовно за декларацією) та приватні вакцини, індивідуальний графік, огляд лікаря, дотримання холодового ланцюга. Львів, Стрийська та Тичини.">
   <link rel="canonical" href="https://www.vulyk.clinic/sub-vaktsinatsiya.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Вулик — сімейна амбулаторія">
   <meta property="og:locale" content="uk_UA">
-  <meta property="og:title" content="Вакцинація поза календарем щеплень — Вулик, Львів">
-  <meta property="og:description" content="Вакцинація у Львові в амбулаторії «Вулик»: досвідчені лікарі, сучасне обладнання. Партнер НСЗУ. Запис на прийом онлайн у месенджері.">
+  <meta property="og:title" content="Вакцинація у Львові — щеплення дітей і дорослих | Вулик">
+  <meta property="og:description" content="Вакцинація у клініці «Вулик»: державні (безкоштовно за декларацією) та приватні вакцини, індивідуальний графік, огляд лікаря, дотримання холодового ланцюга. Львів, Стрийська та Тичини.">
   <meta property="og:url" content="https://www.vulyk.clinic/sub-vaktsinatsiya.html">
   <meta property="og:image" content="https://www.vulyk.clinic/assets/og-default.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -22,22 +22,139 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=13">
   <style>
-    .wip { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 80px 24px; background: var(--warm-bg); }
-    .wip__icon { font-size: 56px; margin-bottom: 20px; }
-    .wip__title { font-size: clamp(22px, 3vw, 38px); font-weight: 800; color: var(--primary); margin-bottom: 12px; }
-    .wip__sub { font-size: 16px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
+    .svc-hero {
+      background: var(--warm-bg);
+      text-align: center;
+      padding: 64px var(--pad) 40px;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .svc-hero__label {
+      font-size: 11px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--gold-text); margin-bottom: 12px;
+    }
+    .svc-hero__title { font-size: clamp(28px,3.4vw,44px); font-weight: 800; color: var(--text); margin-bottom: 16px; line-height: 1.15; }
+    .svc-hero__sub { font-size: 16px; color: var(--muted); max-width: 680px; margin: 0 auto 28px; line-height: 1.7; }
+
+    .svc-body {
+      max-width: 816px; margin: 0 auto; padding: 56px var(--pad) 8px;
+    }
+    .svc-body h2 { font-size: 24px; font-weight: 700; line-height: 1.8; color: #333; margin: 44px 0 16px; }
+    .svc-body h2:first-child { margin-top: 0; }
+    .svc-body p { font-size: 16px; line-height: 1.8; color: #333; margin-bottom: 18px; }
+    .svc-body ul {
+      list-style: none; padding-left: 0; margin-bottom: 18px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .svc-body li { font-size: 16px; line-height: 1.65; color: #333; padding-left: 22px; position: relative; }
+    .svc-body li::before {
+      content: ''; position: absolute; left: 0; top: 9px;
+      width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+    }
+    .svc-body strong { font-weight: 700; color: var(--text); }
+    .svc-body a { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 2px; }
+    .svc-body a:hover { color: var(--accent); }
+    .svc-note { font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7;
+      border-left: 3px solid var(--accent); padding-left: 16px; margin: 4px 0 18px; }
+
+    .svc-cta-inline { text-align: center; margin: 28px 0 8px; }
+
+    .svc-price-card {
+      background: var(--warm-bg); border: 1px solid rgba(0,0,0,.08);
+      border-radius: 14px; padding: 20px 22px; margin: 20px 0 8px; max-width: 560px;
+    }
+    .svc-price-card__title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 12px; }
+    .svc-price-card ul { padding-left: 0; list-style: none; margin-bottom: 0; display: flex; flex-direction: column; gap: 10px; }
+    .svc-price-card li { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; line-height: 1.4; color: var(--text); padding-left: 0; margin-bottom: 0; position: static; }
+    .svc-price-card li::before { display: none; }
+    .svc-price-card li span:last-child { font-weight: 700; color: var(--accent-deep); white-space: nowrap; }
+
+    .svc-faq { width: auto; padding: 44px max(40px, calc((100% - 816px) / 2)) 0; background: var(--warm-bg); }
+    .svc-faq h2 { font-size: 24px; font-weight: 700; line-height: 1.8; color: #1A1A1A; margin-bottom: 20px; }
+    .svc-faq details {
+      border: none; border-bottom: 1px solid rgba(0,0,0,.12);
+      border-radius: 0; padding: 22px 0; margin-bottom: 0; background: transparent;
+    }
+    .svc-faq details:first-of-type { border-top: 1px solid rgba(0,0,0,.12); }
+    .svc-faq summary {
+      font-size: 16px; font-weight: 700; color: var(--text); cursor: pointer;
+      list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    }
+    .svc-faq summary::-webkit-details-marker { display: none; }
+    .svc-faq summary::after {
+      content: ''; flex-shrink: 0; display: inline-block; width: 14px; height: 14px;
+      background: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 14 14%27 fill=%27none%27%3E%3Cpath d=%27M2 5l5 5 5-5%27 stroke=%27%231A1A1A%27 stroke-width=%271.6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E") no-repeat center;
+      transition: transform .2s;
+    }
+    .svc-faq details[open] summary::after { transform: rotate(180deg); }
+    .svc-faq p { font-size: 16px; color: #333; line-height: 1.8; margin-top: 12px; }
+
+    .svc-author {
+      width: auto;
+      margin: 48px 0 0;
+      padding: 40px 0 48px;
+      background: var(--warm-bg);
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+    .svc-author__inner {
+      max-width: 816px; margin: 0 auto; padding: 0 var(--pad);
+      display: flex; align-items: center; gap: 20px;
+    }
+    .svc-author__photo { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,.12); }
+    .svc-author__photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    .svc-author__label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-text); margin-bottom: 6px; }
+    .svc-author__name { font-size: 18px; font-weight: 800; color: var(--text); text-decoration: none; transition: color .15s; }
+    .svc-author__name:hover { color: var(--accent-deep); }
+    .svc-author__role { font-size: 14px; color: var(--muted); margin-top: 3px; }
+    @media (max-width: 560px) { .svc-author__inner { flex-direction: column; text-align: center; align-items: center; } }
+
+    .svc-links {
+      max-width: 816px; margin: 0 auto; padding: 24px var(--pad) 56px;
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .svc-links a {
+      font-size: 13px; font-weight: 600; color: var(--text); text-decoration: none;
+      padding: 8px 16px; border: 1px solid rgba(0,0,0,.12); border-radius: 100px;
+      transition: border-color .15s, color .15s;
+    }
+    .svc-links a:hover { border-color: var(--accent); color: var(--accent-deep); }
+  
+    /* tables */
+    .svc-table-wrap { overflow-x:auto; margin:20px 0 8px; -webkit-overflow-scrolling:touch; border:1px solid rgba(0,0,0,.08); border-radius:12px; }
+    .svc-table { border-collapse:collapse; width:100%; min-width:640px; font-size:14px; }
+    .svc-table th, .svc-table td { text-align:left; padding:11px 14px; border-bottom:1px solid rgba(0,0,0,.07); line-height:1.45; vertical-align:top; }
+    .svc-table thead th { background:var(--warm-bg); font-weight:700; color:var(--text); white-space:nowrap; }
+    .svc-table tbody tr:last-child td { border-bottom:none; }
+    .svc-table tbody tr:hover { background:rgba(0,0,0,.02); }
+    .svc-table--price td:last-child { font-weight:700; color:var(--accent-deep); white-space:nowrap; }
+    /* hub cards */
+    .svc-cards { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:24px 0 8px; }
+    .svc-card { background:var(--warm-bg); border:1px solid rgba(0,0,0,.08); border-radius:16px; padding:24px 22px; display:flex; flex-direction:column; }
+    .svc-card__badge { align-self:flex-start; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:4px 11px; border-radius:100px; margin-bottom:12px; }
+    .svc-card--gov .svc-card__badge { background:rgba(43,75,62,.12); color:var(--primary); }
+    .svc-card--priv .svc-card__badge { background:rgba(232,168,32,.15); color:var(--accent-deep); }
+    .svc-card__title { font-size:19px; font-weight:800; color:var(--text); margin-bottom:8px; }
+    .svc-card__text { font-size:14px; color:#444; line-height:1.6; margin-bottom:18px; flex:1; }
+    .svc-card__link { align-self:flex-start; font-weight:700; font-size:14px; color:#1A1A1A; background:var(--accent); padding:10px 18px; border-radius:10px; text-decoration:none; }
+    .svc-card__link:hover { background:var(--accent-deep); color:#1A1A1A; }
+    .svc-crosslinks { display:flex; flex-wrap:wrap; gap:12px; max-width:816px; margin:0 auto; padding:8px var(--pad) 8px; }
+    .svc-crosslinks a { font-size:14px; font-weight:600; color:var(--text); text-decoration:none; padding:10px 18px; border:1px solid rgba(0,0,0,.12); border-radius:10px; transition:border-color .15s,color .15s; }
+    .svc-crosslinks a:hover { border-color:var(--accent); color:var(--accent-deep); }
+    @media (max-width:700px){ .svc-cards{ grid-template-columns:1fr; } }
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-L73SKQ7F1J"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('consent', 'default', {
-      'analytics_storage': 'denied'
-    });
+    gtag('consent', 'default', { 'analytics_storage': 'denied' });
     gtag('js', new Date());
     gtag('config', 'G-L73SKQ7F1J');
   </script>
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Чи можна робити щеплення, якщо у дитини нежить або вона нещодавно хворіла?","acceptedAnswer":{"@type":"Answer","text":"Так, можна. Остаточне рішення лікар і батьки приймають спільно після огляду."}},{"@type":"Question","name":"Скільки вакцин можна вводити за один візит?","acceptedAnswer":{"@type":"Answer","text":"Стільки, скільки потрібно за віком і показами, з дотриманням правил і мінімальних інтервалів між ділянками введення. Обговорюється на прийомі."}},{"@type":"Question","name":"Яка реакція нормальна і коли дзвонити лікарю?","acceptedAnswer":{"@type":"Answer","text":"Норма: біль/почервоніння в місці ін'єкції, температура в перші 3 доби, сонливість або збудження. До лікаря — при температурі понад 38,5 °C частіше ніж кожні 4 год, судомах, постійній в'ялості/сонливості, або якщо звичайні реакції тривають понад 3 доби."}},{"@type":"Question","name":"Що робити, якщо пропустили щеплення за календарем?","acceptedAnswer":{"@type":"Answer","text":"Записатися до лікаря й скласти графік за Календарем із порушеними інтервалами."}},{"@type":"Question","name":"Чи можна щепити приватною вакциною без декларації?","acceptedAnswer":{"@type":"Answer","text":"Так. Приватні вакцини доступні всім, незалежно від наявності декларації."}},{"@type":"Question","name":"Як дізнатися про наявність вакцин?","acceptedAnswer":{"@type":"Answer","text":"Зверніться до адміністраторів «Вулика» за телефоном або через месенджери."}},{"@type":"Question","name":"Чи може адміністратор порекомендувати, якими вакцинами вакцинувати?","acceptedAnswer":{"@type":"Answer","text":"Ні. Це питання лікар обговорює з пацієнтом на прийомі. Адміністратор може допомогти лише із записом на зручний час."}},{"@type":"Question","name":"Чи можна отримати Карту щеплень без прийому до лікаря?","acceptedAnswer":{"@type":"Answer","text":"Так, за умови, що ви/дитина задекларовані у «Вулику» і всі дані про вакцинацію внесені в Карту щеплень."}}]}
+  </script>
+  <!-- /JSON-LD -->
 </head>
 <body>
 <header class="header">
@@ -62,16 +179,20 @@
                 <li><a href="sub-terapiya.html">Терапія</a></li>
                 <li><a href="sub-lab-obs.html">Лабораторні обстеження</a></li>
                 <li><a href="sub-bazove-test.html">Базове тестування</a></li>
-                <li><a href="sub-vaktsinatsiya-derzh.html">Вакцинація державними вакцинами</a></li>
                 <li><a href="sub-funkts-diag.html">Функціональна діагностика</a></li>
                 <li><a href="sub-esoz.html">Послуги ЕСОЗ</a></li>
               </ul>
             </li>
             <li class="nav__has-sub"><a href="dir-rozshyrena.html">Розширена первинна медична допомога <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
               <ul class="nav__subdropdown">
-                <li><a href="sub-vaktsinatsiya.html">Вакцинація поза календарем щеплень</a></li>
                 <li><a href="sub-dopologovi.html">Допологові консультації</a></li>
                 <li><a href="sub-grudne-vyg.html">Консультації з грудного вигодовування</a></li>
+              </ul>
+            </li>
+            <li class="nav__has-sub"><a href="sub-vaktsinatsiya.html">Вакцинація <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <ul class="nav__subdropdown">
+                <li><a href="sub-vaktsinatsiya-derzh.html">Державними вакцинами</a></li>
+                <li><a href="sub-vaktsinatsiya-pryvatni.html">Приватні вакцини</a></li>
               </ul>
             </li>
             <li class="nav__has-sub"><a href="dir-psykhichne.html">Психічне здоров'я <svg class="nav__chevron nav__chevron--right" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M8 2l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -158,16 +279,179 @@
       <a href="#" class="btn btn--primary">Записатися</a>
     </div>
   </div>
-</header>
+</header><!-- HERO -->
+<section class="svc-hero">
+  <p class="svc-hero__label">Напрями</p>
+  <h1 class="svc-hero__title">Вакцинація</h1>
+  <p class="svc-hero__sub">У «Вулику» ви можете вакцинувати себе та дитину державними вакцинами безоплатно (за декларацією) або приватними вакцинами — за Національним календарем щеплень і рекомендованими поза ним. Кожне щеплення — після огляду лікаря, з дотриманням холодового ланцюга.</p>
+  <a href="#" class="btn btn--primary">Записатися на вакцинацію</a>
+</section>
 
-<main class="wip">
-  <div>
-    <div class="wip__icon">🚧</div>
-    <h1 class="wip__title">Вакцинація</h1>
-    <p class="wip__sub">Ця сторінка на ремонті.<br>Незабаром тут з'явиться повна інформація.</p>
-    <a href="index.html" class="btn btn--primary">На головну</a>
-  </div>
+<main class="svc-body">
+
+  <h2>Як проходить вакцинація — крок за кроком</h2>
+  <p><strong>1. Базовий огляд лікаря перед щепленням.</strong> Перед кожною вакцинацією пацієнта оглядає лікар-педіатр, сімейний лікар або терапевт — у більшості випадків той, у кого пацієнт задекларований. Базовий огляд включає: вимірювання температури тіла, огляд шкірних покривів, огляд вух та ротової порожнини, вимірювання сатурації, аускультацію (вислуховування) легень і серця, вимірювання пульсу, а також росту і ваги. Після огляду лікар повідомляє, чи можна вакцинувати пацієнта відповідно до стану здоров'я.</p>
+  <p><strong>2. Вибір вакцини разом із лікарем.</strong> Оскільки у «Вулику» є можливість вакцинації і державними, і приватними вакцинами, лікар обговорює з пацієнтом (або законним представником) важливість і покази до вакцинації обов'язковими й рекомендованими вакцинами. На цьому етапі обговорюються також країна виробника, склад, побічні реакції, покази та протипокази до введення конкретної вакцини.</p>
+  <p><strong>3. Спосіб введення та інформована згода.</strong> Після вибору вакцини лікар пояснює, як саме і в яку ділянку вона вводитиметься — внутрішньом'язово, внутрішньошкірно, підшкірно чи перорально. Далі підписується інформована згода, у якій лікар ставить кілька питань про наявність можливих протипоказів.</p>
+  <p><strong>4. Введення вакцини медсестрою.</strong> Після згоди лікар проводить пацієнта в маніпуляційний кабінет. Перед введенням медична сестра дістає вакцину з холодильника, <strong>показує упаковку/флакон, серію, термін і дату придатності</strong>, готує вату, спиртові серветки, пластирі та шприц. Відповідно до типу вакцини вводить її внутрішньом'язово / внутрішньошкірно / підшкірно / перорально.</p>
+  <p><strong>5. Заключення та спостереження.</strong> Після введення пацієнт повертається до кабінету лікаря, який видає заключення: дані огляду, діагноз, назву, дозу та серію введеної вакцини, а також рекомендації — що робити в разі побічних реакцій (біль чи почервоніння в місці ін'єкції, підвищення температури). <strong>Рекомендуємо залишитися в закладі або поблизу нього протягом 30 хвилин</strong> після щеплення.</p>
+
+  <h2>Календар та індивідуальний графік</h2>
+  <ul>
+    <li>Вакцинуємо за оновленим <strong><a href="https://moz.gov.ua/uk/kalendar-profilaktichnih-scheplen" target="_blank" rel="noopener">Національним календарем профілактичних щеплень</a></strong>.</li>
+    <li>Якщо щеплення пропущені, розпочаті пізніше або є хронічне захворювання — складаємо <strong>індивідуальний графік</strong> за <a href="https://vaccine.org.ua/vakczynacziya-v-ukrayini/kalendar-shheplen-z-porushennyam-grafiku/" target="_blank" rel="noopener">Календарем щеплень із порушенням графіку</a>.</li>
+    <li>Те саме стосується «наздоганяючих» щеплень для нещеплених або частково щеплених дітей.</li>
+  </ul>
+
+  <h2>Підготовка до щеплення та догляд після</h2>
+  <ul>
+    <li><strong>Особливих приготувань перед вакцинацією не потрібно.</strong></li>
+    <li>Найчастіші побічні реакції — місцеві (біль у місці ін'єкції, почервоніння, набряк), підвищення температури тіла, висипання. Кожна вакцина несе свої ризики тих чи інших реакцій, тому про це лікар окремо комунікує на прийомі, коли обговорюєте конкретну вакцину та шлях її введення.</li>
+    <li>Побічна реакція триває <strong>до 3 діб</strong> після щеплення (для інактивованих вакцин) або виникає на <strong>7–10 день</strong> (для живих вакцин).</li>
+    <li><strong>Звертайтеся до лікаря</strong>, якщо реакція виходить за межі допустимої: температура понад 38,5 °C, яка підвищується частіше ніж кожні 4 години й погано збивається жарознижувальними; сильне нездужання та в'ялість; судоми; надмірна сонливість.</li>
+  </ul>
+
+  <h2>Протипоказання — коли щеплення відкладають або не роблять</h2>
+  <p><strong>Тимчасові протипокази</strong> тривають певний час; після завершення обставини, що спричинила відкладення, вакцинація продовжується. До них належать:</p>
+  <ul>
+    <li>гостре захворювання (гарячка понад 38 °C, прояви інфекційних захворювань) — для всіх вакцин;</li>
+    <li>нещодавнє (останні 6 місяців) введення крові, плазми чи імуноглобулінів;</li>
+    <li>вагітність, тяжка імуносупресія чи імунодефіцит — для <strong>живих</strong> вакцин.</li>
+  </ul>
+  <p><strong>Абсолютні протипокази</strong> — це стани з чітко визначеною імовірністю серйозної побічної реакції. До них належать:</p>
+  <ul>
+    <li>анафілактичний шок або тяжка алергічна реакція на попередню дозу вакцини;</li>
+    <li>гіперчутливість до конкретного компонента вакцини.</li>
+  </ul>
+  <p>Детальніше про тимчасові та абсолютні протипокази можна прочитати <a href="https://ips.ligazakon.net/document/RE19899?an=1" target="_blank" rel="noopener">за посиланням</a>.</p>
+
+  <h2>Безпека та зберігання вакцин (холодовий ланцюг)</h2>
+  <p>Щоб вакцина виконувала свою функцію — захищала організм від збудників небезпечних хвороб — від моменту виробництва до введення має зберігатися температурний режим. Це називається <strong>холодовим ланцюгом</strong>.</p>
+  <ul>
+    <li>Коли державна чи приватна вакцина надходить у «Вулик», відповідальна медсестра перевіряє температуру холодового контейнера (при транспортуванні — <strong>+2…+8 °C</strong>), упаковки, серії та терміни придатності, підписує акт транспортування і переносить вакцини в медичний холодильник.</li>
+    <li>Холодильники на локаціях мають вбудований <strong>дата-логер</strong> — пристрій, що показує і записує температуру цілодобово. Раз на тиждень медсестра роздруковує записану температуру для контролю та вносить у журнал реєстрації температурного режиму.</li>
+    <li>Багатодозні флакони (державні вакцини) мають <strong>температурний індикатор</strong> — квадрат усередині кола: внутрішній квадрат має бути світлішим за зовнішнє коло; якщо він такого ж кольору — вакцину не використовують. Після відкриття багатодозний флакон придатний <strong>28 днів</strong> — ми позначаємо дату й годину, до якої вакцина має бути використана, і показуємо пацієнту дві дати (загальну придатність серії та придатність відкритого флакона). Невикористане утилізуємо згідно із законодавством.</li>
+    <li><strong>Сертифікати:</strong> державні вакцини — від Центру контролю та профілактики інфекційних хвороб; приватні — від офіційних постачальників і дистриб'юторів. Держвакцини для календаря закуповує <strong>ЮНІСЕФ</strong> (ключовий партнер МОЗ України з 2015 року; усі вакцини мають сертифікацію ВООЗ).</li>
+    <li><strong>Безперебійність:</strong> на всіх локаціях є генератори, а кожен холодильник має власний інвертор, що підтримує роботу вночі та при тривалих відключеннях світла.</li>
+  </ul>
+  <p class="svc-note">🐝 Команда «Вулика» вакцинує себе, своїх рідних і дітей у «Вулику». Тож про вакцини ми дбаємо з усією відповідальністю — і перед собою, і перед пацієнтами.</p>
+
 </main>
+
+<section class="doc-cta">
+  <div class="doc-cta__text">
+    <span class="doc-cta__eyebrow">Стати пацієнтом «Вулика»</span>
+    <h2 class="doc-cta__title">Готові записатись на вакцинацію?</h2>
+    <p class="doc-cta__sub">Оберіть зручний час — ми підберемо найближчий прийом</p>
+  </div>
+  <div class="doc-cta__action">
+    <a href="#" class="btn btn--yellow">Записатися на прийом</a>
+    <a href="tel:+380962817338" class="btn doc-cta__phone-btn">+38 (096) 281-73-38</a>
+  </div>
+</section>
+
+<main class="svc-body">
+
+  <h2>Вакцинація дорослих</h2>
+  <p>Дорослих вакцинуємо як за Національним календарем, так і рекомендованими вакцинами.</p>
+  <p><strong>За календарем:</strong> щеплення від <strong>дифтерії та правця — кожні 10 років</strong>. Якщо пацієнт не пам'ятає, чи робив його, або записи відсутні/сумнівні — проводимо первинний вакцинальний комплекс із трьох доз, а далі рекомендуємо ревакцинацію кожні 10 років від останньої дози. Вакцина від дифтерії-правця постачається державою — тож для задекларованих у «Вулику» пацієнтів вона <strong>безоплатна</strong>.</p>
+  <p><strong>Рекомендовані вакцини для дорослих:</strong></p>
+  <ul>
+    <li>від гепатиту В (іноді за державний кошт, здебільшого приватна);</li>
+    <li>від гепатиту А (приватна);</li>
+    <li>від кору, паротиту, краснухи (приватна);</li>
+    <li>від грипу (щороку; приватна);</li>
+    <li>від папіломавірусної інфекції — для чоловіків і жінок (приватна);</li>
+    <li>від кліщового енцефаліту (приватна);</li>
+    <li>від коронавірусної інфекції (буває за державний кошт);</li>
+    <li>від менінгококової інфекції (штами A, B, C, W, Y; приватна);</li>
+    <li>від пневмококової інфекції (10–15 штамів; приватна);</li>
+    <li>від жовтої лихоманки (при подорожах до Південної Америки та Африки; приватна).</li>
+  </ul>
+  <p>Конкретну вакцину й схему підбирає лікар на прийомі, врахувавши вашу історію життя та ризики.</p>
+
+  <h2>Які вакцини доступні</h2>
+  <div class="svc-cards">
+    <div class="svc-card svc-card--gov">
+      <span class="svc-card__badge">Безоплатно</span>
+      <div class="svc-card__title">Державні вакцини</div>
+      <p class="svc-card__text">Для задекларованих у «Вулику» пацієнтів — за механізмом як у комунальних клініках. 11 інфекцій за Нацкалендарем.</p>
+      <a href="sub-vaktsinatsiya-derzh.html" class="svc-card__link">Детальніше про державні вакцини →</a>
+    </div>
+    <div class="svc-card svc-card--priv">
+      <span class="svc-card__badge">Приватні</span>
+      <div class="svc-card__title">Приватні вакцини</div>
+      <p class="svc-card__text">За Нацкалендарем і рекомендовані поза ним. Повний перелік із цінами та виробниками.</p>
+      <a href="sub-vaktsinatsiya-pryvatni.html" class="svc-card__link">Перелік приватних вакцин і ціни →</a>
+    </div>
+  </div>
+
+  <h2>Вартість (супутні послуги)</h2>
+  <div class="svc-table-wrap">
+    <table class="svc-table svc-table--price">
+      <thead><tr><th>Послуга</th><th>Ціна</th></tr></thead>
+      <tbody>
+        <tr><td>Огляд лікаря-педіатра перед вакцинацією</td><td>1 000 грн</td></tr>
+        <tr><td>Огляд дорослого пацієнта перед вакцинацією</td><td>800 грн</td></tr>
+        <tr><td>Внутрішньом'язова / підшкірна ін'єкція</td><td>130 грн</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="svc-note">Ціни на самі вакцини — на сторінці «Приватні вакцини». Для задекларованих пацієнтів — знижка 10% на консультативні послуги.</p>
+
+</main>
+
+
+
+<!-- FAQ -->
+<section class="svc-faq">
+  <h2>Часті запитання</h2>
+  <details>
+    <summary>Чи можна робити щеплення, якщо у дитини нежить або вона нещодавно хворіла?</summary>
+    <p>Так, можна. Остаточне рішення лікар і батьки приймають спільно після огляду.</p>
+  </details>
+  <details>
+    <summary>Скільки вакцин можна вводити за один візит?</summary>
+    <p>Стільки, скільки потрібно за віком і показами, з дотриманням правил і мінімальних інтервалів між ділянками введення. Обговорюється на прийомі.</p>
+  </details>
+  <details>
+    <summary>Яка реакція нормальна і коли дзвонити лікарю?</summary>
+    <p>Норма: біль/почервоніння в місці ін'єкції, температура в перші 3 доби, сонливість або збудження. До лікаря — при температурі понад 38,5 °C частіше ніж кожні 4 год, судомах, постійній в'ялості/сонливості, або якщо звичайні реакції тривають понад 3 доби.</p>
+  </details>
+  <details>
+    <summary>Що робити, якщо пропустили щеплення за календарем?</summary>
+    <p>Записатися до лікаря й скласти графік за Календарем із порушеними інтервалами.</p>
+  </details>
+  <details>
+    <summary>Чи можна щепити приватною вакциною без декларації?</summary>
+    <p>Так. Приватні вакцини доступні всім, незалежно від наявності декларації.</p>
+  </details>
+  <details>
+    <summary>Як дізнатися про наявність вакцин?</summary>
+    <p>Зверніться до адміністраторів «Вулика» за телефоном або через месенджери.</p>
+  </details>
+  <details>
+    <summary>Чи може адміністратор порекомендувати, якими вакцинами вакцинувати?</summary>
+    <p>Ні. Це питання лікар обговорює з пацієнтом на прийомі. Адміністратор може допомогти лише із записом на зручний час.</p>
+  </details>
+  <details>
+    <summary>Чи можна отримати Карту щеплень без прийому до лікаря?</summary>
+    <p>Так, за умови, що ви/дитина задекларовані у «Вулику» і всі дані про вакцинацію внесені в Карту щеплень.</p>
+  </details>
+</section>
+
+<aside class="svc-author">
+  <div class="svc-author__inner">
+  <a href="team-pikulytska.html" class="svc-author__photo">
+    <img src="Employees/Ярина Пікулицька.avif" alt="Ярина Пікулицька">
+  </a>
+  <div>
+    <p class="svc-author__label">Автор і медичний рецензент</p>
+    <a href="team-pikulytska.html" class="svc-author__name">Ярина Пікулицька</a>
+    <p class="svc-author__role">Засновниця клініки, лікарка-педіатр</p>
+  </div>
+  </div>
+</aside>
 
 <footer class="footer">
   <div class="footer__inner">
@@ -175,21 +459,67 @@
       <a href="index.html" class="footer__footer-logo">
         <img src="Вулик-лого.png" alt="ВУЛИК — сімейна амбулаторія" class="logo__img logo__img--light">
       </a>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/vulyk.clinic/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/vulyk.clinic" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@vulyk." target="_blank" rel="noopener" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+      </div>
     </div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Локації</h3>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name"><a href="location-striyska.html" style="color:inherit;text-decoration:none">вул. Стрийська, 86В</a></div>
+          <div class="footer__loc-sub">ЖК Park Tower</div>
+        </div>
+      </div>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><div class="footer__loc-name"><a href="location-tychyny.html" style="color:inherit;text-decoration:none">вул. Тичини, 21</a></div></div>
+      </div>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name"><a href="location-lincolna.html" style="color:inherit;text-decoration:none">вул. Лінкольна, 4</a></div>
+          <div class="footer__loc-sub">відкриття восени 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__col footer__col--schedule">
+      <h3 class="footer__col-title">Графік роботи</h3>
+      <div class="footer__loc-hours">Пн–Пт: 9:00–19:00<br>Сб–Нд: 10:00–18:00</div>
+    </div>
+
     <div class="footer__col footer__col--contacts">
       <h3 class="footer__col-title">Контакти</h3>
       <a href="tel:+380962817338" class="footer__phone">+38 (096) 281-73-38</a>
       <a href="mailto:info@vulyk.clinic" class="footer__email-link">info@vulyk.clinic</a>
     </div>
-    <div class="footer__col footer__col--schedule">
-      <h3 class="footer__col-title">Графік роботи</h3>
-      <div class="footer__loc-hours">Пн–Пт: 9:00–19:00<br>Сб–Нд: 10:00–18:00</div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Відділ найму</h3>
+      <a href="mailto:hr@vulyk.clinic" class="footer__email-link">hr@vulyk.clinic</a>
     </div>
+    <div class="footer__col">
+      <h3 class="footer__col-title">Для партнерів</h3>
+      <a href="mailto:partner@vulyk.clinic" class="footer__email-link">partner@vulyk.clinic</a>
+    </div>
+
   </div>
   <div class="footer__bottom">
     <div class="footer__bottom__inner">
       <span>© 2026 ТОВ «Вулик-Львів». Всі права захищені.</span>
       <span><a href="privacy.html">Політика конфіденційності</a></span>
+      <span>Розроблено <a href="https://www.linkedin.com/in/zakhar-pikulytskyi-32629484/" target="_blank" rel="noopener">З. Пікулицький</a></span>
     </div>
   </div>
 </footer>
