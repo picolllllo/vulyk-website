@@ -1,18 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Психотерапія доросла та дитяча у Львові — Вулик</title>
+  <title>Психотерапія для дітей у Львові — дитячий психолог | Вулик</title>
 
   <!-- SEO meta -->
-  <meta name="description" content="Психотерапія доросла та дитяча у Львові в амбулаторії «Вулик»: досвідчені лікарі, сучасне обладнання. Партнер НСЗУ. Запис на прийом онлайн у месенджері.">
+  <meta name="description" content="Психотерапія для дітей у клініці «Вулик»: метод КПТ низької інтенсивності від дитячої психологині Наталії Мудрик. Тривожність, страхи, поведінка, стосунки з однолітками. Львів, Стрийська та Тичини.">
   <link rel="canonical" href="https://www.vulyk.clinic/sub-psykhoterapiya.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Вулик — сімейна амбулаторія">
   <meta property="og:locale" content="uk_UA">
-  <meta property="og:title" content="Психотерапія доросла та дитяча у Львові — Вулик">
-  <meta property="og:description" content="Психотерапія доросла та дитяча у Львові в амбулаторії «Вулик»: досвідчені лікарі, сучасне обладнання. Партнер НСЗУ. Запис на прийом онлайн у месенджері.">
+  <meta property="og:title" content="Психотерапія для дітей у Львові — дитячий психолог | Вулик">
+  <meta property="og:description" content="Психотерапія для дітей у клініці «Вулик»: метод КПТ низької інтенсивності від дитячої психологині Наталії Мудрик. Тривожність, страхи, поведінка, стосунки з однолітками. Львів, Стрийська та Тичини.">
   <meta property="og:url" content="https://www.vulyk.clinic/sub-psykhoterapiya.html">
   <meta property="og:image" content="https://www.vulyk.clinic/assets/og-default.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -22,21 +22,106 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=15">
   <style>
-    .wip { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 80px 24px; background: var(--warm-bg); }
-    .wip__icon { font-size: 56px; margin-bottom: 20px; }
-    .wip__title { font-size: clamp(22px, 3vw, 38px); font-weight: 800; color: var(--primary); margin-bottom: 12px; }
-    .wip__sub { font-size: 16px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
+    .svc-hero {
+      background: var(--warm-bg);
+      text-align: center;
+      padding: 64px var(--pad) 40px;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .svc-hero__label {
+      font-size: 11px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--gold-text); margin-bottom: 12px;
+    }
+    .svc-hero__title { font-size: clamp(28px,3.4vw,44px); font-weight: 800; color: var(--text); margin-bottom: 16px; line-height: 1.15; }
+    .svc-hero__sub { font-size: 16px; color: var(--muted); max-width: 680px; margin: 0 auto 28px; line-height: 1.7; }
+
+    .svc-body {
+      max-width: 816px; margin: 0 auto; padding: 56px var(--pad) 8px;
+    }
+    .svc-body h2 { font-size: 24px; font-weight: 700; line-height: 1.8; color: #333; margin: 44px 0 16px; }
+    .svc-body h2:first-child { margin-top: 0; }
+    .svc-body p { font-size: 16px; line-height: 1.8; color: #333; margin-bottom: 18px; }
+    .svc-body ul {
+      list-style: none; padding-left: 0; margin-bottom: 18px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .svc-body li { font-size: 16px; line-height: 1.65; color: #333; padding-left: 22px; position: relative; }
+    .svc-body li::before {
+      content: ''; position: absolute; left: 0; top: 9px;
+      width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+    }
+    .svc-body strong { font-weight: 700; color: var(--text); }
+    .svc-body a { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 2px; }
+    .svc-body a:hover { color: var(--accent); }
+    .svc-note { font-size: 15px; color: var(--muted); font-style: italic; line-height: 1.7;
+      border-left: 3px solid var(--accent); padding-left: 16px; margin: 4px 0 18px; }
+
+    /* tables */
+    .svc-table-wrap { overflow-x:auto; margin:20px 0 8px; -webkit-overflow-scrolling:touch; border:1px solid rgba(0,0,0,.08); border-radius:12px; }
+    .svc-table { border-collapse:collapse; width:100%; min-width:520px; font-size:14px; }
+    .svc-table th, .svc-table td { text-align:left; padding:11px 14px; border-bottom:1px solid rgba(0,0,0,.07); line-height:1.45; vertical-align:top; }
+    .svc-table thead th { background:var(--warm-bg); font-weight:700; color:var(--text); white-space:nowrap; }
+    .svc-table tbody tr:last-child td { border-bottom:none; }
+    .svc-table tbody tr:hover { background:rgba(0,0,0,.02); }
+    .svc-table--price td:last-child { font-weight:700; color:var(--accent-deep); white-space:nowrap; }
+
+    .svc-faq { width: auto; padding: 44px max(40px, calc((100% - 816px) / 2)) 0; background: var(--warm-bg); }
+    .svc-faq h2 { font-size: 24px; font-weight: 700; line-height: 1.8; color: #1A1A1A; margin-bottom: 20px; }
+    .svc-faq details {
+      border: none; border-bottom: 1px solid rgba(0,0,0,.12);
+      border-radius: 0; padding: 22px 0; margin-bottom: 0; background: transparent;
+    }
+    .svc-faq details:first-of-type { border-top: 1px solid rgba(0,0,0,.12); }
+    .svc-faq summary {
+      font-size: 16px; font-weight: 700; color: var(--text); cursor: pointer;
+      list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    }
+    .svc-faq summary::-webkit-details-marker { display: none; }
+    .svc-faq summary::after {
+      content: ''; flex-shrink: 0; display: inline-block; width: 14px; height: 14px;
+      background: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2714%27 height=%2714%27 viewBox=%270 0 14 14%27 fill=%27none%27%3E%3Cpath d=%27M2 5l5 5 5-5%27 stroke=%27%231A1A1A%27 stroke-width=%271.6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E") no-repeat center;
+      transition: transform .2s;
+    }
+    .svc-faq details[open] summary::after { transform: rotate(180deg); }
+    .svc-faq p { font-size: 16px; color: #333; line-height: 1.8; margin-top: 12px; }
+
+    .svc-author {
+      width: auto;
+      margin: 48px 0 0;
+      padding: 40px 0 48px;
+      background: var(--warm-bg);
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+    .svc-author__inner {
+      max-width: 816px; margin: 0 auto; padding: 0 var(--pad);
+      display: flex; align-items: center; gap: 20px;
+    }
+    .svc-author__photo { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,.12); }
+    .svc-author__photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    .svc-author__label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-text); margin-bottom: 6px; }
+    .svc-author__name { font-size: 18px; font-weight: 800; color: var(--text); text-decoration: none; transition: color .15s; }
+    .svc-author__name:hover { color: var(--accent-deep); }
+    .svc-author__role { font-size: 14px; color: var(--muted); margin-top: 3px; }
+    @media (max-width: 560px) { .svc-author__inner { flex-direction: column; text-align: center; align-items: center; } }
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-L73SKQ7F1J"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('consent', 'default', {
-      'analytics_storage': 'denied'
-    });
+    gtag('consent', 'default', { 'analytics_storage': 'denied' });
     gtag('js', new Date());
     gtag('config', 'G-L73SKQ7F1J');
+  </script>
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Чи можна батькам бути присутніми на першій зустрічі?","acceptedAnswer":{"@type":"Answer","text":"Так. Перша зустріч може проходити з батьками, з дитиною або в комбінованому форматі. Це залежить від віку дитини, її стану та запиту сім'ї."}},
+{"@type":"Question","name":"Чи можна звернутися лише батькам, без дитини?","acceptedAnswer":{"@type":"Answer","text":"Так, особливо якщо дитина маленька, не готова до зустрічі або основний запит стосується поведінки та взаємодії в сім'ї. Батьківська консультація може бути першим кроком до подальшої допомоги дитині."}},
+{"@type":"Question","name":"Чи можна сказати дитині, що ми йдемо «в гості до тьоті» й просто пограємося?","acceptedAnswer":{"@type":"Answer","text":"Краще не обманювати дитину. Якщо вона дізнається, що дорослі приховали справжню мету візиту, це може ускладнити формування довіри до батьків і психолога. Краще пояснити простими словами: «Ми підемо познайомитися з психологом. Там можна буде погратися, поговорити або просто побути. Тобі не потрібно одразу розповідати все, що тебе турбує»."}},
+{"@type":"Question","name":"Ви скажете мені все, що дитина розповіла?","acceptedAnswer":{"@type":"Answer","text":"Ні. Дитині потрібна певна приватність. З батьками обговорюються важливі для допомоги питання та рекомендації, але не переказується дослівно весь зміст розмов. Виняток — ситуації, пов'язані з безпекою."}},
+{"@type":"Question","name":"Чи можете ви поставити дитині діагноз?","acceptedAnswer":{"@type":"Answer","text":"Психолог може провести психологічне обстеження, описати виявлені особливості та труднощі й рекомендувати подальший маршрут. Психіатричний діагноз та питання медикаментозного лікування належать до компетенції лікаря-психіатра."}}
+]}
   </script>
 </head>
 <body>
@@ -82,7 +167,7 @@
               <ul class="nav__subdropdown">
                 <li><a href="sub-psykhiatriya.html">Психіатрія</a></li>
                 <li><a href="sub-dyt-psykhiatriya.html">Дитяча психіатрія</a></li>
-                <li><a href="sub-psykhoterapiya.html">Психотерапія доросла та дитяча</a></li>
+                <li><a href="sub-psykhoterapiya.html">Психотерапія для дітей</a></li>
                 <li><a href="sub-casd.html">Діагностичний інструмент CASD</a></li>
                 <li><a href="sub-conners3.html">Діагностичний інструмент Conners-3</a></li>
                 <li><a href="sub-logopediya.html">Логопедія</a></li>
@@ -151,7 +236,7 @@
           </ul>
         </li>
         <li><a href="contacts.html">Контакти</a></li>
-        
+
       </ul>
     </nav>
     <div class="header__right">
@@ -164,14 +249,161 @@
   </div>
 </header>
 
-<main class="wip">
-  <div>
-    <div class="wip__icon">🚧</div>
-    <h1 class="wip__title">Психотерапія доросла та дитяча</h1>
-    <p class="wip__sub">Ця сторінка на ремонті.<br>Незабаром тут з'явиться повна інформація.</p>
-    <a href="index.html" class="btn btn--primary">На головну</a>
-  </div>
+<section class="svc-hero">
+  <p class="svc-hero__label">Психічне здоров'я</p>
+  <h1 class="svc-hero__title">Психотерапія для дітей</h1>
+  <p class="svc-hero__sub">Відтепер у «Вулику» проводимо психотерапію для дітей у методі КПТ низької інтенсивності — з дитячою психологинею Наталією Мудрик. Працюємо з тривожністю, страхами, поведінкою, емоційною саморегуляцією та стосунками з однолітками й батьками.</p>
+  <a href="#" class="btn btn--primary">Записатися на консультацію</a>
+</section>
+
+<main class="svc-body">
+
+  <h2>Вступ</h2>
+  <p>Ми все більше бачимо необхідність у поведінковому супроводі дітей на різних етапах зростання. Для кращого розуміння цього супроводу, ми приготували для вас покроковий алгоритм та новину про те, що відтепер у «Вулику» проводимо <strong>психотерапію для дітей</strong>.</p>
+  <p>Якщо у вас є труднощі з поведінкою дитини, і ви не знаєте, чи ці труднощі є етапом зростання дитини чи вони можуть потребувати втручання з боку фахівців, рекомендуємо первинно звернутись до лікаря-педіатра або сімейного лікаря, у якого ви задекларовані.</p>
+
+  <h2>Покроковий алгоритм поведінкового супроводу</h2>
+  <p>На консультації лікар зможе допомогти у розумінні:</p>
+  <ul>
+    <li>особливостей психоемоційного розвитку дитини відповідно до віку;</li>
+    <li>виявленні ознак і потреби у зверненні до психотерапевта чи лікаря-психіатра дитячого.</li>
+  </ul>
+  <p><strong>Якщо на консультації лікар підозрює розлад аутистичного спектру (РАС)</strong>, тоді ви отримаєте рекомендацію спочатку пройти інструмент <strong><a href="sub-casd.html">CASD</a></strong> для діагностики аутизму, і після нього записатись на консультацію до <strong><a href="sub-dyt-psykhiatriya.html">лікаря-психіатра дитячого</a></strong>.</p>
+  <p><strong>Якщо на консультації лікар підозрює розлад дефіциту уваги та гіперактивності (РДУГ)</strong>, тоді ви отримаєте рекомендацію спочатку проконсультуватись з <strong><a href="sub-dyt-psykhiatriya.html">лікарем-психіатром дитячим</a></strong>. І далі, за потреби, лікар-психіатр зможе зробити скерування на діагностичний інструмент <strong><a href="sub-conners3.html">Conners-3</a></strong> для комплексної діагностики РДУГ та супровідних поведінкових порушень.</p>
+  <p><strong>Якщо на консультації є труднощі у батьківсько-дитячих стосунках</strong>, часті конфлікти та складнощі у взаєморозумінні, труднощі у взаєминах з однолітками тощо, тоді лікар може скерувати на <strong>психотерапію</strong>.</p>
+
+  <h2>Що таке психотерапія для дітей — простими словами</h2>
+  <p>Психологічна допомога дитині — це робота з її емоціями, думками, поведінкою, стосунками та навичками, які допомагають краще справлятися з труднощами у повсякденному житті. Психолог також допомагає батькам краще зрозуміти поведінку дитини та знайти способи підтримки, які будуть ефективними саме для неї.</p>
+  <p>До психолога можна звертатися при тривожності, страхах, труднощах адаптації до садка чи школи, проблемах поведінки та саморегуляції, труднощах у стосунках з однолітками чи батьками, навчальних труднощах, низькій самооцінці.</p>
+  <p><strong>Чим психолог відрізняється від психіатра:</strong> дитячий психіатр — це лікар. Він проводить медичну оцінку психічного стану, може встановлювати психіатричний діагноз та, за потреби, призначати медикаментозне лікування. Іноді психолог і психіатр працюють разом: якщо під час психологічної консультації психолог бачить симптоми, які потребують медичної оцінки, він рекомендує батькам додатково звернутися до дитячого психіатра.</p>
+
+  <h2>Метод: КПТ низької інтенсивності</h2>
+  <p><strong>КПТ — це когнітивно-поведінковий підхід.</strong> Його основна ідея полягає в тому, що наші думки, емоції, тілесні реакції та поведінка взаємопов'язані. Тому під час роботи ми поступово вчимо дитину/підлітка помічати, що з нею/ним відбувається, краще розуміти свої реакції та опановувати конкретні способи допомоги собі.</p>
+  <p><strong>КПТ низької інтенсивності</strong> — це структурована психологічна допомога, орієнтована на конкретну проблему та практичні навички. У роботі ми використовуємо психоедукацію, спостереження за думками та емоціями, поведінкові вправи. Працюємо з тривожними думками, страхами, уникненням, емоційною і поведінковою саморегуляцією. У роботі з дітьми важливою частиною також є залучення та консультування батьків.</p>
+
+  <h2>З якими труднощами звертаються</h2>
+  <ul>
+    <li>труднощі уваги та саморегуляції;</li>
+    <li>проблеми поведінки, часті конфлікти, протестна або агресивна поведінка;</li>
+    <li>труднощі навчання та шкільної адаптації;</li>
+    <li>тривожність, страхи, надмірні переживання;</li>
+    <li>емоційні труднощі, складнощі з розумінням і регуляцією власних емоцій;</li>
+    <li>труднощі у спілкуванні та взаєминах з однолітками;</li>
+    <li>труднощі у батьківсько-дитячих стосунках, часті конфлікти та складнощі у взаєморозумінні;</li>
+    <li>питання виховання, встановлення правил і меж, реагування на складну поведінку дитини.</li>
+  </ul>
+
+  <h2>Як проходить психотерапія — крок за кроком</h2>
+  <p>Зазвичай робота починається з <strong>первинної консультації</strong>. Для дітей молодшого віку перша зустріч часто проводиться з батьками або частково з батьками та дитиною. Психолог уточнює запит, історію розвитку дитини, особливості її поведінки, емоційного стану, навчання, стосунків з однолітками та сімейної ситуації.</p>
+  <p>Далі разом визначаємо, над чим будемо працювати і який формат допомоги буде найбільш доцільним. За потреби може бути рекомендоване додаткове психологічне обстеження або консультація іншого фахівця.</p>
+  <p>Зустрічі найчастіше проводяться <strong>один раз на тиждень</strong>, тривалість консультації — <strong>50 хвилин</strong>. Кількість консультацій залежить від запиту, віку дитини, складності труднощів та динаміки роботи. КПТ низької інтенсивності передбачає фокусовану роботу над визначеними цілями, тому тривалість допомоги обговорюється індивідуально та періодично переглядається.</p>
+
+  <h2>Роль батьків</h2>
+  <p>У роботі з дітьми батьки є важливою частиною процесу. Чим молодша дитина, тим більше змін залежить не лише від того, що відбувається на консультації, а й від реакцій дорослих та організації повсякденного життя.</p>
+  <p>Батьки можуть бути присутні на частині зустрічей або мати окремі батьківські консультації, де ми обговорюємо, як реагувати на тривогу, сильні емоції чи складну поведінку дитини, як встановлювати правила та межі, підтримувати самостійність і закріплювати нові навички.</p>
+  <p>Між зустрічами можуть бути невеликі практичні завдання для дитини та/або батьків. Це не «домашня робота на оцінку», а можливість перенести навички з кабінету в реальне життя.</p>
+
+  <h2>Чого очікувати — результати</h2>
+  <p>Мета нашої роботи — не зробити так, щоб дитина ніколи не тривожилася, не сердилася чи завжди слухалася дорослих. Важливіше, щоб вона краще розуміла свої реакції, поступово навчалася справлятися зі складними емоціями, могла діяти більш гнучко та використовувати нові навички у повсякденних ситуаціях. Щоб батьки могли краще розуміти причини поведінки дитини, менше потрапляли у повторювані конфлікти та мали конкретні способи реагування.</p>
+  <p>Швидкість змін є індивідуальною. Іноді перші зміни помітні після декількох зустрічей, а для стійких змін потрібен довший час і регулярна практика між консультаціями. Для відстеження динаміки ми регулярно підбиваємо підсумки роботи: обговорюємо з дитиною та/або батьками зміни, труднощі у застосуванні нових навичок і те, що вже допомагає. Це дає змогу своєчасно коригувати цілі та способи роботи.</p>
+
+  <h2>Коли потрібен не психолог, а інший фахівець</h2>
+  <p>Іноді психологічної консультації недостатньо.</p>
+  <p><strong>Консультація дитячого психіатра</strong> необхідна, якщо є підозра на психічний розлад, значне погіршення повсякденного функціонування, виражені депресивні прояви, суїцидальні думки, самоушкодження, психотичні симптоми, значні поведінкові порушення або інші стани, що потребують медичної оцінки. Психіатр також визначає необхідність медикаментозного лікування.</p>
+  <p>Якщо основний запит стосується уваги, гіперактивності, імпульсивності, поведінки або особливостей розвитку, може бути рекомендоване окреме психологічне обстеження зі стандартизованими методиками — зокрема <strong><a href="sub-conners3.html">Conners-3</a></strong> або <strong><a href="sub-casd.html">CASD</a></strong>, відповідно до запиту та показань.</p>
+
+  <h2>Вік дітей</h2>
+  <p>Психолог у «Вулику» працює з <strong>дітьми та підлітками</strong>. Формат консультації залежить від віку:</p>
+  <ul>
+    <li>з <strong>маленькими дітьми</strong> значна частина допомоги може бути спрямована на батьків та зміну способів взаємодії з дитиною;</li>
+    <li>зі <strong>школярами</strong> поступово додається більше безпосередньої роботи з емоціями, поведінкою та конкретними навичками;</li>
+    <li>з <strong>підлітками</strong> можлива більш самостійна індивідуальна робота з періодичним залученням батьків.</li>
+  </ul>
+
+  <h2>Конфіденційність та етика</h2>
+  <p>Дитині та підлітку важливо мати безпечний простір, у якому можна говорити про свої переживання без страху, що кожне слово буде переказане батькам. Тому зміст індивідуальних розмов не передається батькам дослівно. Водночас батьки можуть отримувати інформацію про загальні цілі роботи, динаміку та рекомендації щодо підтримки дитини.</p>
+  <p>Конфіденційність має межі, коли йдеться про безпеку. Якщо з'являється інформація про реальний ризик заподіяння шкоди собі чи іншій людині або інші ситуації, в яких необхідне втручання дорослих для захисту дитини, пріоритетом стає її безпека. Ці правила обов'язково проговорюються і батькам, і самій дитині на початку роботи.</p>
+
+  <h2>У «Вулику» ви можете</h2>
+  <ul>
+    <li><strong>укласти декларацію</strong> з лікарем-педіатром/сімейним лікарем для супроводу дитини на всіх етапах зростання;</li>
+    <li>отримати консультацію <strong><a href="sub-dyt-psykhiatriya.html">лікаря-психіатра дитячого</a></strong> — Оксани Тавридзької;</li>
+    <li>провести діагностику РАС і РДУГ за допомогою діагностичних інструментів <strong><a href="sub-casd.html">CASD</a></strong> та <strong><a href="sub-conners3.html">Conners-3</a></strong> у сертифікованої дитячої психологині Наталії Мудрик;</li>
+    <li>отримати психотерапію у напрямку КПТ низької інтенсивності при поведінкових труднощах дитини — у дитячої психологині Наталії Мудрик.</li>
+  </ul>
+
 </main>
+
+<section class="doc-cta">
+  <div class="doc-cta__text">
+    <span class="doc-cta__eyebrow">Стати пацієнтом «Вулика»</span>
+    <h2 class="doc-cta__title">Готові записатись на консультацію?</h2>
+    <p class="doc-cta__sub">Оберіть зручний час — ми підберемо найближчий прийом</p>
+  </div>
+  <div class="doc-cta__action">
+    <a href="#" class="btn btn--yellow">Записатися на прийом</a>
+    <a href="tel:+380962817338" class="btn doc-cta__phone-btn">+38 (096) 281-73-38</a>
+  </div>
+</section>
+
+<main class="svc-body">
+
+  <h2>Вартість</h2>
+  <p class="svc-note">Знижка <strong>10%</strong> для задекларованих пацієнтів «Вулика» — на консультацію дитячого психіатра та супровід психолога Наталії Мудрик.</p>
+  <div class="svc-table-wrap">
+    <table class="svc-table svc-table--price">
+      <thead><tr><th>Послуга</th><th>Ціна</th></tr></thead>
+      <tbody>
+        <tr><td>Декларація з лікарем «Вулика» + консультативний супровід</td><td>безоплатно (партнерство з НСЗУ)</td></tr>
+        <tr><td>Консультація дитячого психіатра (60 хв)</td><td>1 600 грн</td></tr>
+        <tr><td>Повторна консультація дитячого психіатра (30 хв)</td><td>1 100 грн</td></tr>
+        <tr><td>Діагностика — інструмент CASD (РАС)</td><td>1 500 грн</td></tr>
+        <tr><td>Діагностика — інструмент Conners-3 (РДУГ)</td><td>2 300 грн</td></tr>
+        <tr><td>Первинна консультація практичного психолога (перед психотерапією, 60 хв)</td><td>1 300 грн</td></tr>
+        <tr><td>Психотерапія (60 хв)</td><td>1 800 грн</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<!-- FAQ -->
+<section class="svc-faq">
+  <h2>Часті запитання</h2>
+  <details>
+    <summary>Чи можна батькам бути присутніми на першій зустрічі?</summary>
+    <p>Так. Перша зустріч може проходити з батьками, з дитиною або в комбінованому форматі. Це залежить від віку дитини, її стану та запиту сім'ї.</p>
+  </details>
+  <details>
+    <summary>Чи можна звернутися лише батькам, без дитини?</summary>
+    <p>Так, особливо якщо дитина маленька, не готова до зустрічі або основний запит стосується поведінки та взаємодії в сім'ї. Батьківська консультація може бути першим кроком до подальшої допомоги дитині.</p>
+  </details>
+  <details>
+    <summary>Чи можна сказати дитині, що ми йдемо «в гості до тьоті» й просто пограємося?</summary>
+    <p>Краще не обманювати дитину. Якщо вона дізнається, що дорослі приховали справжню мету візиту, це може ускладнити формування довіри до батьків і психолога. Краще пояснити простими словами: «Ми підемо познайомитися з психологом. Там можна буде погратися, поговорити або просто побути. Тобі не потрібно одразу розповідати все, що тебе турбує».</p>
+  </details>
+  <details>
+    <summary>Ви скажете мені все, що дитина розповіла?</summary>
+    <p>Ні. Дитині потрібна певна приватність. З батьками обговорюються важливі для допомоги питання та рекомендації, але не переказується дослівно весь зміст розмов. Виняток — ситуації, пов'язані з безпекою.</p>
+  </details>
+  <details>
+    <summary>Чи можете ви поставити дитині діагноз?</summary>
+    <p>Психолог може провести психологічне обстеження, описати виявлені особливості та труднощі й рекомендувати подальший маршрут. Психіатричний діагноз та питання медикаментозного лікування належать до компетенції лікаря-психіатра.</p>
+  </details>
+</section>
+
+<aside class="svc-author">
+  <div class="svc-author__inner">
+  <a href="team-mudryk.html" class="svc-author__photo">
+    <img src="Employees/Наталія Мудрик.jpg" alt="Наталія Мудрик">
+  </a>
+  <div>
+    <p class="svc-author__label">Авторка</p>
+    <a href="team-mudryk.html" class="svc-author__name">Наталія Мудрик</a>
+    <p class="svc-author__role">Дитяча психологиня, сертифікована з КПТ · Рецензентка: Ярина Пікулицька, лікарка-педіатр</p>
+  </div>
+  </div>
+</aside>
 
 <footer class="footer">
   <div class="footer__inner">
@@ -179,21 +411,67 @@
       <a href="index.html" class="footer__footer-logo">
         <img src="Вулик-лого.png" alt="ВУЛИК — сімейна амбулаторія" class="logo__img logo__img--light">
       </a>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/vulyk.clinic/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/vulyk.clinic" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@vulyk." target="_blank" rel="noopener" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+      </div>
     </div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Локації</h3>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name"><a href="location-striyska.html" style="color:inherit;text-decoration:none">вул. Стрийська, 86В</a></div>
+          <div class="footer__loc-sub">ЖК Park Tower</div>
+        </div>
+      </div>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><div class="footer__loc-name"><a href="location-tychyny.html" style="color:inherit;text-decoration:none">вул. Тичини, 21</a></div></div>
+      </div>
+      <div class="footer__loc-item">
+        <svg class="footer__loc-icon" width="13" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="footer__loc-name"><a href="location-lincolna.html" style="color:inherit;text-decoration:none">вул. Лінкольна, 4</a></div>
+          <div class="footer__loc-sub">відкриття восени 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__col footer__col--schedule">
+      <h3 class="footer__col-title">Графік роботи</h3>
+      <div class="footer__loc-hours">Пн–Пт: 9:00–19:00<br>Сб–Нд: 10:00–18:00</div>
+    </div>
+
     <div class="footer__col footer__col--contacts">
       <h3 class="footer__col-title">Контакти</h3>
       <a href="tel:+380962817338" class="footer__phone">+38 (096) 281-73-38</a>
       <a href="mailto:info@vulyk.clinic" class="footer__email-link">info@vulyk.clinic</a>
     </div>
-    <div class="footer__col footer__col--schedule">
-      <h3 class="footer__col-title">Графік роботи</h3>
-      <div class="footer__loc-hours">Пн–Пт: 9:00–19:00<br>Сб–Нд: 10:00–18:00</div>
+
+    <div class="footer__col">
+      <h3 class="footer__col-title">Відділ найму</h3>
+      <a href="mailto:hr@vulyk.clinic" class="footer__email-link">hr@vulyk.clinic</a>
     </div>
+    <div class="footer__col">
+      <h3 class="footer__col-title">Для партнерів</h3>
+      <a href="mailto:partner@vulyk.clinic" class="footer__email-link">partner@vulyk.clinic</a>
+    </div>
+
   </div>
   <div class="footer__bottom">
     <div class="footer__bottom__inner">
       <span>© 2026 ТОВ «Вулик-Львів». Всі права захищені.</span>
       <span><a href="privacy.html">Політика конфіденційності</a></span>
+      <span>Розроблено <a href="https://www.linkedin.com/in/zakhar-pikulytskyi-32629484/" target="_blank" rel="noopener">З. Пікулицький</a></span>
     </div>
   </div>
 </footer>
