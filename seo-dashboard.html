@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEO-дешборд · внутрішній · Вулик</title>
+
+  <!-- Прихована службова сторінка: не індексувати, не переходити -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=15">
+  <style>
+    .dash-top { background: var(--warm-bg); border-bottom: 1px solid rgba(0,0,0,.08); padding: 22px var(--pad); }
+    .dash-top__inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .dash-top__brand { display: flex; align-items: center; gap: 14px; }
+    .dash-top__brand img { height: 34px; width: auto; }
+    .dash-top__titles h1 { font-size: 18px; font-weight: 800; color: var(--text); line-height: 1.2; }
+    .dash-top__titles p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .dash-badge { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-deep); background: rgba(232,168,32,.15); padding: 4px 10px; border-radius: 100px; }
+    .dash-refresh { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--text); background: var(--accent); border: none; border-radius: 10px; padding: 9px 16px; cursor: pointer; transition: background .15s; }
+    .dash-refresh:hover { background: var(--accent-deep); }
+    .dash-refresh[disabled] { opacity: .5; cursor: default; }
+
+    .dash { max-width: 1200px; margin: 0 auto; padding: 28px var(--pad) 64px; }
+    .dash__meta { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .dash__status { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 15px; }
+    .dash__status--error { color: #b3261e; }
+
+    /* KPI */
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 34px; }
+    .kpi { background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 16px; padding: 18px 20px; box-shadow: 0 2px 10px rgba(0,0,0,.03); }
+    .kpi__label { font-size: 12px; font-weight: 600; color: var(--muted); line-height: 1.35; margin-bottom: 10px; min-height: 32px; }
+    .kpi__value { font-size: 30px; font-weight: 800; color: var(--text); line-height: 1; }
+    .kpi__delta { font-size: 13px; font-weight: 700; margin-top: 8px; display: inline-flex; align-items: center; gap: 4px; }
+    .kpi__delta--up { color: #1a7f37; }
+    .kpi__delta--down { color: #b3261e; }
+    .kpi__delta--flat { color: var(--muted); }
+
+    /* Chart cards */
+    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 34px; }
+    .chart-card { background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 16px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,.03); }
+    .chart-card--wide { grid-column: 1 / -1; }
+    .chart-card__title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .chart-card__sub { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+    .chart-card__canvas { position: relative; height: 260px; }
+
+    /* Section tables */
+    .dash-section { margin-bottom: 34px; }
+    .dash-section__title { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block; }
+    .dash-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid rgba(0,0,0,.08); border-radius: 12px; }
+    .dash-table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 13px; }
+    .dash-table th, .dash-table td { padding: 10px 12px; border-bottom: 1px solid rgba(0,0,0,.06); text-align: right; white-space: nowrap; }
+    .dash-table th:first-child, .dash-table td:first-child { text-align: left; white-space: normal; min-width: 220px; position: sticky; left: 0; background: #fff; }
+    .dash-table thead th { background: var(--warm-bg); font-weight: 700; color: var(--text); font-size: 12px; }
+    .dash-table thead th:first-child { background: var(--warm-bg); }
+    .dash-table tbody tr:last-child td { border-bottom: none; }
+    .dash-table tbody tr:hover td { background: rgba(0,0,0,.015); }
+    .dash-table tbody tr:hover td:first-child { background: #fbfbf9; }
+    .dash-table__val { font-weight: 700; color: var(--text); }
+    .dash-delta { font-size: 11px; font-weight: 700; margin-left: 6px; }
+    .dash-delta--up { color: #1a7f37; }
+    .dash-delta--down { color: #b3261e; }
+
+    @media (max-width: 860px) {
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .chart-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="dash-top">
+  <div class="dash-top__inner">
+    <div class="dash-top__brand">
+      <a href="index.html"><img src="Вулик-лого.png" alt="Вулик"></a>
+      <div class="dash-top__titles">
+        <h1>SEO-дешборд <span class="dash-badge">внутрішнє</span></h1>
+        <p>GA4 · Search Console · Google Business Profile</p>
+      </div>
+    </div>
+    <button class="dash-refresh" id="refreshBtn" aria-label="Оновити дані">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      Оновити
+    </button>
+  </div>
+</div>
+
+<main class="dash">
+  <p class="dash__meta" id="dashMeta">Дані завантажуються з Google-таблиці наживо.</p>
+
+  <div id="dashStatus" class="dash__status">Завантаження даних…</div>
+
+  <div id="dashContent" hidden>
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-card__title">Трафік</div>
+        <div class="chart-card__sub">Користувачі та сеанси по періодах</div>
+        <div class="chart-card__canvas"><canvas id="chartTraffic"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card__title">Конверсії</div>
+        <div class="chart-card__sub">Ключові події та коефіцієнт конверсії</div>
+        <div class="chart-card__canvas"><canvas id="chartConv"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card__title">Канали (сеанси)</div>
+        <div class="chart-card__sub">Органічний пошук, соцмережі, AI-асистенти</div>
+        <div class="chart-card__canvas"><canvas id="chartChannels"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card__title">Google Search Console</div>
+        <div class="chart-card__sub">Покази, кліки та середня позиція</div>
+        <div class="chart-card__canvas"><canvas id="chartGsc"></canvas></div>
+      </div>
+    </div>
+
+    <div id="tables"></div>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+(function () {
+  var SHEET_ID = '1jq1PNVcx1B7rv9ZjfHNLKl2kEDLUC9m8';
+  var URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:csv';
+
+  var VALUE_COLS = [1, 3, 5, 7, 9, 11];   // колонки зі значеннями
+  var DELTA_COLS = [2, 4, 6, 8, 10];      // колонки зі змінами між періодами
+
+  var MONTHS = 'Січень|Лютий|Березень|Квітень|Травень|Червень|Липень|Серпень|Вересень|Жовтень|Листопад|Грудень';
+  var charts = [];
+
+  /* ── CSV parser (лапки, коми всередині лапок) ── */
+  function parseCSV(text) {
+    var rows = [], lines = text.split(/\r?\n/);
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      if (!line.trim()) continue;
+      var cols = [], cur = '', inQ = false;
+      for (var j = 0; j < line.length; j++) {
+        var c = line[j];
+        if (c === '"') { if (inQ && line[j + 1] === '"') { cur += '"'; j++; } else { inQ = !inQ; } }
+        else if (c === ',' && !inQ) { cols.push(cur); cur = ''; }
+        else { cur += c; }
+      }
+      cols.push(cur);
+      rows.push(cols);
+    }
+    return rows;
+  }
+
+  function clean(s) { return (s == null ? '' : ('' + s)).replace(/ /g, ' ').trim(); }
+
+  /* Число з українського формату: "1 149" → 1149, "17,1%" → 17.1 */
+  function num(s) {
+    s = clean(s);
+    if (!s) return null;
+    var v = parseFloat(s.replace('%', '').replace(/\s/g, '').replace(',', '.'));
+    return isNaN(v) ? null : v;
+  }
+
+  function shortLabel(s) {
+    s = clean(s).replace(/\s*20\d\d\s*$/, '');
+    s = s.replace(new RegExp('^(' + MONTHS + ')\\s+'), '');
+    return s.trim();
+  }
+
+  function isEmptyRow(row) {
+    for (var k = 0; k < VALUE_COLS.length; k++) {
+      if (clean(row[VALUE_COLS[k]]) !== '') return false;
+    }
+    return clean(row[DELTA_COLS[0]]) === '';
+  }
+
+  /* ── Побудова моделі з рядків ── */
+  function buildModel(rows) {
+    var header = rows[0] || [];
+    var periods = [];
+    for (var k = 0; k < VALUE_COLS.length; k++) {
+      var lbl = clean(header[VALUE_COLS[k]]);
+      periods.push({ full: lbl, short: shortLabel(lbl), col: VALUE_COLS[k] });
+    }
+
+    var sections = [];
+    // Перша секція «зашита» у заголовок (клітинка A рядка 0)
+    var firstTitle = clean(header[0]).replace(/^Показник\s+/i, '');
+    var current = { title: firstTitle || 'GA4', metrics: [] };
+    sections.push(current);
+
+    for (var i = 1; i < rows.length; i++) {
+      var row = rows[i];
+      var name = clean(row[0]);
+      if (!name && isEmptyRow(row)) continue;
+      if (name && isEmptyRow(row)) {                 // рядок-заголовок секції
+        current = { title: name, metrics: [] };
+        sections.push(current);
+        continue;
+      }
+      var values = [], deltas = [];
+      for (var v = 0; v < VALUE_COLS.length; v++) {
+        values.push({ raw: clean(row[VALUE_COLS[v]]), num: num(row[VALUE_COLS[v]]) });
+      }
+      for (var d = 0; d < DELTA_COLS.length; d++) {
+        deltas.push(clean(row[DELTA_COLS[d]]));
+      }
+      current.metrics.push({ name: name, values: values, deltas: deltas });
+    }
+    // Тільки періоди, у яких є хоч якісь дані
+    var used = [];
+    periods.forEach(function (p, idx) {
+      var has = sections.some(function (s) { return s.metrics.some(function (m) { return m.values[idx] && m.values[idx].raw !== ''; }); });
+      if (p.full && has) used.push(idx);
+    });
+    return { periods: periods, usedIdx: used, sections: sections };
+  }
+
+  function findMetric(model, sectionTitlePart, metricPart) {
+    for (var s = 0; s < model.sections.length; s++) {
+      if (model.sections[s].title.indexOf(sectionTitlePart) === -1) continue;
+      var ms = model.sections[s].metrics;
+      for (var m = 0; m < ms.length; m++) {
+        if (ms[m].name.indexOf(metricPart) !== -1) return ms[m];
+      }
+    }
+    return null;
+  }
+
+  function series(model, metric) {
+    if (!metric) return { labels: [], data: [] };
+    var labels = [], data = [];
+    model.usedIdx.forEach(function (idx) {
+      labels.push(model.periods[idx].short);
+      data.push(metric.values[idx] ? metric.values[idx].num : null);
+    });
+    return { labels: labels, data: data };
+  }
+
+  /* ── KPI ── */
+  function renderKPIs(model) {
+    var wanted = [
+      { sec: 'трафік', m: 'Користувачі' },
+      { sec: 'трафік', m: 'Сеанси' },
+      { sec: 'трафік', m: 'Конверсії' },
+      { sec: 'трафік', m: 'Коеф' },
+      { sec: 'цільові', m: 'Записи' },
+      { sec: 'цільові', m: 'Дзвінки' },
+      { sec: 'Search Console', m: 'Кліки' },
+      { sec: 'Search Console', m: 'Середня позиція' }
+    ];
+    var html = '';
+    wanted.forEach(function (w) {
+      var metric = findMetric(model, w.sec, w.m);
+      if (!metric) return;
+      // останній непорожній період
+      var lastIdx = -1;
+      model.usedIdx.forEach(function (idx) { if (metric.values[idx] && metric.values[idx].raw !== '') lastIdx = idx; });
+      if (lastIdx === -1) return;
+      var valRaw = metric.values[lastIdx].raw;
+      var deltaStr = lastIdx > 0 ? metric.deltas[lastIdx - 1] : '';
+      var cls = 'kpi__delta--flat', arrow = '';
+      if (/^\+/.test(deltaStr)) { cls = 'kpi__delta--up'; arrow = '▲'; }
+      else if (/^-/.test(deltaStr)) { cls = 'kpi__delta--down'; arrow = '▼'; }
+      var deltaHtml = deltaStr ? '<div class="kpi__delta ' + cls + '">' + arrow + ' ' + deltaStr + '</div>' : '';
+      html += '<div class="kpi">'
+            + '<div class="kpi__label">' + metric.name + '</div>'
+            + '<div class="kpi__value">' + valRaw + '</div>'
+            + deltaHtml + '</div>';
+    });
+    document.getElementById('kpiGrid').innerHTML = html;
+  }
+
+  /* ── Таблиці по секціях ── */
+  function renderTables(model) {
+    var out = '';
+    model.sections.forEach(function (sec) {
+      if (!sec.metrics.length) return;
+      var ths = '<th>Показник</th>';
+      model.usedIdx.forEach(function (idx) { ths += '<th>' + model.periods[idx].short + '</th>'; });
+      var rowsHtml = '';
+      sec.metrics.forEach(function (m) {
+        var tds = '<td>' + m.name + '</td>';
+        model.usedIdx.forEach(function (idx, order) {
+          var cell = m.values[idx] ? m.values[idx].raw : '';
+          var deltaStr = idx > 0 ? m.deltas[idx - 1] : '';
+          var dh = '';
+          if (cell && deltaStr) {
+            var dc = /^\+/.test(deltaStr) ? 'dash-delta--up' : (/^-/.test(deltaStr) ? 'dash-delta--down' : '');
+            dh = ' <span class="dash-delta ' + dc + '">' + deltaStr + '</span>';
+          }
+          tds += '<td>' + (cell ? '<span class="dash-table__val">' + cell + '</span>' + dh : '—') + '</td>';
+        });
+        rowsHtml += '<tr>' + tds + '</tr>';
+      });
+      out += '<div class="dash-section">'
+           + '<div class="dash-section__title">' + sec.title + '</div>'
+           + '<div class="dash-table-wrap"><table class="dash-table"><thead><tr>' + ths + '</tr></thead>'
+           + '<tbody>' + rowsHtml + '</tbody></table></div></div>';
+    });
+    document.getElementById('tables').innerHTML = out;
+  }
+
+  /* ── Графіки ── */
+  var GOLD = '#E8A820', GREEN = '#2B4B3E', BLUE = '#3b74c4', GREY = '#9a938a';
+  function baseOpts(extra) {
+    var o = {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: true, labels: { boxWidth: 12, font: { size: 12 } } } },
+      scales: { y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,.06)' } }, x: { grid: { display: false } } }
+    };
+    if (extra) Object.keys(extra).forEach(function (k) { o[k] = extra[k]; });
+    return o;
+  }
+  function line(data, color, label, extra) {
+    var d = { label: label, data: data, borderColor: color, backgroundColor: color + '22', tension: .3, borderWidth: 2.5, pointRadius: 3, pointBackgroundColor: color, fill: false, spanGaps: true };
+    if (extra) Object.keys(extra).forEach(function (k) { d[k] = extra[k]; });
+    return d;
+  }
+
+  function renderCharts(model) {
+    charts.forEach(function (c) { c.destroy(); }); charts = [];
+    var users = series(model, findMetric(model, 'трафік', 'Користувачі'));
+    var sess  = series(model, findMetric(model, 'трафік', 'Сеанси'));
+    var conv  = series(model, findMetric(model, 'трафік', 'Конверсії'));
+    var cr    = series(model, findMetric(model, 'трафік', 'Коеф'));
+    var org   = series(model, findMetric(model, 'канали', 'Органічний'));
+    var soc   = series(model, findMetric(model, 'канали', 'Organic Social'));
+    var ai    = series(model, findMetric(model, 'канали', 'AI'));
+    var impr  = series(model, findMetric(model, 'Search Console', 'Покази'));
+    var clk   = series(model, findMetric(model, 'Search Console', 'Кліки'));
+    var pos   = series(model, findMetric(model, 'Search Console', 'Середня позиція'));
+
+    charts.push(new Chart(document.getElementById('chartTraffic'), {
+      type: 'line', data: { labels: users.labels, datasets: [ line(users.data, GOLD, 'Користувачі'), line(sess.data, GREEN, 'Сеанси') ] }, options: baseOpts()
+    }));
+
+    charts.push(new Chart(document.getElementById('chartConv'), {
+      type: 'line',
+      data: { labels: conv.labels, datasets: [
+        line(conv.data, GOLD, 'Конверсії', { yAxisID: 'y' }),
+        line(cr.data, BLUE, 'Коеф. конверсії, %', { yAxisID: 'y1' })
+      ] },
+      options: baseOpts({ scales: {
+        y:  { beginAtZero: true, position: 'left', grid: { color: 'rgba(0,0,0,.06)' } },
+        y1: { beginAtZero: true, position: 'right', grid: { display: false }, ticks: { callback: function (v) { return v + '%'; } } },
+        x:  { grid: { display: false } }
+      } })
+    }));
+
+    charts.push(new Chart(document.getElementById('chartChannels'), {
+      type: 'line', data: { labels: org.labels, datasets: [ line(org.data, GREEN, 'Органічний пошук'), line(soc.data, GOLD, 'Organic Social'), line(ai.data, BLUE, 'AI Assistant') ] }, options: baseOpts()
+    }));
+
+    charts.push(new Chart(document.getElementById('chartGsc'), {
+      type: 'bar',
+      data: { labels: impr.labels, datasets: [
+        { type: 'bar', label: 'Покази', data: impr.data, backgroundColor: GOLD + 'cc', yAxisID: 'y', borderRadius: 4 },
+        { type: 'bar', label: 'Кліки', data: clk.data, backgroundColor: GREEN + 'cc', yAxisID: 'y', borderRadius: 4 },
+        Object.assign(line(pos.data, BLUE, 'Середня позиція', { yAxisID: 'y1' }), { type: 'line' })
+      ] },
+      options: baseOpts({ scales: {
+        y:  { beginAtZero: true, position: 'left', grid: { color: 'rgba(0,0,0,.06)' } },
+        y1: { position: 'right', reverse: true, grid: { display: false } },
+        x:  { grid: { display: false } }
+      } })
+    }));
+  }
+
+  /* ── Завантаження ── */
+  function load() {
+    var btn = document.getElementById('refreshBtn');
+    var status = document.getElementById('dashStatus');
+    var content = document.getElementById('dashContent');
+    btn.disabled = true;
+    status.hidden = false; status.className = 'dash__status'; status.textContent = 'Завантаження даних…';
+    fetch(URL, { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function (text) {
+        var model = buildModel(parseCSV(text));
+        if (!model.usedIdx.length) throw new Error('Немає даних для відображення');
+        renderKPIs(model);
+        renderCharts(model);
+        renderTables(model);
+        content.hidden = false;
+        status.hidden = true;
+        var last = model.periods[model.usedIdx[model.usedIdx.length - 1]];
+        document.getElementById('dashMeta').textContent =
+          'Джерело: Google-таблиця (оновлюється наживо). Останній період з даними: ' + (last ? last.full : '—') + '.';
+      })
+      .catch(function (err) {
+        content.hidden = true;
+        status.hidden = false;
+        status.className = 'dash__status dash__status--error';
+        status.textContent = 'Не вдалося завантажити дані: ' + err.message +
+          '. Перевірте, що таблиця відкрита для перегляду («Усі, хто має посилання»).';
+      })
+      .then(function () { btn.disabled = false; });
+  }
+
+  document.getElementById('refreshBtn').addEventListener('click', load);
+  load();
+})();
+</script>
+</body>
+</html>
