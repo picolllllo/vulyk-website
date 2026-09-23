@@ -113,8 +113,8 @@
         <div class="chart-card__canvas"><canvas id="chartGsc"></canvas></div>
       </div>
       <div class="chart-card chart-card--wide">
-        <div class="chart-card__title">Соцмережі — сеанси (сумарно)</div>
-        <div class="chart-card__sub">Усі заходи з соцмереж разом — усі платформи та пристрої (телефон і компʼютер)</div>
+        <div class="chart-card__title">Соцмережі — сеанси</div>
+        <div class="chart-card__sub">Instagram і Facebook окремо — усі джерела разом (застосунок і вебверсія, телефон і компʼютер)</div>
         <div class="chart-card__canvas"><canvas id="chartSocial"></canvas></div>
       </div>
     </div>
@@ -256,24 +256,28 @@
      і окремо телефон/компʼютер. Складаємо всі ці джерела в один показник «заходи».
      Рахуємо лише в блоці СЕАНСІВ (до рядка «… — конверсії»), щоб не подвоїти
      дані конверсійним блоком, і не беремо агрегат «Organic Social». */
-  function socialSum(model) {
-    var SRC = /(instagram|інстаграм|инстаграм|facebook|фейсбук|tiktok|тікток|тикток|youtube|ютуб|telegram|телеграм|threads|pinterest|linkedin|\big\b)/i;
-    var sums = model.usedIdx.map(function () { return null; });
+  function socialSplit(model) {
+    var IG = /(instagram|інстаграм|инстаграм|\big\b)/i;
+    var FB = /(facebook|фейсбук|\bfb\b)/i;
+    var ig = model.usedIdx.map(function () { return null; });
+    var fb = model.usedIdx.map(function () { return null; });
     model.sections.forEach(function (sec) {
       var collecting = false;  // збираємо лише між «Organic Social — сеанси» і «… — конверсії»
       sec.metrics.forEach(function (m) {
         var soc = /organic social|соцмереж/i.test(m.name);
         if (soc && /сеанс/i.test(m.name)) { collecting = true; return; }   // старт блоку соц-сеансів
         if (/конвер/i.test(m.name)) { collecting = false; return; }         // кінець блоку сеансів
-        if (!collecting || !SRC.test(m.name)) return;
+        if (!collecting) return;
+        var target = IG.test(m.name) ? ig : (FB.test(m.name) ? fb : null);
+        if (!target) return;
         model.usedIdx.forEach(function (idx, k) {
           var v = m.values[idx];
-          if (v && v.num != null) sums[k] = (sums[k] || 0) + v.num;
+          if (v && v.num != null) target[k] = (target[k] || 0) + v.num;
         });
       });
     });
     var labels = model.usedIdx.map(function (idx) { return model.periods[idx].short; });
-    return { labels: labels, data: sums };
+    return { labels: labels, instagram: ig, facebook: fb };
   }
 
   /* ── Таблиці по секціях ── */
@@ -393,11 +397,12 @@
       } })
     }));
 
-    var social = socialSum(model);
+    var social = socialSplit(model);
     charts.push(new Chart(document.getElementById('chartSocial'), {
       type: 'line',
       data: { labels: social.labels, datasets: [
-        Object.assign(line(social.data, GOLD, 'Соцмережі — сеанси (сумарно)'), { fill: true, backgroundColor: GOLD + '26' })
+        line(social.instagram, '#C13584', 'Instagram'),
+        line(social.facebook, '#1877F2', 'Facebook')
       ] },
       options: baseOpts()
     }));
@@ -415,10 +420,10 @@
       .then(function (text) {
         var model = buildModel(parseCSV(text));
         if (!model.usedIdx.length) throw new Error('Немає даних для відображення');
+        content.hidden = false;   // показуємо контейнери ДО побудови графіків, щоб canvas мали реальну ширину
+        status.hidden = true;
         renderCharts(model);
         renderTables(model);
-        content.hidden = false;
-        status.hidden = true;
         var last = model.periods[model.usedIdx[model.usedIdx.length - 1]];
         document.getElementById('dashMeta').textContent =
           'Джерело: Google-таблиця (оновлюється наживо). Останній період з даними: ' + (last ? last.full : '—') + '.';
