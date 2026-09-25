@@ -243,9 +243,6 @@
   <div class="roles" id="rolesList">
     <div class="role"><div class="role__top"><div class="role__main"><div class="role__meta"><span>Завантаження вакансій…</span></div></div></div></div>
   </div>
-  <div id="rolesEmpty" class="roles" hidden>
-    <div class="role"><div class="role__top"><div class="role__main"><div class="role__meta"><span>Наразі відкритих вакансій немає. Ви можете подати резюме у формі нижче — ми звернемося, щойно з'явиться відповідна позиція.</span></div></div></div></div>
-  </div>
 </main>
 
 <!-- ═══════════════ ЗАГАЛЬНА ЗАЯВКА (talent pool) ═══════════════ -->
@@ -351,7 +348,7 @@
     var res = await sb.from('jobs').select('*').eq('status', 'open').order('created_at', { ascending: true });
     if (res.error) { list.innerHTML = '<div class="role"><div class="role__top"><div class="role__main"><div class="role__meta"><span>Не вдалося завантажити вакансії.</span></div></div></div></div>'; return; }
     var jobs = res.data || [];
-    if (!jobs.length) { list.hidden = true; document.getElementById('rolesEmpty').hidden = false; return; }
+    if (!jobs.length) { list.innerHTML = '<div class="role"><div class="role__top"><div class="role__main"><div class="role__meta"><span>Наразі відкритих вакансій немає. Ви можете подати резюме у формі нижче — ми звернемося, щойно з\'явиться відповідна позиція.</span></div></div></div></div>'; return; }
     list.innerHTML = jobs.map(function (j) {
       var meta = [];
       if (j.employment) meta.push('<span>' + esc(j.employment) + '</span>');
