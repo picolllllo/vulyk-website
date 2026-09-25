@@ -93,6 +93,10 @@
             <option value="other">Інше</option>
           </select>
         </div>
+        <div class="full">
+          <label for="f_summary">Про кандидата / коментар</label>
+          <textarea id="f_summary" placeholder="Нотатка HR, видима у профілі"></textarea>
+        </div>
       </div>
       <div class="form-actions">
         <button id="saveBtn" class="btn btn--primary">Зберегти</button>
@@ -145,6 +149,11 @@
         <div class="cand-meta" id="dMeta"></div>
       </div>
       <button id="editBtn" class="btn btn--ghost btn--sm">Редагувати профіль</button>
+    </div>
+
+    <div id="dSummaryBox" class="box" hidden>
+      <h3>Про кандидата</h3>
+      <div id="dSummary" style="white-space:pre-wrap; font-size:14px"></div>
     </div>
 
     <div class="cols">
@@ -257,6 +266,7 @@ function openForm(c) {
   el('f_phone').value    = c ? (c.phone || '') : '';
   el('f_position').value = c && c.position_id ? String(c.position_id) : '';
   el('f_source').value   = c ? c.source : 'direct';
+  el('f_summary').value  = c ? (c.summary || '') : '';
   el('formMsg').textContent = '';
   el('form').hidden = false;
   el('f_name').focus();
@@ -271,7 +281,8 @@ async function saveCandidate() {
     email: el('f_email').value.trim() || null,
     phone: el('f_phone').value.trim() || null,
     position_id: el('f_position').value ? Number(el('f_position').value) : null,
-    source: el('f_source').value
+    source: el('f_source').value,
+    summary: el('f_summary').value.trim() || null
   };
   let error, savedId = editingId;
   if (editingId) {
@@ -308,6 +319,9 @@ async function openCandidate(id) {
   if (c.email) meta.push('<a href="mailto:' + escapeHtml(c.email) + '">' + escapeHtml(c.email) + '</a>');
   if (c.phone) meta.push('<a href="tel:' + escapeHtml(c.phone) + '">' + escapeHtml(c.phone) + '</a>');
   el('dMeta').innerHTML = meta.join('');
+
+  if (c.summary) { el('dSummary').textContent = c.summary; el('dSummaryBox').hidden = false; }
+  else { el('dSummaryBox').hidden = true; }
 
   // випадайка вакансій для прив'язки
   el('a_job').innerHTML = '<option value="">— оберіть вакансію —</option>'

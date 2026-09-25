@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Долучитися до команди · Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --accent:#E8A820; --on-gold:#241F19; --warm-bg:#fffef9; --text:#241F19; --muted:#7a736a; --line:rgba(0,0,0,.12); --red:#b3261e; --green:#1a7f37; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:'Nunito Sans',system-ui,sans-serif; background:var(--warm-bg); color:var(--text);
+          min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:32px 16px 64px; }
+    .brand{ display:flex; align-items:center; gap:12px; margin-bottom:26px; }
+    .brand img{ height:44px; width:auto; }
+    .brand span{ font-weight:800; font-size:20px; }
+    .card{ width:100%; max-width:560px; background:#fff; border:1px solid var(--line); border-radius:20px;
+           padding:32px; box-shadow:0 10px 40px rgba(0,0,0,.06); }
+    h1{ font-size:24px; margin:0 0 6px; }
+    .lead{ color:var(--muted); font-size:15px; margin:0 0 24px; }
+    label{ display:block; font-size:14px; font-weight:700; margin:16px 0 6px; }
+    .req{ color:var(--accent); }
+    input, select, textarea{ width:100%; font:inherit; padding:12px 14px; border:1px solid var(--line);
+           border-radius:12px; background:#fff; color:var(--text); }
+    textarea{ min-height:110px; resize:vertical; }
+    input:focus, select:focus, textarea:focus{ outline:2px solid rgba(232,168,32,.4); border-color:var(--accent); }
+    input[type=file]{ padding:10px 14px; }
+    .hint{ font-size:12px; color:var(--muted); margin-top:5px; }
+    .row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    @media (max-width:480px){ .row{ grid-template-columns:1fr; } }
+    .btn{ width:100%; margin-top:24px; font:inherit; font-weight:800; font-size:16px; border:none;
+          border-radius:12px; padding:14px; cursor:pointer; background:var(--accent); color:var(--on-gold); }
+    .btn:hover{ box-shadow:0 4px 16px rgba(232,168,32,.45); }
+    .btn:disabled{ opacity:.6; cursor:default; box-shadow:none; }
+    .msg{ margin-top:16px; font-size:14px; min-height:18px; }
+    .msg--err{ color:var(--red); }
+    .job-badge{ display:inline-block; background:rgba(232,168,32,.16); color:#8C6006; font-weight:700;
+                font-size:13px; padding:5px 12px; border-radius:100px; margin-bottom:14px; }
+    /* Екран подяки */
+    .done{ text-align:center; }
+    .done .tick{ width:64px; height:64px; border-radius:50%; background:rgba(26,127,55,.12); color:var(--green);
+                 display:flex; align-items:center; justify-content:center; font-size:34px; margin:0 auto 16px; }
+    .done h1{ margin-bottom:8px; }
+    [hidden]{ display:none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="brand"><img src="Вулик-лого.png" alt="Вулик"><span>Вулик</span></div>
+
+  <div class="card">
+    <!-- Форма -->
+    <form id="applyForm">
+      <div id="jobBadge" class="job-badge" hidden></div>
+      <h1 id="heading">Долучитися до команди</h1>
+      <p class="lead" id="lead">Заповніть форму — і ми звʼяжемося з вами. Резюме можна додати файлом.</p>
+
+      <label for="full_name">Імʼя та прізвище <span class="req">*</span></label>
+      <input id="full_name" type="text" autocomplete="name" required placeholder="Оксана Петренко">
+
+      <div class="row">
+        <div>
+          <label for="email">Email</label>
+          <input id="email" type="email" autocomplete="email" placeholder="name@example.com">
+        </div>
+        <div>
+          <label for="phone">Телефон</label>
+          <input id="phone" type="tel" autocomplete="tel" placeholder="+380…">
+        </div>
+      </div>
+      <div class="hint">Вкажіть хоча б один спосіб звʼязку — email або телефон.</div>
+
+      <!-- Загальний режим: вибір позиції -->
+      <div id="posWrap" hidden>
+        <label for="position_id">Бажана посада</label>
+        <select id="position_id"><option value="">— оберіть зі списку —</option></select>
+      </div>
+
+      <!-- Режим вакансії: очікувана ЗП -->
+      <div id="salWrap" hidden>
+        <label for="salary_expectation">Очікувана зарплата, грн</label>
+        <input id="salary_expectation" type="number" min="0" step="500" placeholder="напр. 25000">
+      </div>
+
+      <label for="message" id="msgLabel">Кілька слів про себе</label>
+      <textarea id="message" placeholder="Досвід, чому саме «Вулик», зручний час для дзвінка…"></textarea>
+
+      <label for="resume">Резюме (PDF, DOC — за наявності)</label>
+      <input id="resume" type="file" accept=".pdf,.doc,.docx,.rtf,.odt,image/*">
+
+      <button id="submitBtn" class="btn" type="submit">Надіслати</button>
+      <div id="formMsg" class="msg"></div>
+    </form>
+
+    <!-- Подяка -->
+    <div id="done" class="done" hidden>
+      <div class="tick">✓</div>
+      <h1>Дякуємо!</h1>
+      <p class="lead" id="doneText">Ваша заявка отримана. Ми звʼяжемося з вами найближчим часом.</p>
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SB_URL  = 'https://lrahraibulpaagpwyvzj.supabase.co';
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxyYWhyYWlidWxwYWFncHd5dnpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAzMzMyNDcsImV4cCI6MjEwNTkwOTI0N30.BC0fPTDip2jabAHcSCkSiCEh--fsG7Bin7xiEoi1L-Y';
+const FN_URL  = SB_URL + '/functions/v1/apply';
+const sb = supabase.createClient(SB_URL, SB_ANON);
+
+const $ = function (id) { return document.getElementById(id); };
+const params = new URLSearchParams(location.search);
+const jobId = params.get('job');
+let currentJob = null;
+
+async function init() {
+  if (jobId) {
+    // Режим вакансії: показати назву, поле ЗП
+    const { data: job } = await sb.from('jobs').select('id,title,status').eq('id', jobId).maybeSingle();
+    if (job && job.status === 'open') {
+      currentJob = job;
+      $('jobBadge').textContent = 'Вакансія'; $('jobBadge').hidden = false;
+      $('heading').textContent = job.title;
+      $('lead').textContent = 'Відгукніться на цю вакансію. Заповніть форму й додайте резюме.';
+      $('msgLabel').textContent = 'Супровідний лист';
+      $('salWrap').hidden = false;
+      return;
+    }
+    // вакансія недоступна — плавно переходимо в загальний режим
+  }
+  // Загальний режим: підвантажити активні позиції
+  const { data: pos } = await sb.from('positions').select('id,name').eq('active', true).order('sort_order').order('name');
+  $('position_id').innerHTML = '<option value="">— оберіть зі списку —</option>'
+    + (pos || []).map(function (p) { return '<option value="' + p.id + '">' + p.name.replace(/</g, '&lt;') + '</option>'; }).join('');
+  $('posWrap').hidden = false;
+}
+
+$('applyForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const m = $('formMsg'); m.className = 'msg'; m.textContent = '';
+  const name = $('full_name').value.trim();
+  const email = $('email').value.trim();
+  const phone = $('phone').value.trim();
+  if (!name) { m.className = 'msg msg--err'; m.textContent = 'Вкажіть імʼя.'; return; }
+  if (!email && !phone) { m.className = 'msg msg--err'; m.textContent = 'Вкажіть email або телефон.'; return; }
+
+  const fd = new FormData();
+  fd.append('full_name', name);
+  fd.append('email', email);
+  fd.append('phone', phone);
+  fd.append('message', $('message').value.trim());
+  if (currentJob) {
+    fd.append('job_id', currentJob.id);
+    if ($('salary_expectation').value) fd.append('salary_expectation', $('salary_expectation').value);
+  } else if ($('position_id').value) {
+    fd.append('position_id', $('position_id').value);
+  }
+  const file = $('resume').files[0];
+  if (file) fd.append('resume', file);
+
+  const btn = $('submitBtn'); btn.disabled = true; btn.textContent = 'Надсилаємо…';
+  try {
+    const res = await fetch(FN_URL, { method: 'POST', headers: { Authorization: 'Bearer ' + SB_ANON }, body: fd });
+    const out = await res.json().catch(function () { return {}; });
+    if (!res.ok || out.error) throw new Error(out.error || ('HTTP ' + res.status));
+    $('applyForm').hidden = true;
+    if (currentJob) $('doneText').textContent = 'Ваш відгук на «' + currentJob.title + '» отримано. Ми звʼяжемося з вами найближчим часом.';
+    $('done').hidden = false;
+  } catch (err) {
+    m.className = 'msg msg--err'; m.textContent = 'Не вдалося надіслати: ' + err.message;
+    btn.disabled = false; btn.textContent = 'Надіслати';
+  }
+});
+
+init();
+</script>
+</body>
+</html>
