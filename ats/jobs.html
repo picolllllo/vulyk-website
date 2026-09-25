@@ -39,6 +39,10 @@
           <input id="f_location" type="text" placeholder="напр. вул. Стрийська, 86В">
         </div>
         <div>
+          <label for="f_employment">Зайнятість</label>
+          <input id="f_employment" type="text" placeholder="напр. Повна зайнятість · 5 год/день">
+        </div>
+        <div>
           <label for="f_status">Статус</label>
           <select id="f_status">
             <option value="draft">Чернетка</option>
@@ -49,7 +53,8 @@
         </div>
         <div class="full">
           <label for="f_description">Опис</label>
-          <textarea id="f_description" placeholder="Обов'язки, вимоги, умови…"></textarea>
+          <textarea id="f_description" placeholder="Обов'язки, вимоги, умови…" style="min-height:220px"></textarea>
+          <div class="sub" style="margin-top:6px">Форматування: <code>## Заголовок розділу</code> · <code>- пункт списку</code> · <code>**жирний**</code>. Порожній рядок = новий абзац. Саме так опис показується на сторінці вакансії.</div>
         </div>
       </div>
       <div class="form-actions">
@@ -132,6 +137,7 @@ function openForm(job) {
   el('formTitle').textContent = job ? 'Редагувати вакансію' : 'Нова вакансія';
   el('f_title').value = job ? (job.title || '') : '';
   el('f_location').value = job ? (job.location || '') : '';
+  el('f_employment').value = job ? (job.employment || '') : '';
   el('f_status').value = job ? job.status : 'draft';
   el('f_description').value = job ? (job.description || '') : '';
   el('formMsg').textContent = '';
@@ -146,6 +152,7 @@ async function saveJob() {
   const payload = {
     title: title,
     location: el('f_location').value.trim() || null,
+    employment: el('f_employment').value.trim() || null,
     status: el('f_status').value,
     description: el('f_description').value.trim() || null
   };

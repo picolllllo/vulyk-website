@@ -240,64 +240,11 @@
     <a href="mailto:hr@vulyk.clinic" class="careers__contact-mail">hr@vulyk.clinic</a>
   </aside>
 
-  <div class="roles">
-
-    <!-- 008 -->
-    <div class="role">
-      <div class="role__top">
-        <div class="role__main">
-          <div class="role__label">Відкрита вакансія № 008</div>
-          <h2 class="role__title"><a href="vacancy-008.html">Сімейний лікар</a></h2>
-          <div class="role__meta"><span>Повна зайнятість</span><span class="dot"></span><span>вул. Стрийська, 86В</span></div>
-        </div>
-        <a href="vacancy-008.html" class="role__apply">Детальніше
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- 009 -->
-    <div class="role">
-      <div class="role__top">
-        <div class="role__main">
-          <div class="role__label">Відкрита вакансія № 009</div>
-          <h2 class="role__title"><a href="vacancy-009.html">Лікар-педіатр</a></h2>
-          <div class="role__meta"><span>Повна зайнятість</span><span class="dot"></span><span>вул. Стрийська, 86В / Тичини, 21</span></div>
-        </div>
-        <a href="vacancy-009.html" class="role__apply">Детальніше
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- 010 -->
-    <div class="role">
-      <div class="role__top">
-        <div class="role__main">
-          <div class="role__label">Відкрита вакансія № 010</div>
-          <h2 class="role__title"><a href="vacancy-010.html">Бухгалтер</a></h2>
-          <div class="role__meta"><span>Повна зайнятість</span><span class="dot"></span><span>вул. Стрийська, 86В</span></div>
-        </div>
-        <a href="vacancy-010.html" class="role__apply">Детальніше
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- 011 -->
-    <div class="role">
-      <div class="role__top">
-        <div class="role__main">
-          <div class="role__label">Відкрита вакансія № 011</div>
-          <h2 class="role__title"><a href="vacancy-011.html">Лікар УЗД-діагностики</a></h2>
-          <div class="role__meta"><span>Часткова зайнятість</span><span class="dot"></span><span>вул. Стрийська, 86В</span></div>
-        </div>
-        <a href="vacancy-011.html" class="role__apply">Детальніше
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </div>
-
+  <div class="roles" id="rolesList">
+    <div class="role"><div class="role__top"><div class="role__main"><div class="role__meta"><span>Завантаження вакансій…</span></div></div></div></div>
+  </div>
+  <div id="rolesEmpty" class="roles" hidden>
+    <div class="role"><div class="role__top"><div class="role__main"><div class="role__meta"><span>Наразі відкритих вакансій немає. Ви можете подати резюме у формі нижче — ми звернемося, щойно з'явиться відповідна позиція.</span></div></div></div></div>
   </div>
 </main>
 
@@ -388,6 +335,36 @@
         btn.disabled = false; btn.innerHTML = oldHtml;
       });
   });
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  var SB_URL  = 'https://lrahraibulpaagpwyvzj.supabase.co';
+  var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxyYWhyYWlidWxwYWFncHd5dnpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAzMzMyNDcsImV4cCI6MjEwNTkwOTI0N30.BC0fPTDip2jabAHcSCkSiCEh--fsG7Bin7xiEoi1L-Y';
+  var sb = supabase.createClient(SB_URL, SB_ANON);
+  var ARROW = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M8 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function esc(s) { return (s == null ? '' : ('' + s)).replace(/[&<>"]/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]; }); }
+  (async function () {
+    var list = document.getElementById('rolesList');
+    var res = await sb.from('jobs').select('*').eq('status', 'open').order('created_at', { ascending: true });
+    if (res.error) { list.innerHTML = '<div class="role"><div class="role__top"><div class="role__main"><div class="role__meta"><span>Не вдалося завантажити вакансії.</span></div></div></div></div>'; return; }
+    var jobs = res.data || [];
+    if (!jobs.length) { list.hidden = true; document.getElementById('rolesEmpty').hidden = false; return; }
+    list.innerHTML = jobs.map(function (j) {
+      var meta = [];
+      if (j.employment) meta.push('<span>' + esc(j.employment) + '</span>');
+      if (j.location) meta.push('<span>' + esc(j.location) + '</span>');
+      var url = 'vacancy.html?job=' + j.id;
+      return '<div class="role"><div class="role__top"><div class="role__main">'
+        + '<div class="role__label">Відкрита вакансія</div>'
+        + '<h2 class="role__title"><a href="' + url + '">' + esc(j.title) + '</a></h2>'
+        + '<div class="role__meta">' + meta.join('<span class="dot"></span>') + '</div></div>'
+        + '<a href="' + url + '" class="role__apply">Детальніше ' + ARROW + '</a>'
+        + '</div></div>';
+    }).join('');
+  })();
 })();
 </script>
 

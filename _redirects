@@ -1,0 +1,5 @@
+# Старі статичні сторінки вакансій → динамічні (ATS). Cloudflare Pages, 301.
+/vacancy-008.html  /vacancy.html?job=564bb4c0-3ed4-4b5b-8b9a-dd01c071d9b0  301
+/vacancy-009.html  /vacancy.html?job=a4d981ae-072a-47e0-9392-826a28d96e1c  301
+/vacancy-010.html  /vacancy.html?job=6efc79cf-15b8-4ec3-ac5b-163dd8beffc2  301
+/vacancy-011.html  /vacancy.html?job=ff4ec63c-2d39-4736-a5d6-e75b653e3578  301

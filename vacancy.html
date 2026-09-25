@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вакансія: Бухгалтер — Вулик, Львів</title>
+  <title>Вакансія — Вулик, Львів</title>
 
   <!-- SEO meta -->
-  <meta name="description" content="Амбулаторія «Вулик» у Львові шукає бухгалтера. Умови роботи, вимоги та контакти для відгуку на вакансію.">
-  <link rel="canonical" href="https://www.vulyk.clinic/vacancy-010.html">
+  <meta name="description" content="Амбулаторія «Вулик» у Львові шукає сімейного лікаря. Умови роботи, вимоги та контакти для відгуку на вакансію.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Вулик — сімейна амбулаторія">
   <meta property="og:locale" content="uk_UA">
-  <meta property="og:title" content="Вакансія: Бухгалтер — Вулик, Львів">
-  <meta property="og:description" content="Амбулаторія «Вулик» у Львові шукає бухгалтера. Умови роботи, вимоги та контакти для відгуку на вакансію.">
-  <meta property="og:url" content="https://www.vulyk.clinic/vacancy-010.html">
+  <meta property="og:title" content="Вакансія — Вулик, Львів">
+  <meta property="og:description" content="Амбулаторія «Вулик» у Львові шукає сімейного лікаря. Умови роботи, вимоги та контакти для відгуку на вакансію.">
+  <meta property="og:url" content="https://www.vulyk.clinic/vacancies.html">
   <meta property="og:image" content="https://www.vulyk.clinic/assets/og-default.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <!-- /SEO meta -->
@@ -165,7 +164,7 @@
   </div>
 </header>
 
-<!-- ═══════════════ VACANCY DETAIL ═══════════════ -->
+<!-- ═══════════════ VACANCY DETAIL (динамічно з ATS) ═══════════════ -->
 <main class="vac-detail">
 
   <a href="vacancies.html" class="vac-detail__back">
@@ -179,110 +178,37 @@
     <img src="Vacancies/VYLUK_COMANDA_STRUISKA3.jpg" alt="Команда Вулик">
   </div>
 
-  <div class="vac-detail__num">Вакансія № 010</div>
-  <h1 class="vac-detail__title">Бухгалтер</h1>
-  <div class="vac-detail__meta">
-    <span class="vac-detail__badge">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-      вул. Стрийська, 86В
-    </span>
-    <span class="vac-detail__badge">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-      Повна зайнятість · 8 год/день
-    </span>
-  </div>
+  <h1 class="vac-detail__title" id="vTitle">Завантаження…</h1>
+  <div class="vac-detail__meta" id="vMeta"></div>
+  <div id="vBody"></div>
 
-  <!-- Опис вакансії -->
-  <div class="vac-section">
-    <h2 class="vac-section__title">Опис вакансії</h2>
-    <p>Сімейна амбулаторія «Вулик» шукає бухгалтера на локацію по вул. Стрийська, 86В.</p>
+  <div id="vMissing" hidden>
+    <div class="vac-section">
+      <p>Вакансію не знайдено або її вже закрито. <a href="vacancies.html">Переглянути відкриті вакансії →</a></p>
+    </div>
   </div>
-
-  <!-- Про компанію -->
-  <div class="vac-section">
-    <h2 class="vac-section__title">Про компанію</h2>
-    <p>Сімейна амбулаторія «Вулик» — сучасна мережа амбулаторій, що поєднує державні та приватні медичні послуги у співпраці з НСЗУ. Ми надаємо якісне медичне обслуговування, можливість укладання декларацій і платні послуги, створюючи комфорт для пацієнтів і команди.</p>
-    <p>Наразі «Вулик» має дві локації у Львові (вул. Тичини, 21 та Стрийська, 86В), працює з 2019 року, налічує понад 50 працівників і охоплює ключові напрями медицини — від сімейної та педіатрії до діагностики, хірургії й вузьких спеціалістів.</p>
-  </div>
-
-  <!-- Основні компетенції -->
-  <div class="vac-section">
-    <h2 class="vac-section__title">Основні компетенції</h2>
-    <p><strong>Професійність.</strong> Ведення бухгалтерського та податкового обліку (загальна система / спрощена, ПДВ). Нарахування заробітної плати медперсоналу (ставки, відсотки, чергування, сумісництво). Кадровий облік (прийом, звільнення, лікарняні, відпустки). Фінансова звітність та подання звітів до ДПС, ПФУ, статистики. Контроль касової дисципліни, РРО/ПРРО. Знання медичного законодавства у частині фінансів і обліку. Ведення банківської документації у розрізі кредитування за державними програмами.</p>
-    <p><strong>Цифрові навички.</strong> Знання систем BAS, Medoc, СОТА. Вміння аналізувати P&L та CF. Володіння Excel / Google Sheets (зведені таблиці, формули) на рівні досвідченого користувача.</p>
-    <p><strong>Сфокусованість.</strong> Ви уважні до деталей і вмієте сфокусуватись на одній справі, доводячи її до кінця. Ви вмієте працювати з дедлайнами та відповідально до них відноситесь. Ви організовані і вмієте організувати всі необхідні процеси навколо.</p>
-  </div>
-
-  <!-- Основні вимоги -->
-  <div class="vac-section">
-    <h2 class="vac-section__title">Основні вимоги</h2>
-    <ul>
-      <li>Дотримуватись цінностей Вулика: людино-орієнтованість, доказова медицина, професіоналізм</li>
-      <li>Вища освіта у сфері бухгалтерського обліку / фінансів / економіки</li>
-      <li>Впевнене знання податкового законодавства України</li>
-      <li>Володіння ПК, Word, Excel, Google Drive, Google Sheets на рівні досвідченого користувача</li>
-      <li>Досвід роботи на аналогічній або суміжній посаді — від 1 року</li>
-    </ul>
-  </div>
-
-  <!-- Обов'язки -->
-  <div class="vac-section">
-    <h2 class="vac-section__title">Обов'язки</h2>
-    <ul>
-      <li>Ведення повного бухгалтерського та податкового обліку клініки</li>
-      <li>Формування та подання податкової, фінансової, статистичної звітності</li>
-      <li>Нарахування заробітної плати (медичний персонал, адміністрація, сумісники, відсотки від послуг)</li>
-      <li>Ведення кадрового обліку (прийом, переведення, звільнення, відпустки, лікарняні)</li>
-      <li>Взаємодія з податковими органами, підготовка відповідей на запити, участь у перевірках</li>
-      <li>Контроль своєчасної сплати податків та зборів</li>
-      <li>Забезпечення збереження бухгалтерської документації та архіву</li>
-    </ul>
-  </div>
-
-  <!-- Ми пропонуємо -->
-  <div class="vac-section">
-    <h2 class="vac-section__title">Ми пропонуємо</h2>
-    <ul>
-      <li>Офіційне працевлаштування на ТОВ</li>
-      <li>Офіційне нарахування відпускних днів — 24 календарні дні на рік</li>
-      <li>8-годинний робочий день з 9:00 до 18:00, понеділок–п'ятниця</li>
-      <li>Заробітна плата <strong>40 000 грн (договірна)</strong></li>
-      <li>Комфортні умови праці: сучасне обладнання, привітний колектив, зручна локація, кухня</li>
-      <li>Кар'єрний ріст: відкрита позиція фінансового директора Вулика у зв'язку з ростом клініки</li>
-    </ul>
-  </div>
-
-  <!-- Стадії інтерв'ю -->
-  <div class="vac-section">
-    <h2 class="vac-section__title">Стадії інтерв'ю</h2>
-    <ul>
-      <li>Знайомство з керівником Вулика</li>
-      <li>Стажування та виконання завдань для оцінки фаховості у команді з бухгалтером Вулика</li>
-      <li>Фінальне інтерв'ю з керівником Вулика, детальне обговорення вашої ролі в компанії та подальших кроків</li>
-    </ul>
-</div>
 
 </main>
 
-<!-- Apply Form -->
-<div class="vac-apply">
-    <div class="vac-apply__cta">
-      <span class="vac-apply__eyebrow">стати частиною Вулика</span>
-      <h2 class="vac-apply__title">Готові приєднатися до команди?</h2>
-      <p class="vac-apply__sub">Заповніть форму — ми зв'яжемося з вами якнайшвидше, або надішліть резюме на пошту.</p>
-      <a href="mailto:hr@vulyk.clinic" class="vac-apply__hint">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        hr@vulyk.clinic
-      </a>
-    </div>
-    <div class="vac-apply__form-wrap" style="display:flex;flex-direction:column;justify-content:center;gap:18px">
-      <p style="font-size:15px;color:rgba(255,255,255,.72);line-height:1.65;margin:0">Заповніть коротку форму на окремій сторінці — і ми зв'яжемося з вами якнайшвидше.</p>
-      <a href="apply.html?job=6efc79cf-15b8-4ec3-ac5b-163dd8beffc2" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;align-self:flex-start;background:#E8A820;color:#241F19;font-weight:800;font-size:16px;text-decoration:none;padding:16px 30px;border-radius:12px">
-        Відгукнутися на вакансію
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-    </div>
+<!-- Apply CTA -->
+<div class="vac-apply" id="vApply" hidden>
+  <div class="vac-apply__cta">
+    <span class="vac-apply__eyebrow">стати частиною Вулика</span>
+    <h2 class="vac-apply__title">Готові приєднатися до команди?</h2>
+    <p class="vac-apply__sub">Заповніть коротку форму і ми зв'яжемося з вами якнайшвидше.</p>
+    <a href="mailto:hr@vulyk.clinic" class="vac-apply__hint">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      hr@vulyk.clinic
+    </a>
   </div>
+  <div class="vac-apply__form-wrap" style="display:flex;flex-direction:column;justify-content:center;gap:18px">
+    <p style="font-size:15px;color:rgba(255,255,255,.72);line-height:1.65;margin:0">Заповніть коротку форму і ми зв'яжемося з вами якнайшвидше.</p>
+    <a id="vApplyBtn" href="#" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;align-self:flex-start;background:#E8A820;color:#241F19;font-weight:800;font-size:16px;text-decoration:none;padding:16px 30px;border-radius:12px">
+      Відгукнутися на вакансію
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</div>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
 <footer class="footer">
@@ -372,6 +298,64 @@
 <script src="booking-modal.js?v=2"></script>
   <script src="cookie-consent.js?v=1"></script>
   <script src="ga-tracking.js?v=1"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  var SB_URL  = 'https://lrahraibulpaagpwyvzj.supabase.co';
+  var SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxyYWhyYWlidWxwYWFncHd5dnpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAzMzMyNDcsImV4cCI6MjEwNTkwOTI0N30.BC0fPTDip2jabAHcSCkSiCEh--fsG7Bin7xiEoi1L-Y';
+  var sb = supabase.createClient(SB_URL, SB_ANON);
+  var jobId = new URLSearchParams(location.search).get('job');
+  var $ = function (id) { return document.getElementById(id); };
+
+  function esc(s) { return (s == null ? '' : ('' + s)).replace(/[&<>"]/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]; }); }
+  function inline(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
+
+  function renderMarkdown(md) {
+    var lines = String(md || '').replace(/\r/g, '').split('\n');
+    var html = '', list = null, para = [], sec = false;
+    function flushPara() { if (para.length) { html += '<p>' + inline(para.join(' ')) + '</p>'; para = []; } }
+    function flushList() { if (list) { html += '<ul>' + list + '</ul>'; list = null; } }
+    function closeSec() { flushPara(); flushList(); if (sec) { html += '</div>'; sec = false; } }
+    lines.forEach(function (raw) {
+      var line = raw.trim();
+      if (line === '') { flushPara(); flushList(); return; }
+      if (line.indexOf('## ') === 0) { closeSec(); html += '<div class="vac-section"><h2 class="vac-section__title">' + esc(line.slice(3)) + '</h2>'; sec = true; return; }
+      if (line.indexOf('- ') === 0) { flushPara(); list = (list || '') + '<li>' + inline(line.slice(2)) + '</li>'; return; }
+      para.push(line);
+    });
+    closeSec();
+    return html;
+  }
+
+  var PIN = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>';
+  var CLK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>';
+  function badge(icon, text) { return '<span class="vac-detail__badge">' + icon + ' ' + esc(text) + '</span>'; }
+
+  function showMissing() {
+    $('vTitle').style.display = 'none';
+    $('vMissing').hidden = false;
+    document.title = 'Вакансію не знайдено — Вулик';
+  }
+
+  (async function () {
+    if (!jobId) { showMissing(); return; }
+    var res = await sb.from('jobs').select('*').eq('id', jobId).maybeSingle();
+    var job = res.data;
+    if (res.error || !job || job.status !== 'open') { showMissing(); return; }
+    document.title = 'Вакансія: ' + job.title + ' — Вулик, Львів';
+    $('vTitle').textContent = job.title;
+    var badges = [];
+    if (job.location) badges.push(badge(PIN, job.location));
+    if (job.employment) badges.push(badge(CLK, job.employment));
+    $('vMeta').innerHTML = badges.join('');
+    $('vBody').innerHTML = renderMarkdown(job.description);
+    $('vApplyBtn').href = 'apply.html?job=' + job.id;
+    $('vApply').hidden = false;
+  })();
+})();
+</script>
+
 </body>
 </html>
 
