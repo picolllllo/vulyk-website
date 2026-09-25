@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ATS · Вакансія · Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ats.css">
+  <style>
+    .back{ background:none; border:none; color:var(--muted); cursor:pointer; font:inherit; font-weight:600; padding:0; margin-bottom:14px; }
+    .back:hover{ color:var(--accent-deep); }
+    .job-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:6px; }
+    .job-title{ font-size:24px; margin:0 0 6px; }
+    .job-meta{ color:var(--muted); font-size:14px; display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+    .stack{ display:flex; flex-direction:column; gap:22px; }
+    .box{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; }
+    .box h3{ margin:0 0 12px; font-size:15px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+
+    /* Опис — згортний */
+    details.desc{ padding:0; }
+    details.desc > summary{ list-style:none; cursor:pointer; padding:16px 22px; font-size:15px; font-weight:800;
+      text-transform:uppercase; letter-spacing:.04em; color:var(--muted); display:flex; align-items:center; justify-content:space-between; }
+    details.desc > summary::-webkit-details-marker{ display:none; }
+    details.desc > summary .chev{ transition:transform .18s; color:var(--accent-deep); font-size:13px; }
+    details.desc[open] > summary .chev{ transform:rotate(180deg); }
+    details.desc .desc-body{ padding:0 22px 20px; }
+    .desc-body .vac-section{ margin:0 0 18px; }
+    .desc-body .vac-section__title{ font-size:16px; font-weight:800; margin:0 0 8px; color:var(--text); }
+    .desc-body p{ margin:0 0 10px; line-height:1.6; font-size:14px; }
+    .desc-body ul{ margin:0 0 10px; padding-left:20px; }
+    .desc-body li{ margin:4px 0; font-size:14px; line-height:1.5; }
+
+    /* Канбан */
+    /* Воронка — без зовнішньої рамки, на всю ширину */
+    .pipe__title{ margin:0 0 12px; font-size:15px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+    .board{ display:grid; grid-template-columns:repeat(6, 1fr); gap:12px; }
+    @media (max-width:1000px){ .board{ grid-template-columns:repeat(3, 1fr); } }
+    @media (max-width:600px){ .board{ grid-template-columns:repeat(2, 1fr); } }
+    .col{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px; min-height:120px; min-width:0; }
+    .col__head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding:0 2px; }
+    .stage-pill{ font-size:12px; font-weight:700; padding:3px 11px; border-radius:100px; }
+    .col__count{ color:var(--muted); font-weight:800; font-size:13px; padding-right:4px; }
+    .card{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 11px; margin-bottom:8px; }
+    .card__name{ font-weight:700; font-size:14px; text-decoration:none; color:var(--text); }
+    .card__name:hover{ color:var(--accent-deep); }
+    .card__meta{ font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4; }
+    .card__foot{ margin-top:8px; }
+    .card select{ width:100%; font:inherit; font-size:12px; padding:5px 7px; border:1px solid var(--line); border-radius:7px; background:#fff; cursor:pointer; }
+    .col--empty{ color:#b0b0b3; font-size:12px; text-align:center; padding:14px 4px; }
+    .pipe-empty{ color:var(--muted); font-size:14px; }
+
+    /* Нотатки команди */
+    .tnote{ border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:10px; background:#fcfcfb; }
+    .tnote__head{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); margin-bottom:5px; }
+    .tnote__author{ font-weight:800; color:var(--text); }
+    .tnote__acts{ margin-left:auto; display:flex; gap:4px; }
+    .tnote__acts button{ background:none; border:none; cursor:pointer; color:var(--muted); font:inherit; font-size:12px; font-weight:700; padding:2px 6px; border-radius:6px; }
+    .tnote__acts button:hover{ background:var(--hover); color:var(--accent-deep); }
+    .tnote__text{ font-size:14px; white-space:pre-wrap; line-height:1.5; }
+    .tnote__edited{ font-style:italic; }
+    .note-add{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; margin-top:6px; }
+    .note-add textarea{ min-height:80px; }
+    .edit-actions{ display:flex; gap:8px; margin-top:8px; }
+  </style>
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="wrap">
+  <div id="noAccess" class="notice" hidden>
+    <h2>Немає доступу</h2>
+    <p>Цей акаунт не має ролі <b>hr</b>. Зверніться до адміністратора.</p>
+  </div>
+
+  <div id="panel" hidden>
+    <button class="back" id="backBtn">← До списку вакансій</button>
+
+    <div class="job-head">
+      <div>
+        <h2 class="job-title" id="jTitle"></h2>
+        <div class="job-meta" id="jMeta"></div>
+      </div>
+      <div style="display:flex; gap:8px; white-space:nowrap">
+        <a id="viewPublic" class="btn btn--ghost btn--sm" target="_blank" rel="noopener">Сторінка на сайті ↗</a>
+        <a id="editLink" class="btn btn--ghost btn--sm" href="jobs.html">Редагувати</a>
+      </div>
+    </div>
+
+    <div id="notFound" class="notice" hidden><h2>Вакансію не знайдено</h2></div>
+
+    <div class="stack" id="content" hidden>
+
+      <!-- Опис (згорнутий) -->
+      <details class="box desc" id="descBox">
+        <summary>Опис вакансії <span class="chev">▼</span></summary>
+        <div class="desc-body" id="jDesc"></div>
+      </details>
+
+      <!-- Воронка (без зовнішньої рамки) -->
+      <div class="pipe">
+        <h3 class="pipe__title">Воронка кандидатів</h3>
+        <div id="pipeEmpty" class="pipe-empty" hidden>На цю вакансію ще немає заявок.</div>
+        <div class="board" id="board"></div>
+      </div>
+
+      <!-- Нотатки команди (без зовнішньої рамки) -->
+      <div class="notes">
+        <h3 class="pipe__title">Нотатки команди</h3>
+        <div id="notesList"></div>
+        <div class="note-add">
+          <textarea id="noteInput" placeholder="Написати нотатку для команди…"></textarea>
+          <button id="addNoteBtn" class="btn btn--primary">Додати</button>
+        </div>
+        <div id="notesMsg" class="msg"></div>
+      </div>
+
+    </div>
+    <div id="msg" class="msg"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+const STAGE = { new:'Новий', review:'Розгляд', interview:'Співбесіда', offer:'Оффер', hired:'Найнято', rejected:'Відмова' };
+const STAGE_ORDER = ['new','review','interview','offer','hired','rejected'];
+const STAGE_TINT = {
+  new:       { bg:'#eceef1', fg:'#5b6673' },
+  review:    { bg:'#e5edff', fg:'#2563eb' },
+  interview: { bg:'#f0e9ff', fg:'#7c3aed' },
+  offer:     { bg:'#fbedcf', fg:'#8C6006' },
+  hired:     { bg:'#e4f4ea', fg:'#1a7f37' },
+  rejected:  { bg:'#fde7e7', fg:'#b3261e' }
+};
+const SOURCE = { direct:'Прямий', agency:'Агенція', referral:'Рекомендація', other:'Інше' };
+
+const jobId = new URLSearchParams(location.search).get('id');
+let apps = [];
+let notes = [];
+let editingNote = null;
+
+function initJob() {
+  el('panel').hidden = false;
+  if (!jobId) { el('notFound').hidden = false; return; }
+  loadJob();
+}
+
+/* --- markdown --- */
+function inlineMd(s) { return escapeHtml(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
+function renderMarkdown(md) {
+  const lines = String(md || '').replace(/\r/g, '').split('\n');
+  let html = '', list = null, para = [], sec = false;
+  function flushPara() { if (para.length) { html += '<p>' + inlineMd(para.join(' ')) + '</p>'; para = []; } }
+  function flushList() { if (list) { html += '<ul>' + list + '</ul>'; list = null; } }
+  function closeSec() { flushPara(); flushList(); if (sec) { html += '</div>'; sec = false; } }
+  lines.forEach(function (raw) {
+    const line = raw.trim();
+    if (line === '') { flushPara(); flushList(); return; }
+    if (line.indexOf('## ') === 0) { closeSec(); html += '<div class="vac-section"><h4 class="vac-section__title">' + escapeHtml(line.slice(3)) + '</h4>'; sec = true; return; }
+    if (line.indexOf('- ') === 0) { flushPara(); list = (list || '') + '<li>' + inlineMd(line.slice(2)) + '</li>'; return; }
+    para.push(line);
+  });
+  closeSec();
+  return html;
+}
+
+async function loadJob() {
+  const { data: job, error } = await sb.from('jobs').select('*').eq('id', jobId).maybeSingle();
+  if (error) { flash(el('msg'), error.message, false); return; }
+  if (!job) { el('notFound').hidden = false; return; }
+
+  document.title = 'ATS · ' + job.title + ' · Вулик';
+  el('jTitle').textContent = job.title;
+  const meta = [];
+  meta.push('<span class="pill pill--' + job.status + '">' + ({draft:'Чернетка',open:'Відкрита',paused:'Пауза',closed:'Закрита'}[job.status]) + '</span>');
+  if (job.location) meta.push('<span>' + escapeHtml(job.location) + '</span>');
+  if (job.employment) meta.push('<span>' + escapeHtml(job.employment) + '</span>');
+  el('jMeta').innerHTML = meta.join('');
+
+  const vp = el('viewPublic');
+  if (job.status === 'open') { vp.href = '../vacancy.html?job=' + job.id; vp.style.display = ''; }
+  else { vp.style.display = 'none'; }
+
+  el('jDesc').innerHTML = job.description ? renderMarkdown(job.description) : '<p class="pipe-empty">Опис не заповнено.</p>';
+  el('content').hidden = false;
+
+  await loadPipeline();
+  await loadNotes();
+}
+
+async function loadPipeline() {
+  const { data, error } = await sb.from('applications')
+    .select('id,stage,salary_expectation,salary_currency,created_at, candidates(id,full_name,source,email,phone)')
+    .eq('job_id', jobId)
+    .order('created_at', { ascending: true });
+  if (error) { flash(el('msg'), error.message, false); return; }
+  apps = data || [];
+  el('pipeEmpty').hidden = apps.length > 0;
+  renderBoard();
+}
+
+function renderBoard() {
+  const byStage = {};
+  STAGE_ORDER.forEach(function (s) { byStage[s] = []; });
+  apps.forEach(function (a) { (byStage[a.stage] = byStage[a.stage] || []).push(a); });
+
+  el('board').innerHTML = STAGE_ORDER.map(function (s) {
+    const tint = STAGE_TINT[s];
+    const cards = (byStage[s] || []).map(function (a) {
+      const c = a.candidates || {};
+      const sal = a.salary_expectation ? (a.salary_expectation.toLocaleString('uk-UA') + ' ' + a.salary_currency) : '';
+      const opts = STAGE_ORDER.map(function (x) {
+        return '<option value="' + x + '"' + (x === a.stage ? ' selected' : '') + '>' + STAGE[x] + '</option>';
+      }).join('');
+      const bits = [SOURCE[c.source] || ''];
+      if (sal) bits.push('Очік.: ' + sal);
+      return '<div class="card">'
+        + '<a class="card__name" href="candidates.html?candidate=' + c.id + '">' + escapeHtml(c.full_name || '—') + '</a>'
+        + '<div class="card__meta">' + bits.filter(Boolean).map(escapeHtml).join(' · ') + '</div>'
+        + '<div class="card__foot"><select data-app="' + a.id + '">' + opts + '</select></div>'
+        + '</div>';
+    }).join('');
+    return '<div class="col">'
+      + '<div class="col__head"><span class="stage-pill" style="background:' + tint.bg + ';color:' + tint.fg + '">' + STAGE[s] + '</span>'
+      +   '<span class="col__count">' + (byStage[s] || []).length + '</span></div>'
+      + (cards || '<div class="col--empty">—</div>')
+      + '</div>';
+  }).join('');
+}
+
+/* --- Нотатки команди --- */
+async function loadNotes() {
+  const { data, error } = await sb.from('job_notes')
+    .select('*, users(full_name,email)')
+    .eq('job_id', jobId)
+    .order('created_at', { ascending: true });
+  if (error) {
+    el('notesList').innerHTML = '<div class="pipe-empty">Не вдалося завантажити нотатки: ' + escapeHtml(error.message) + '</div>';
+    return;
+  }
+  notes = data || [];
+  renderNotes();
+}
+
+function noteAuthor(n) {
+  const u = n.users || {};
+  return u.full_name || u.email || 'HR';
+}
+
+function renderNotes() {
+  if (!notes.length) { el('notesList').innerHTML = '<div class="pipe-empty" style="margin-bottom:10px">Поки що немає нотаток. Почніть обговорення нижче.</div>'; return; }
+  el('notesList').innerHTML = notes.map(function (n) {
+    const dt = new Date(n.created_at).toLocaleString('uk-UA', { dateStyle: 'short', timeStyle: 'short' });
+    const edited = (n.updated_at && n.updated_at !== n.created_at) ? ' <span class="tnote__edited">· ред.</span>' : '';
+    const mine = ATS.user && n.author_id === ATS.user.id;
+    if (editingNote === n.id) {
+      return '<div class="tnote" data-id="' + n.id + '">'
+        + '<div class="tnote__head"><span class="tnote__author">' + escapeHtml(noteAuthor(n)) + '</span><span>' + dt + '</span></div>'
+        + '<textarea data-role="editbox">' + escapeHtml(n.text) + '</textarea>'
+        + '<div class="edit-actions"><button class="btn btn--primary btn--sm" data-act="save">Зберегти</button>'
+        + '<button class="btn btn--ghost btn--sm" data-act="canceledit">Скасувати</button></div>'
+        + '</div>';
+    }
+    const acts = mine
+      ? '<span class="tnote__acts"><button data-act="edit">Редагувати</button><button data-act="del">Видалити</button></span>'
+      : '';
+    return '<div class="tnote" data-id="' + n.id + '">'
+      + '<div class="tnote__head"><span class="tnote__author">' + escapeHtml(noteAuthor(n)) + '</span><span>' + dt + edited + '</span>' + acts + '</div>'
+      + '<div class="tnote__text">' + escapeHtml(n.text) + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+async function addNote() {
+  const text = el('noteInput').value.trim();
+  if (!text) return;
+  const { error } = await sb.from('job_notes').insert({ job_id: jobId, author_id: ATS.user.id, text: text });
+  if (error) { flash(el('notesMsg'), error.message, false); return; }
+  el('noteInput').value = '';
+  loadNotes();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  el('backBtn').addEventListener('click', function () { location.href = 'jobs.html'; });
+  el('addNoteBtn').addEventListener('click', addNote);
+
+  // зміна етапу заявки
+  el('board').addEventListener('change', async function (e) {
+    const sel = e.target.closest('select[data-app]'); if (!sel) return;
+    const appId = sel.getAttribute('data-app');
+    const { error } = await sb.from('applications').update({ stage: sel.value }).eq('id', appId);
+    if (error) { flash(el('msg'), error.message, false); return; }
+    flash(el('msg'), 'Етап оновлено', true);
+    loadPipeline();
+  });
+
+  // дії з нотатками
+  el('notesList').addEventListener('click', async function (e) {
+    const btn = e.target.closest('button[data-act]'); if (!btn) return;
+    const wrap = e.target.closest('.tnote'); const id = wrap.getAttribute('data-id');
+    const act = btn.getAttribute('data-act');
+    if (act === 'edit') { editingNote = id; renderNotes(); }
+    else if (act === 'canceledit') { editingNote = null; renderNotes(); }
+    else if (act === 'save') {
+      const val = wrap.querySelector('textarea[data-role="editbox"]').value.trim();
+      if (!val) return;
+      const { error } = await sb.from('job_notes').update({ text: val }).eq('id', id);
+      if (error) { flash(el('notesMsg'), error.message, false); return; }
+      editingNote = null; loadNotes();
+    } else if (act === 'del') {
+      if (!confirm('Видалити нотатку?')) return;
+      const { error } = await sb.from('job_notes').delete().eq('id', id);
+      if (error) { flash(el('notesMsg'), error.message, false); return; }
+      loadNotes();
+    }
+  });
+
+  atsGuard('jobs.html', initJob);
+});
+</script>
+</body>
+</html>

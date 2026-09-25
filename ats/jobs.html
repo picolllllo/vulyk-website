@@ -119,7 +119,7 @@ function render() {
       return '<option value="' + s + '"' + (s === j.status ? ' selected' : '') + '>' + STATUS[s] + '</option>';
     }).join('');
     return '<tr data-id="' + j.id + '">'
-      + '<td><b>' + escapeHtml(j.title) + '</b></td>'
+      + '<td><a href="job.html?id=' + j.id + '" style="font-weight:700;color:var(--text);text-decoration:none">' + escapeHtml(j.title) + '</a></td>'
       + '<td>' + escapeHtml(j.location || '—') + '</td>'
       + '<td><select data-role="status" class="pill pill--' + j.status + '" '
       +      'style="border:none;font-weight:700;cursor:pointer;padding:4px 8px">' + opts + '</select></td>'

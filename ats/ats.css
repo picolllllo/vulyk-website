@@ -1,6 +1,6 @@
 /* ATS «Вулик» — спільні стилі */
 :root{
-  --bg:#fff; --card:#fff; --line:rgba(0,0,0,.1); --text:#1a1a1a; --muted:#7a736a;
+  --bg:#fff; --card:#fff; --line:rgba(0,0,0,.1); --text:#1a1a1a; --muted:#6b7280;
   --accent:#E8A820; --accent-deep:#E8A820; --green:#1a7f37; --red:#b3261e;
   --hover:rgba(232,168,32,.10); --head:#f6f6f4;
 }

@@ -207,7 +207,10 @@ const SOURCE = { direct:'Прямий', agency:'Агенція', referral:'Ре�
 
 function initCandidates() {
   el('listPanel').hidden = false;
-  loadRefs().then(loadCandidates);
+  loadRefs().then(loadCandidates).then(function () {
+    const cid = new URLSearchParams(location.search).get('candidate');
+    if (cid) openCandidate(cid);
+  });
 }
 
 async function loadRefs() {
