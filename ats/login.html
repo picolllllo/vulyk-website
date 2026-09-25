@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ATS · Вхід · Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ats.css">
+</head>
+<body>
+
+<div id="cfgWarn" class="notice" hidden>
+  <h2>Треба вписати ключ Supabase</h2>
+  <p>У файлі <b>ats/app.js</b> у блоці <code>CONFIG</code> впишіть <code>SB_ANON</code> — ваш anon public key.</p>
+</div>
+
+<div id="loginView" class="login" hidden>
+  <h1>ATS «Вулик»</h1>
+  <p>Вхід для HR</p>
+  <form id="loginForm">
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="username" required>
+    <label for="pass">Пароль</label>
+    <input id="pass" type="password" autocomplete="current-password" required>
+    <div style="margin-top:18px"><button class="btn btn--primary" type="submit" style="width:100%">Увійти</button></div>
+    <div id="loginMsg" class="msg"></div>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+(async function () {
+  if (!SB_ANON || SB_ANON.indexOf('PASTE') === 0) { el('cfgWarn').hidden = false; return; }
+  // якщо вже залогінений — одразу до вакансій
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) { location.href = 'jobs.html'; return; }
+  el('loginView').hidden = false;
+
+  el('loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const m = el('loginMsg'); m.className = 'msg'; m.textContent = 'Вхід…';
+    const { error } = await sb.auth.signInWithPassword({
+      email: el('email').value.trim(), password: el('pass').value
+    });
+    if (error) { m.className = 'msg msg--err'; m.textContent = 'Не вдалося увійти: ' + error.message; return; }
+    location.href = 'jobs.html';
+  });
+})();
+</script>
+</body>
+</html>

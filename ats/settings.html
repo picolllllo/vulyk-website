@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ATS · Налаштування · Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ats.css">
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="wrap">
+  <div id="noAccess" class="notice" hidden>
+    <h2>Немає доступу</h2>
+    <p>Цей акаунт не має ролі <b>hr</b>. Зверніться до адміністратора.</p>
+  </div>
+
+  <div id="panel" hidden>
+    <div class="panel__head">
+      <h2>Позиції</h2>
+      <span class="sub">Список для випадайки в загальній формі подачі та для пошуку профілів</span>
+    </div>
+
+    <div class="add-row">
+      <input id="newPos" type="text" placeholder="Нова позиція, напр. «Логопед»">
+      <button id="addBtn" class="btn btn--primary">Додати</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th style="width:44px">#</th><th>Назва</th><th style="width:200px;text-align:right">Дії</th></tr>
+      </thead>
+      <tbody id="posBody"></tbody>
+    </table>
+    <div id="panelMsg" class="msg"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+let positions = [];
+
+function initSettings() {
+  el('panel').hidden = false;
+  loadPositions();
+}
+
+async function loadPositions() {
+  const { data, error } = await sb.from('positions').select('*').order('sort_order').order('name');
+  if (error) { flash(el('panelMsg'), 'Помилка завантаження: ' + error.message); return; }
+  positions = data || [];
+  render();
+}
+
+function render() {
+  el('posBody').innerHTML = positions.map(function (p, i) {
+    return '<tr data-id="' + p.id + '">'
+      + '<td class="ord">' + (i + 1) + '</td>'
+      + '<td class="name-cell"><input type="text" value="' + escapeHtml(p.name) + '" data-role="name"></td>'
+      + '<td><div class="actions">'
+      +   '<button class="btn btn--ghost btn--sm" data-act="up" ' + (i === 0 ? 'disabled' : '') + '>↑</button>'
+      +   '<button class="btn btn--ghost btn--sm" data-act="down" ' + (i === positions.length - 1 ? 'disabled' : '') + '>↓</button>'
+      +   '<button class="btn btn--danger btn--sm" data-act="delete">Видалити</button>'
+      + '</div></td>'
+      + '</tr>';
+  }).join('');
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  el('addBtn').addEventListener('click', addPosition);
+  el('newPos').addEventListener('keydown', function (e) { if (e.key === 'Enter') addPosition(); });
+
+  el('posBody').addEventListener('change', async function (e) {
+    const inp = e.target.closest('input[data-role="name"]'); if (!inp) return;
+    const id = e.target.closest('tr').dataset.id;
+    const name = inp.value.trim(); if (!name) { loadPositions(); return; }
+    const { error } = await sb.from('positions').update({ name: name }).eq('id', id);
+    flash(el('panelMsg'), error ? error.message : 'Збережено', !error);
+    if (error) loadPositions();
+  });
+
+  el('posBody').addEventListener('click', async function (e) {
+    const btn = e.target.closest('button[data-act]'); if (!btn) return;
+    const id = btn.closest('tr').dataset.id;
+    const idx = positions.findIndex(function (p) { return String(p.id) === id; });
+    const p = positions[idx];
+    if (btn.dataset.act === 'delete') {
+      const { count } = await sb.from('candidates').select('id', { count: 'exact', head: true }).eq('position_id', id);
+      const ok = (count && count > 0)
+        ? confirm('Видалити позицію «' + p.name + '»?\n\nУ ' + count + ' кандидат(ів) вона зникне з профілю (самі профілі залишаться).')
+        : confirm('Видалити позицію «' + p.name + '»?');
+      if (!ok) return;
+      const { error } = await sb.from('positions').delete().eq('id', id);
+      flash(el('panelMsg'), error ? error.message : 'Видалено', !error); loadPositions();
+    } else if (btn.dataset.act === 'up' || btn.dataset.act === 'down') {
+      const j = btn.dataset.act === 'up' ? idx - 1 : idx + 1;
+      if (j < 0 || j >= positions.length) return;
+      const a = positions[idx], b = positions[j];
+      await sb.from('positions').update({ sort_order: b.sort_order }).eq('id', a.id);
+      await sb.from('positions').update({ sort_order: a.sort_order }).eq('id', b.id);
+      loadPositions();
+    }
+  });
+
+  atsGuard('settings.html', initSettings);
+});
+
+async function addPosition() {
+  const name = el('newPos').value.trim(); if (!name) return;
+  const maxOrder = positions.reduce(function (m, p) { return Math.max(m, p.sort_order || 0); }, 0);
+  const { error } = await sb.from('positions').insert({ name: name, sort_order: maxOrder + 10 });
+  if (error) { flash(el('panelMsg'), error.message.indexOf('duplicate') > -1 ? 'Така позиція вже є' : error.message); return; }
+  el('newPos').value = ''; flash(el('panelMsg'), 'Додано', true); loadPositions();
+}
+</script>
+</body>
+</html>

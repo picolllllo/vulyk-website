@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ATS · Вакансії · Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ats.css">
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="wrap">
+  <div id="noAccess" class="notice" hidden>
+    <h2>Немає доступу</h2>
+    <p>Цей акаунт не має ролі <b>hr</b>. Зверніться до адміністратора.</p>
+  </div>
+
+  <div id="panel" hidden>
+    <div class="panel__head">
+      <h2>Вакансії</h2>
+      <button id="newBtn" class="btn btn--primary">+ Нова вакансія</button>
+    </div>
+
+    <!-- Форма створення / редагування -->
+    <div id="form" class="form-panel" hidden>
+      <h3 id="formTitle">Нова вакансія</h3>
+      <div class="form-grid">
+        <div class="full">
+          <label for="f_title">Назва *</label>
+          <input id="f_title" type="text" placeholder="напр. Лікар-педіатр">
+        </div>
+        <div>
+          <label for="f_location">Локація</label>
+          <input id="f_location" type="text" placeholder="напр. вул. Стрийська, 86В">
+        </div>
+        <div>
+          <label for="f_status">Статус</label>
+          <select id="f_status">
+            <option value="draft">Чернетка</option>
+            <option value="open">Відкрита</option>
+            <option value="paused">Пауза</option>
+            <option value="closed">Закрита</option>
+          </select>
+        </div>
+        <div class="full">
+          <label for="f_description">Опис</label>
+          <textarea id="f_description" placeholder="Обов'язки, вимоги, умови…"></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button id="saveBtn" class="btn btn--primary">Зберегти</button>
+        <button id="cancelBtn" class="btn btn--ghost">Скасувати</button>
+        <span id="formMsg" class="msg" style="margin:0"></span>
+      </div>
+    </div>
+
+    <!-- Фільтр -->
+    <div class="add-row" style="align-items:center">
+      <label style="margin:0 8px 0 0">Фільтр:</label>
+      <select id="statusFilter" style="max-width:220px">
+        <option value="">Усі статуси</option>
+        <option value="draft">Чернетки</option>
+        <option value="open">Відкриті</option>
+        <option value="paused">На паузі</option>
+        <option value="closed">Закриті</option>
+      </select>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Назва</th><th style="width:180px">Локація</th><th style="width:150px">Статус</th>
+            <th style="width:110px">Створено</th><th style="width:170px;text-align:right">Дії</th></tr>
+      </thead>
+      <tbody id="jobsBody"></tbody>
+    </table>
+    <div id="emptyMsg" class="sub" style="margin-top:14px" hidden>Поки немає вакансій. Натисніть «Нова вакансія».</div>
+    <div id="listMsg" class="msg"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+let jobs = [];
+let editingId = null;   // null = режим створення
+
+const STATUS = { draft:'Чернетка', open:'Відкрита', paused:'Пауза', closed:'Закрита' };
+
+function initJobs() {
+  el('panel').hidden = false;
+  loadJobs();
+}
+
+async function loadJobs() {
+  let q = sb.from('jobs').select('*').order('created_at', { ascending: false });
+  const f = el('statusFilter').value;
+  if (f) q = q.eq('status', f);
+  const { data, error } = await q;
+  if (error) { flash(el('listMsg'), 'Помилка: ' + error.message); return; }
+  jobs = data || [];
+  render();
+}
+
+function render() {
+  el('emptyMsg').hidden = jobs.length > 0;
+  el('jobsBody').innerHTML = jobs.map(function (j) {
+    const d = new Date(j.created_at).toLocaleDateString('uk-UA');
+    const opts = Object.keys(STATUS).map(function (s) {
+      return '<option value="' + s + '"' + (s === j.status ? ' selected' : '') + '>' + STATUS[s] + '</option>';
+    }).join('');
+    return '<tr data-id="' + j.id + '">'
+      + '<td><b>' + escapeHtml(j.title) + '</b></td>'
+      + '<td>' + escapeHtml(j.location || '—') + '</td>'
+      + '<td><select data-role="status" class="pill pill--' + j.status + '" '
+      +      'style="border:none;font-weight:700;cursor:pointer;padding:4px 8px">' + opts + '</select></td>'
+      + '<td class="ord">' + d + '</td>'
+      + '<td><div class="actions">'
+      +   '<button class="btn btn--ghost btn--sm" data-act="edit">Редагувати</button>'
+      +   '<button class="btn btn--danger btn--sm" data-act="delete">Видалити</button>'
+      + '</div></td>'
+      + '</tr>';
+  }).join('');
+}
+
+function openForm(job) {
+  editingId = job ? job.id : null;
+  el('formTitle').textContent = job ? 'Редагувати вакансію' : 'Нова вакансія';
+  el('f_title').value = job ? (job.title || '') : '';
+  el('f_location').value = job ? (job.location || '') : '';
+  el('f_status').value = job ? job.status : 'draft';
+  el('f_description').value = job ? (job.description || '') : '';
+  el('formMsg').textContent = '';
+  el('form').hidden = false;
+  el('f_title').focus();
+}
+function closeForm() { el('form').hidden = true; editingId = null; }
+
+async function saveJob() {
+  const title = el('f_title').value.trim();
+  if (!title) { flash(el('formMsg'), 'Вкажіть назву', false); return; }
+  const payload = {
+    title: title,
+    location: el('f_location').value.trim() || null,
+    status: el('f_status').value,
+    description: el('f_description').value.trim() || null
+  };
+  let error;
+  if (editingId) {
+    ({ error } = await sb.from('jobs').update(payload).eq('id', editingId));
+  } else {
+    payload.created_by = ATS.user.id;
+    ({ error } = await sb.from('jobs').insert(payload));
+  }
+  if (error) { flash(el('formMsg'), error.message, false); return; }
+  closeForm(); loadJobs();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  el('newBtn').addEventListener('click', function () { openForm(null); });
+  el('saveBtn').addEventListener('click', saveJob);
+  el('cancelBtn').addEventListener('click', closeForm);
+  el('statusFilter').addEventListener('change', loadJobs);
+
+  el('jobsBody').addEventListener('change', async function (e) {
+    const sel = e.target.closest('select[data-role="status"]'); if (!sel) return;
+    const id = e.target.closest('tr').dataset.id;
+    const { error } = await sb.from('jobs').update({ status: sel.value }).eq('id', id);
+    flash(el('listMsg'), error ? error.message : 'Статус оновлено', !error);
+    loadJobs();
+  });
+
+  el('jobsBody').addEventListener('click', async function (e) {
+    const btn = e.target.closest('button[data-act]'); if (!btn) return;
+    const id = btn.closest('tr').dataset.id;
+    const job = jobs.find(function (j) { return String(j.id) === id; });
+    if (btn.dataset.act === 'edit') { openForm(job); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    else if (btn.dataset.act === 'delete') {
+      if (!confirm('Видалити вакансію «' + job.title + '»?')) return;
+      const { error } = await sb.from('jobs').delete().eq('id', id);
+      if (error) {
+        flash(el('listMsg'), error.message.indexOf('foreign key') > -1
+          ? 'Не можна видалити: до вакансії вже є заявки. Спершу закрийте її.' : error.message, false);
+      } else { flash(el('listMsg'), 'Видалено', true); loadJobs(); }
+    }
+  });
+
+  atsGuard('jobs.html', initJobs);
+});
+</script>
+</body>
+</html>

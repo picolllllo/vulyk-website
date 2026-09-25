@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ATS · Кандидати · Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ats.css">
+  <style>
+    .filters{ display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; margin-bottom:18px; }
+    .filters .fld{ display:flex; flex-direction:column; }
+    .filters label{ margin:0 0 4px; }
+    .filters input, .filters select{ min-width:200px; }
+    .filters .grow{ flex:1; min-width:220px; }
+
+    /* Картка кандидата */
+    .detail-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:8px; }
+    .back{ background:none; border:none; color:var(--muted); cursor:pointer; font:inherit; font-weight:600; padding:0; margin-bottom:14px; }
+    .back:hover{ color:var(--accent-deep); }
+    .cand-name{ font-size:24px; margin:0 0 4px; }
+    .cand-meta{ color:var(--muted); font-size:14px; display:flex; gap:16px; flex-wrap:wrap; }
+    .cand-meta a{ color:var(--accent-deep); text-decoration:none; }
+    .cols{ display:grid; grid-template-columns:1.35fr 1fr; gap:22px; align-items:start; }
+    @media (max-width:860px){ .cols{ grid-template-columns:1fr; } }
+    .box{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:20px; }
+    .box h3{ margin:0 0 14px; font-size:16px; }
+    .app-item{ border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; }
+    .app-item__head{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; }
+    .app-item__title{ font-weight:700; }
+    .app-sub{ font-size:13px; color:var(--muted); margin-top:2px; }
+    .note{ border-left:3px solid var(--line); padding:6px 0 6px 12px; margin:10px 0; }
+    .note__meta{ font-size:12px; color:var(--muted); margin-bottom:2px; }
+    .note__text{ font-size:14px; white-space:pre-wrap; }
+    .note-add{ display:flex; gap:8px; margin-top:10px; }
+    .note-add textarea{ min-height:40px; }
+    .att{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px; }
+    .att:last-child{ border-bottom:none; }
+    .att a{ color:var(--accent-deep); text-decoration:none; font-weight:600; }
+    .muted{ color:var(--muted); font-size:14px; }
+    .row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    @media (max-width:520px){ .row2{ grid-template-columns:1fr; } }
+    .inline-add{ display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; }
+    .inline-add .fld{ display:flex; flex-direction:column; }
+    .inline-add label{ margin:0 0 4px; }
+  </style>
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="wrap">
+  <div id="noAccess" class="notice" hidden>
+    <h2>Немає доступу</h2>
+    <p>Цей акаунт не має ролі <b>hr</b>. Зверніться до адміністратора.</p>
+  </div>
+
+  <!-- ============ СПИСОК ============ -->
+  <div id="listPanel" hidden>
+    <div class="panel__head">
+      <h2>Кандидати</h2>
+      <button id="newBtn" class="btn btn--primary">+ Новий кандидат</button>
+    </div>
+
+    <!-- Форма створення / редагування -->
+    <div id="form" class="form-panel" hidden>
+      <h3 id="formTitle">Новий кандидат</h3>
+      <div class="form-grid">
+        <div class="full">
+          <label for="f_name">Ім'я та прізвище *</label>
+          <input id="f_name" type="text" placeholder="напр. Оксана Петренко">
+        </div>
+        <div>
+          <label for="f_email">Email</label>
+          <input id="f_email" type="email" placeholder="name@example.com">
+        </div>
+        <div>
+          <label for="f_phone">Телефон</label>
+          <input id="f_phone" type="text" placeholder="+380…">
+        </div>
+        <div>
+          <label for="f_position">Позиція</label>
+          <select id="f_position"><option value="">— не вказано —</option></select>
+        </div>
+        <div>
+          <label for="f_source">Джерело</label>
+          <select id="f_source">
+            <option value="direct">Прямий</option>
+            <option value="agency">Агенція</option>
+            <option value="referral">Рекомендація</option>
+            <option value="other">Інше</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button id="saveBtn" class="btn btn--primary">Зберегти</button>
+        <button id="cancelBtn" class="btn btn--ghost">Скасувати</button>
+        <span id="formMsg" class="msg" style="margin:0"></span>
+      </div>
+    </div>
+
+    <!-- Фільтри -->
+    <div class="filters">
+      <div class="fld grow">
+        <label for="q">Пошук</label>
+        <input id="q" type="text" placeholder="ім'я, email або телефон">
+      </div>
+      <div class="fld">
+        <label for="posFilter">Позиція</label>
+        <select id="posFilter"><option value="">Усі позиції</option></select>
+      </div>
+      <div class="fld">
+        <label for="srcFilter">Джерело</label>
+        <select id="srcFilter">
+          <option value="">Усі джерела</option>
+          <option value="direct">Прямий</option>
+          <option value="agency">Агенція</option>
+          <option value="referral">Рекомендація</option>
+          <option value="other">Інше</option>
+        </select>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Ім'я</th><th style="width:220px">Позиція</th><th style="width:230px">Контакти</th>
+            <th style="width:90px;text-align:center">Заявки</th><th style="width:110px">Додано</th>
+            <th style="width:110px;text-align:right">Дії</th></tr>
+      </thead>
+      <tbody id="candBody"></tbody>
+    </table>
+    <div id="emptyMsg" class="muted" style="margin-top:14px" hidden>Кандидатів не знайдено.</div>
+    <div id="listMsg" class="msg"></div>
+  </div>
+
+  <!-- ============ КАРТКА КАНДИДАТА ============ -->
+  <div id="detailPanel" hidden>
+    <button class="back" id="backBtn">← До списку</button>
+
+    <div class="detail-head">
+      <div>
+        <h2 class="cand-name" id="dName"></h2>
+        <div class="cand-meta" id="dMeta"></div>
+      </div>
+      <button id="editBtn" class="btn btn--ghost btn--sm">Редагувати профіль</button>
+    </div>
+
+    <div class="cols">
+      <!-- Ліва колонка: заявки + нотатки -->
+      <div>
+        <div class="box">
+          <h3>Заявки на вакансії</h3>
+          <div id="appsList"></div>
+          <div class="inline-add" style="margin-top:6px">
+            <div class="fld grow" style="flex:1;min-width:220px">
+              <label for="a_job">Прив'язати до вакансії</label>
+              <select id="a_job"><option value="">— оберіть вакансію —</option></select>
+            </div>
+            <div class="fld">
+              <label for="a_salary">Очік. ЗП</label>
+              <input id="a_salary" type="number" min="0" step="500" style="min-width:120px" placeholder="грн">
+            </div>
+            <button id="addAppBtn" class="btn btn--primary">Додати заявку</button>
+          </div>
+          <div id="appMsg" class="msg"></div>
+        </div>
+      </div>
+
+      <!-- Права колонка: резюме -->
+      <div>
+        <div class="box">
+          <h3>Резюме та файли</h3>
+          <div id="attList"></div>
+          <label for="fileInput" style="margin-top:12px">Завантажити файл</label>
+          <input id="fileInput" type="file" style="border:none;padding:0">
+          <div id="attMsg" class="msg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Панель редагування профілю (використовує ту саму форму згори через showEdit) -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+let candidates = [];
+let positions  = [];
+let openJobs   = [];
+let editingId  = null;         // null = створення нового
+let current    = null;         // відкритий кандидат (об'єкт)
+
+const STAGE  = { new:'Новий', review:'Розгляд', interview:'Співбесіда', offer:'Оффер', rejected:'Відмова', hired:'Найнято' };
+const SOURCE = { direct:'Прямий', agency:'Агенція', referral:'Рекомендація', other:'Інше' };
+
+function initCandidates() {
+  el('listPanel').hidden = false;
+  loadRefs().then(loadCandidates);
+}
+
+async function loadRefs() {
+  const [{ data: pos }, { data: jobs }] = await Promise.all([
+    sb.from('positions').select('id,name').order('sort_order').order('name'),
+    sb.from('jobs').select('id,title,status').in('status', ['open','paused']).order('title')
+  ]);
+  positions = pos || [];
+  openJobs  = jobs || [];
+  // заповнити випадайки позицій
+  const posOpts = positions.map(function (p) { return '<option value="' + p.id + '">' + escapeHtml(p.name) + '</option>'; }).join('');
+  el('f_position').innerHTML = '<option value="">— не вказано —</option>' + posOpts;
+  el('posFilter').innerHTML  = '<option value="">Усі позиції</option>' + posOpts;
+}
+
+async function loadCandidates() {
+  let q = sb.from('candidates')
+    .select('*, positions(name), applications(count)')
+    .order('created_at', { ascending: false });
+  const pf = el('posFilter').value;
+  const sf = el('srcFilter').value;
+  const term = el('q').value.trim();
+  if (pf)  q = q.eq('position_id', pf);
+  if (sf)  q = q.eq('source', sf);
+  if (term) q = q.or('full_name.ilike.%' + term + '%,email.ilike.%' + term + '%,phone.ilike.%' + term + '%');
+  const { data, error } = await q;
+  if (error) { flash(el('listMsg'), 'Помилка: ' + error.message, false); return; }
+  candidates = data || [];
+  renderList();
+}
+
+function renderList() {
+  el('emptyMsg').hidden = candidates.length > 0;
+  el('candBody').innerHTML = candidates.map(function (c) {
+    const d = new Date(c.created_at).toLocaleDateString('uk-UA');
+    const posName = c.positions ? c.positions.name : '—';
+    const cnt = (c.applications && c.applications[0]) ? c.applications[0].count : 0;
+    const contact = [c.email, c.phone].filter(Boolean).join('<br>') || '—';
+    return '<tr data-id="' + c.id + '">'
+      + '<td><b>' + escapeHtml(c.full_name) + '</b><div class="app-sub">' + SOURCE[c.source] + '</div></td>'
+      + '<td>' + escapeHtml(posName) + '</td>'
+      + '<td style="font-size:13px">' + contact + '</td>'
+      + '<td style="text-align:center">' + cnt + '</td>'
+      + '<td class="ord">' + d + '</td>'
+      + '<td><div class="actions"><button class="btn btn--ghost btn--sm" data-act="open">Відкрити</button></div></td>'
+      + '</tr>';
+  }).join('');
+}
+
+/* ---------- Форма створення / редагування ---------- */
+function openForm(c) {
+  editingId = c ? c.id : null;
+  el('formTitle').textContent = c ? 'Редагувати профіль' : 'Новий кандидат';
+  el('f_name').value     = c ? (c.full_name || '') : '';
+  el('f_email').value    = c ? (c.email || '') : '';
+  el('f_phone').value    = c ? (c.phone || '') : '';
+  el('f_position').value = c && c.position_id ? String(c.position_id) : '';
+  el('f_source').value   = c ? c.source : 'direct';
+  el('formMsg').textContent = '';
+  el('form').hidden = false;
+  el('f_name').focus();
+}
+function closeForm() { el('form').hidden = true; editingId = null; }
+
+async function saveCandidate() {
+  const name = el('f_name').value.trim();
+  if (!name) { flash(el('formMsg'), 'Вкажіть ім’я', false); return; }
+  const payload = {
+    full_name: name,
+    email: el('f_email').value.trim() || null,
+    phone: el('f_phone').value.trim() || null,
+    position_id: el('f_position').value ? Number(el('f_position').value) : null,
+    source: el('f_source').value
+  };
+  let error, savedId = editingId;
+  if (editingId) {
+    ({ error } = await sb.from('candidates').update(payload).eq('id', editingId));
+  } else {
+    const res = await sb.from('candidates').insert(payload).select('id').single();
+    error = res.error; if (res.data) savedId = res.data.id;
+  }
+  if (error) {
+    flash(el('formMsg'), error.message.indexOf('duplicate') > -1
+      ? 'Кандидат із таким email вже існує' : error.message, false);
+    return;
+  }
+  closeForm();
+  await loadCandidates();
+  if (current && editingId === null) { /* новий зі списку */ }
+  if (current) { await openCandidate(current.id); }   // оновити відкриту картку
+}
+
+/* ---------- Картка кандидата ---------- */
+async function openCandidate(id) {
+  const { data: c, error } = await sb.from('candidates')
+    .select('*, positions(name)').eq('id', id).single();
+  if (error) { flash(el('listMsg'), error.message, false); return; }
+  current = c;
+  el('listPanel').hidden = true;
+  el('detailPanel').hidden = false;
+  window.scrollTo({ top: 0 });
+
+  el('dName').textContent = c.full_name;
+  const meta = [];
+  if (c.positions) meta.push('<span>' + escapeHtml(c.positions.name) + '</span>');
+  meta.push('<span>Джерело: ' + SOURCE[c.source] + '</span>');
+  if (c.email) meta.push('<a href="mailto:' + escapeHtml(c.email) + '">' + escapeHtml(c.email) + '</a>');
+  if (c.phone) meta.push('<a href="tel:' + escapeHtml(c.phone) + '">' + escapeHtml(c.phone) + '</a>');
+  el('dMeta').innerHTML = meta.join('');
+
+  // випадайка вакансій для прив'язки
+  el('a_job').innerHTML = '<option value="">— оберіть вакансію —</option>'
+    + openJobs.map(function (j) { return '<option value="' + j.id + '">' + escapeHtml(j.title) + '</option>'; }).join('');
+
+  await Promise.all([loadApps(id), loadAttachments(id)]);
+}
+
+function backToList() {
+  current = null;
+  el('detailPanel').hidden = true;
+  el('listPanel').hidden = false;
+  loadCandidates();
+}
+
+/* ----- Заявки + нотатки ----- */
+async function loadApps(candId) {
+  const { data: apps, error } = await sb.from('applications')
+    .select('*, jobs(title)').eq('candidate_id', candId).order('created_at', { ascending: false });
+  if (error) { el('appsList').innerHTML = '<div class="muted">' + escapeHtml(error.message) + '</div>'; return; }
+  const { data: notes } = await sb.from('notes')
+    .select('*').eq('candidate_id', candId).order('created_at', { ascending: true });
+  const byApp = {};
+  (notes || []).forEach(function (n) { (byApp[n.application_id] = byApp[n.application_id] || []).push(n); });
+
+  if (!apps || !apps.length) {
+    el('appsList').innerHTML = '<div class="muted">Заявок ще немає. Прив’яжіть кандидата до вакансії нижче.</div>';
+    return;
+  }
+  el('appsList').innerHTML = apps.map(function (a) {
+    const jobTitle = a.jobs ? a.jobs.title : '(вакансію видалено)';
+    const stageOpts = Object.keys(STAGE).map(function (s) {
+      return '<option value="' + s + '"' + (s === a.stage ? ' selected' : '') + '>' + STAGE[s] + '</option>';
+    }).join('');
+    const salary = a.salary_expectation ? (a.salary_expectation.toLocaleString('uk-UA') + ' ' + a.salary_currency) : '—';
+    const notesHtml = (byApp[a.id] || []).map(function (n) {
+      const nd = new Date(n.created_at).toLocaleString('uk-UA', { dateStyle:'short', timeStyle:'short' });
+      return '<div class="note"><div class="note__meta">' + nd + '</div><div class="note__text">' + escapeHtml(n.text) + '</div></div>';
+    }).join('');
+    return '<div class="app-item" data-app="' + a.id + '">'
+      + '<div class="app-item__head">'
+      +   '<div><div class="app-item__title">' + escapeHtml(jobTitle) + '</div>'
+      +       '<div class="app-sub">Очік. ЗП: ' + salary + '</div></div>'
+      +   '<select data-role="stage" class="pill pill--paused" style="border:none;font-weight:700;cursor:pointer;padding:4px 8px">' + stageOpts + '</select>'
+      + '</div>'
+      + notesHtml
+      + '<div class="note-add">'
+      +   '<textarea data-role="note" placeholder="Додати нотатку…"></textarea>'
+      +   '<button class="btn btn--ghost btn--sm" data-act="addnote">Додати</button>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+async function addApplication() {
+  const jobId = el('a_job').value;
+  if (!jobId) { flash(el('appMsg'), 'Оберіть вакансію', false); return; }
+  const sal = el('a_salary').value ? Number(el('a_salary').value) : null;
+  const { error } = await sb.from('applications').insert({
+    job_id: jobId, candidate_id: current.id, stage: 'new', salary_expectation: sal
+  });
+  if (error) {
+    flash(el('appMsg'), error.message.indexOf('duplicate') > -1 || error.message.indexOf('unique') > -1
+      ? 'Кандидат уже має заявку на цю вакансію' : error.message, false);
+    return;
+  }
+  el('a_job').value = ''; el('a_salary').value = '';
+  flash(el('appMsg'), 'Заявку додано', true);
+  loadApps(current.id);
+  loadCandidates();
+}
+
+/* ----- Резюме / файли ----- */
+async function loadAttachments(candId) {
+  const { data, error } = await sb.from('attachments')
+    .select('*').eq('candidate_id', candId).order('created_at', { ascending: false });
+  if (error) { el('attList').innerHTML = '<div class="muted">' + escapeHtml(error.message) + '</div>'; return; }
+  if (!data || !data.length) { el('attList').innerHTML = '<div class="muted">Файлів ще немає.</div>'; return; }
+  el('attList').innerHTML = data.map(function (f) {
+    const nm = f.file_name || 'файл';
+    return '<div class="att" data-att="' + f.id + '" data-url="' + escapeHtml(f.file_url) + '">'
+      + '<a href="#" data-act="download">' + escapeHtml(nm) + '</a>'
+      + '<button class="btn btn--danger btn--sm" data-act="delfile">✕</button>'
+      + '</div>';
+  }).join('');
+}
+
+async function uploadFile(file) {
+  if (!file) return;
+  flash(el('attMsg'), 'Завантаження…', true);
+  const safe = file.name.replace(/[^\w.\-]+/g, '_');
+  const path = current.id + '/' + Date.now() + '_' + safe;
+  const up = await sb.storage.from('resumes').upload(path, file, { upsert: false });
+  if (up.error) { flash(el('attMsg'), up.error.message, false); return; }
+  const { error } = await sb.from('attachments').insert({
+    candidate_id: current.id, kind: 'resume', file_url: path, file_name: file.name, uploaded_by: ATS.user.id
+  });
+  if (error) { flash(el('attMsg'), error.message, false); return; }
+  el('fileInput').value = '';
+  flash(el('attMsg'), 'Завантажено', true);
+  loadAttachments(current.id);
+}
+
+async function downloadFile(path) {
+  const { data, error } = await sb.storage.from('resumes').createSignedUrl(path, 120);
+  if (error) { flash(el('attMsg'), error.message, false); return; }
+  window.open(data.signedUrl, '_blank');
+}
+
+async function deleteFile(attId, path) {
+  if (!confirm('Видалити файл?')) return;
+  await sb.storage.from('resumes').remove([path]);
+  const { error } = await sb.from('attachments').delete().eq('id', attId);
+  flash(el('attMsg'), error ? error.message : 'Видалено', !error);
+  loadAttachments(current.id);
+}
+
+/* ---------- Події ---------- */
+document.addEventListener('DOMContentLoaded', function () {
+  el('newBtn').addEventListener('click', function () { openForm(null); });
+  el('saveBtn').addEventListener('click', saveCandidate);
+  el('cancelBtn').addEventListener('click', closeForm);
+  el('backBtn').addEventListener('click', backToList);
+  el('editBtn').addEventListener('click', function () {
+    el('detailPanel').hidden = true; el('listPanel').hidden = false; openForm(current);
+    window.scrollTo({ top: 0 });
+  });
+
+  let t;
+  el('q').addEventListener('input', function () { clearTimeout(t); t = setTimeout(loadCandidates, 250); });
+  el('posFilter').addEventListener('change', loadCandidates);
+  el('srcFilter').addEventListener('change', loadCandidates);
+
+  el('candBody').addEventListener('click', function (e) {
+    const btn = e.target.closest('button[data-act="open"]'); if (!btn) return;
+    openCandidate(btn.closest('tr').dataset.id);
+  });
+
+  el('addAppBtn').addEventListener('click', addApplication);
+
+  // зміна етапу заявки + додавання нотатки (делегування)
+  el('appsList').addEventListener('change', async function (e) {
+    const sel = e.target.closest('select[data-role="stage"]'); if (!sel) return;
+    const appId = e.target.closest('.app-item').dataset.app;
+    const { error } = await sb.from('applications').update({ stage: sel.value }).eq('id', appId);
+    flash(el('appMsg'), error ? error.message : 'Етап оновлено', !error);
+  });
+  el('appsList').addEventListener('click', async function (e) {
+    const btn = e.target.closest('button[data-act="addnote"]'); if (!btn) return;
+    const item = e.target.closest('.app-item');
+    const appId = item.dataset.app;
+    const ta = item.querySelector('textarea[data-role="note"]');
+    const text = ta.value.trim(); if (!text) return;
+    const { error } = await sb.from('notes').insert({
+      application_id: appId, candidate_id: current.id, author_id: ATS.user.id, text: text
+    });
+    if (error) { flash(el('appMsg'), error.message, false); return; }
+    ta.value = '';
+    loadApps(current.id);
+  });
+
+  // файли
+  el('fileInput').addEventListener('change', function (e) { uploadFile(e.target.files[0]); });
+  el('attList').addEventListener('click', function (e) {
+    const a = e.target.closest('[data-act]'); if (!a) return;
+    e.preventDefault();
+    const row = e.target.closest('.att');
+    if (a.dataset.act === 'download') downloadFile(row.dataset.url);
+    else if (a.dataset.act === 'delfile') deleteFile(row.dataset.att, row.dataset.url);
+  });
+
+  atsGuard('candidates.html', initCandidates);
+});
+</script>
+</body>
+</html>
