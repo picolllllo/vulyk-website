@@ -84,13 +84,52 @@
         <h2 class="job-title" id="jTitle"></h2>
         <div class="job-meta" id="jMeta"></div>
       </div>
-      <div style="display:flex; gap:8px; white-space:nowrap">
+      <div style="display:flex; gap:8px; white-space:nowrap; align-items:center">
         <a id="viewPublic" class="btn btn--ghost btn--sm" target="_blank" rel="noopener">Сторінка на сайті ↗</a>
-        <a id="editLink" class="btn btn--ghost btn--sm" href="jobs.html">Редагувати</a>
+        <select id="statusQuick" title="Змінити статус вакансії"
+          style="font:inherit; font-weight:700; font-size:13px; padding:7px 10px; border:1px solid var(--line); border-radius:9px; background:#fff; cursor:pointer">
+          <option value="draft">Чернетка</option>
+          <option value="open">Відкрита</option>
+          <option value="paused">Пауза</option>
+          <option value="closed">Закрита</option>
+        </select>
+        <button id="editBtn" class="btn btn--ghost btn--sm">Редагувати</button>
       </div>
     </div>
 
     <div id="notFound" class="notice" hidden><h2>Вакансію не знайдено</h2></div>
+
+    <!-- Форма редагування вакансії -->
+    <div id="editPanel" class="form-panel" hidden style="margin-bottom:22px">
+      <h3>Редагувати вакансію</h3>
+      <div class="form-grid">
+        <div class="full"><label for="e_title">Назва *</label><input id="e_title" type="text"></div>
+        <div><label for="e_location">Локація</label><input id="e_location" type="text" placeholder="напр. вул. Стрийська, 86В"></div>
+        <div><label for="e_employment">Зайнятість</label><input id="e_employment" type="text" placeholder="напр. Повна зайнятість · 5 год/день"></div>
+        <div>
+          <label for="e_status">Статус</label>
+          <select id="e_status">
+            <option value="draft">Чернетка</option>
+            <option value="open">Відкрита</option>
+            <option value="paused">Пауза</option>
+            <option value="closed">Закрита</option>
+          </select>
+        </div>
+        <div class="full">
+          <label for="e_description">Опис</label>
+          <textarea id="e_description" style="min-height:220px"></textarea>
+          <div class="sub" style="margin-top:6px">Форматування: <code>## Заголовок розділу</code> · <code>- пункт списку</code> · <code>**жирний**</code>. Порожній рядок = новий абзац.</div>
+        </div>
+      </div>
+      <div class="form-actions" style="justify-content:space-between; align-items:center">
+        <div style="display:flex; gap:10px; align-items:center">
+          <button id="e_save" class="btn btn--primary">Зберегти</button>
+          <button id="e_cancel" class="btn btn--ghost">Скасувати</button>
+          <span id="e_msg" class="msg" style="margin:0"></span>
+        </div>
+        <button id="e_delete" class="btn btn--danger">Видалити вакансію</button>
+      </div>
+    </div>
 
     <div class="stack" id="content" hidden>
 
@@ -139,9 +178,11 @@ const STAGE_TINT = {
 const SOURCE = { direct:'Прямий', agency:'Агенція', referral:'Рекомендація', other:'Інше' };
 
 const jobId = new URLSearchParams(location.search).get('id');
+const JOBSTATUS = { draft:'Чернетка', open:'Відкрита', paused:'Пауза', closed:'Закрита' };
 let apps = [];
 let notes = [];
 let editingNote = null;
+let currentJob = null;
 
 function initJob() {
   el('panel').hidden = false;
@@ -172,14 +213,16 @@ async function loadJob() {
   const { data: job, error } = await sb.from('jobs').select('*').eq('id', jobId).maybeSingle();
   if (error) { flash(el('msg'), error.message, false); return; }
   if (!job) { el('notFound').hidden = false; return; }
+  currentJob = job;
 
   document.title = 'ATS · ' + job.title + ' · Вулик';
   el('jTitle').textContent = job.title;
   const meta = [];
-  meta.push('<span class="pill pill--' + job.status + '">' + ({draft:'Чернетка',open:'Відкрита',paused:'Пауза',closed:'Закрита'}[job.status]) + '</span>');
+  meta.push('<span class="pill pill--' + job.status + '">' + JOBSTATUS[job.status] + '</span>');
   if (job.location) meta.push('<span>' + escapeHtml(job.location) + '</span>');
   if (job.employment) meta.push('<span>' + escapeHtml(job.employment) + '</span>');
   el('jMeta').innerHTML = meta.join('');
+  el('statusQuick').value = job.status;
 
   const vp = el('viewPublic');
   if (job.status === 'open') { vp.href = '../vacancy.html?job=' + job.id; vp.style.display = ''; }
@@ -275,6 +318,47 @@ function renderNotes() {
   }).join('');
 }
 
+/* --- Редагування / видалення вакансії --- */
+function openEdit() {
+  if (!currentJob) return;
+  el('e_title').value = currentJob.title || '';
+  el('e_location').value = currentJob.location || '';
+  el('e_employment').value = currentJob.employment || '';
+  el('e_status').value = currentJob.status;
+  el('e_description').value = currentJob.description || '';
+  el('e_msg').textContent = '';
+  el('editPanel').hidden = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  el('e_title').focus();
+}
+
+async function saveEdit() {
+  const title = el('e_title').value.trim();
+  if (!title) { flash(el('e_msg'), 'Вкажіть назву', false); return; }
+  const payload = {
+    title: title,
+    location: el('e_location').value.trim() || null,
+    employment: el('e_employment').value.trim() || null,
+    status: el('e_status').value,
+    description: el('e_description').value.trim() || null
+  };
+  const { error } = await sb.from('jobs').update(payload).eq('id', jobId);
+  if (error) { flash(el('e_msg'), error.message, false); return; }
+  el('editPanel').hidden = true;
+  loadJob();
+}
+
+async function deleteJob() {
+  if (!confirm('Видалити вакансію «' + (currentJob ? currentJob.title : '') + '»?\n\nЦю дію не можна скасувати.')) return;
+  const { error } = await sb.from('jobs').delete().eq('id', jobId);
+  if (error) {
+    flash(el('e_msg'), error.message.indexOf('foreign key') > -1
+      ? 'Не можна видалити: до вакансії вже є заявки. Спершу переведіть її в «Закрита».' : error.message, false);
+    return;
+  }
+  location.href = 'jobs.html';
+}
+
 async function addNote() {
   const text = el('noteInput').value.trim();
   if (!text) return;
@@ -287,6 +371,17 @@ async function addNote() {
 document.addEventListener('DOMContentLoaded', function () {
   el('backBtn').addEventListener('click', function () { location.href = 'jobs.html'; });
   el('addNoteBtn').addEventListener('click', addNote);
+  el('editBtn').addEventListener('click', openEdit);
+  el('statusQuick').addEventListener('change', async function () {
+    const v = el('statusQuick').value;
+    const { error } = await sb.from('jobs').update({ status: v }).eq('id', jobId);
+    if (error) { flash(el('msg'), error.message, false); if (currentJob) el('statusQuick').value = currentJob.status; return; }
+    flash(el('msg'), 'Статус оновлено', true);
+    loadJob();
+  });
+  el('e_cancel').addEventListener('click', function () { el('editPanel').hidden = true; });
+  el('e_save').addEventListener('click', saveEdit);
+  el('e_delete').addEventListener('click', deleteJob);
 
   // зміна етапу заявки
   el('board').addEventListener('change', async function (e) {
