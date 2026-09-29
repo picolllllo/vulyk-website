@@ -291,7 +291,7 @@ async function loadAttachments() {
   if (!data || !data.length) { el('attList').innerHTML = '<div class="muted">Файлів ще немає.</div>'; return; }
   el('attList').innerHTML = data.map(function (f) {
     const nm = f.file_name || 'файл';
-    return '<div class="att" data-att="' + f.id + '" data-url="' + escapeHtml(f.file_url) + '">'
+    return '<div class="att" data-att="' + f.id + '" data-url="' + escapeHtml(f.file_url) + '" data-name="' + escapeHtml(nm) + '">'
       + '<a href="#" data-act="view" title="Відкрити у браузері">' + escapeHtml(nm) + '</a>'
       + '<span style="display:flex;gap:6px">'
       +   '<button class="btn btn--ghost btn--sm" data-act="view">Переглянути</button>'
@@ -317,11 +317,17 @@ async function uploadFile(file) {
   loadAttachments();
 }
 
-async function viewFile(path) {
+async function viewFile(path, name) {
   const w = window.open('', '_blank');   // відкриваємо одразу, щоб не блокував popup-фільтр
-  const { data, error } = await sb.storage.from('resumes').createSignedUrl(path, 300, { download: false });
+  const { data, error } = await sb.storage.from('resumes').createSignedUrl(path, 600, { download: false });
   if (error) { if (w) w.close(); flash(el('attMsg'), error.message, false); return; }
-  if (w) w.location = data.signedUrl; else window.open(data.signedUrl, '_blank');
+  const ext = (name || path).split('.').pop().toLowerCase();
+  let target = data.signedUrl;
+  // Word/Excel/PowerPoint — через онлайн-перегляд Microsoft Office (браузер їх сам не показує)
+  if (['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].indexOf(ext) > -1) {
+    target = 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(data.signedUrl);
+  }
+  if (w) w.location = target; else window.open(target, '_blank');
 }
 
 async function deleteFile(attId, path) {
@@ -418,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const a = e.target.closest('[data-act]'); if (!a) return;
     e.preventDefault();
     const row = e.target.closest('.att');
-    if (a.dataset.act === 'view') viewFile(row.dataset.url);
+    if (a.dataset.act === 'view') viewFile(row.dataset.url, row.dataset.name);
     else if (a.dataset.act === 'delfile') deleteFile(row.dataset.att, row.dataset.url);
   });
 
