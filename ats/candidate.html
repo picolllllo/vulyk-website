@@ -40,6 +40,26 @@
     .inline-add{ display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; }
     .inline-add .fld{ display:flex; flex-direction:column; }
     .inline-add label{ margin:0 0 4px; }
+
+    /* Новий макет профілю */
+    .prof-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:16px; }
+    .cpos{ color:var(--muted); font-size:15px; margin-top:3px; }
+    .infogrid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:18px; padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-bottom:16px; }
+    @media (max-width:720px){ .infogrid{ grid-template-columns:repeat(2, 1fr); } }
+    .info__l{ font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+    .info__v{ font-size:15px; margin-top:5px; }
+    .contactrow{ display:flex; gap:22px; flex-wrap:wrap; align-items:center; margin-bottom:18px; font-size:14px; }
+    .contactrow a{ color:var(--accent-deep); text-decoration:none; display:inline-flex; align-items:center; gap:7px; }
+    .contactrow a:hover{ text-decoration:underline; }
+    .prof-summary{ font-size:14px; line-height:1.65; margin:0 0 20px; white-space:pre-wrap; }
+    .skills-sec{ margin-bottom:22px; }
+    .skills-sec__t{ font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin-bottom:10px; }
+    .skills{ display:flex; flex-wrap:wrap; gap:8px; }
+    .skill{ display:inline-flex; align-items:center; gap:8px; background:var(--head); border:1px solid var(--line); border-radius:8px; padding:5px 11px; font-size:13px; }
+    .skill button{ background:none; border:none; cursor:pointer; color:var(--muted); font-weight:800; line-height:1; padding:0; }
+    .skill button:hover{ color:var(--red); }
+    .skill-add{ display:inline-flex; align-items:center; border:1px dashed rgba(0,0,0,.25); border-radius:8px; padding:4px 8px; }
+    .skill-add input{ border:none; outline:none; font:inherit; font-size:13px; width:130px; background:transparent; padding:2px 0; }
   </style>
 </head>
 <body>
@@ -55,15 +75,25 @@
   <div id="panel" hidden>
     <button class="back" id="backBtn">← До кандидатів</button>
 
-    <div class="chead">
+    <div class="prof-head">
       <div>
         <h2 class="cname" id="cName"></h2>
-        <div class="cmeta" id="cMeta"></div>
+        <div class="cpos" id="cPos"></div>
       </div>
       <button id="editBtn" class="btn btn--ghost btn--sm">Редагувати</button>
     </div>
 
     <div id="notFound" class="notice" hidden><h2>Кандидата не знайдено</h2></div>
+
+    <div id="profInfo" hidden>
+      <div class="infogrid" id="cInfo"></div>
+      <div class="contactrow" id="cContact"></div>
+      <div class="prof-summary" id="cSummary" hidden></div>
+      <div class="skills-sec">
+        <div class="skills-sec__t">Навички</div>
+        <div class="skills" id="cSkills"></div>
+      </div>
+    </div>
 
     <!-- Форма редагування профілю -->
     <div id="editPanel" class="form-panel" hidden style="margin:16px 0 22px">
@@ -73,7 +103,9 @@
         <div><label for="e_email">Email</label><input id="e_email" type="email" placeholder="name@example.com"></div>
         <div><label for="e_phone">Телефон</label><input id="e_phone" type="text" placeholder="+380…"></div>
         <div><label for="e_location">Локація</label><input id="e_location" type="text" placeholder="напр. Львів"></div>
+        <div><label for="e_experience">Досвід</label><input id="e_experience" type="text" placeholder="напр. 6 років (з 2020)"></div>
         <div><label for="e_salary">Очікувана ЗП, грн</label><input id="e_salary" type="number" min="0" step="500" placeholder="напр. 25000"></div>
+        <div><label for="e_linkedin">LinkedIn</label><input id="e_linkedin" type="text" placeholder="посилання на профіль"></div>
         <div><label for="e_facebook">Facebook</label><input id="e_facebook" type="text" placeholder="посилання на профіль"></div>
         <div><label for="e_instagram">Instagram</label><input id="e_instagram" type="text" placeholder="посилання або @нік"></div>
         <div><label for="e_position">Позиція</label><select id="e_position"><option value="">— не вказано —</option></select></div>
@@ -108,11 +140,6 @@
     </div>
 
     <div id="content" hidden>
-      <div id="summaryBox" class="box" hidden>
-        <h3>Про кандидата</h3>
-        <div id="cSummary" style="white-space:pre-wrap; font-size:14px"></div>
-      </div>
-
       <div class="cols">
         <div>
           <div class="box">
@@ -208,23 +235,58 @@ async function loadCandidate() {
     tagBadge = '<span class="tagbadge" style="background:' + tt.bg + ';color:' + tt.fg + '">' + TAG[c.tag] + '</span>';
   }
   el('cName').innerHTML = escapeHtml(c.full_name) + tagBadge;
-  const meta = [];
-  if (c.positions) meta.push('<span>' + escapeHtml(c.positions.name) + '</span>');
-  if (c.location) meta.push('<span>' + escapeHtml(c.location) + '</span>');
-  if (c.expected_salary) meta.push('<span>Очікує: ' + c.expected_salary.toLocaleString('uk-UA') + ' грн</span>');
-  meta.push('<span>Джерело: ' + SOURCE[c.source] + '</span>');
-  if (c.email) meta.push('<a href="mailto:' + escapeHtml(c.email) + '">' + escapeHtml(c.email) + '</a>');
-  if (c.phone) meta.push('<a href="tel:' + escapeHtml(c.phone) + '">' + escapeHtml(c.phone) + '</a>');
-  if (c.facebook) meta.push('<a href="' + escapeHtml(normalizeUrl(c.facebook)) + '" target="_blank" rel="noopener">Facebook</a>');
-  if (c.instagram) meta.push('<a href="' + escapeHtml(normalizeUrl(c.instagram)) + '" target="_blank" rel="noopener">Instagram</a>');
-  el('cMeta').innerHTML = meta.join('');
+  el('cPos').textContent = c.positions ? c.positions.name : '';
 
-  if (c.summary) { el('cSummary').textContent = c.summary; el('summaryBox').hidden = false; }
-  else { el('summaryBox').hidden = true; }
+  // Інфо-сітка
+  function infoItem(l, v) { return '<div><div class="info__l">' + l + '</div><div class="info__v">' + v + '</div></div>'; }
+  el('cInfo').innerHTML = [
+    infoItem('Локація', c.location ? escapeHtml(c.location) : '—'),
+    infoItem('Досвід', c.experience ? escapeHtml(c.experience) : '—'),
+    infoItem('Категорія', c.positions ? escapeHtml(c.positions.name) : '—'),
+    infoItem('ЗП', c.expected_salary ? (c.expected_salary.toLocaleString('uk-UA') + ' грн') : '—'),
+    infoItem('Джерело', SOURCE[c.source])
+  ].join('');
 
+  // Контакти
+  const cr = [];
+  if (c.email) cr.push('<a href="mailto:' + escapeHtml(c.email) + '">✉ ' + escapeHtml(c.email) + '</a>');
+  if (c.phone) cr.push('<a href="tel:' + escapeHtml(c.phone) + '">☎ ' + escapeHtml(c.phone) + '</a>');
+  if (c.linkedin) cr.push('<a href="' + escapeHtml(normalizeUrl(c.linkedin)) + '" target="_blank" rel="noopener">in LinkedIn</a>');
+  if (c.facebook) cr.push('<a href="' + escapeHtml(normalizeUrl(c.facebook)) + '" target="_blank" rel="noopener">Facebook</a>');
+  if (c.instagram) cr.push('<a href="' + escapeHtml(normalizeUrl(c.instagram)) + '" target="_blank" rel="noopener">Instagram</a>');
+  el('cContact').innerHTML = cr.join('');
+  el('cContact').style.display = cr.length ? 'flex' : 'none';
+
+  // Про кандидата
+  if (c.summary) { el('cSummary').textContent = c.summary; el('cSummary').hidden = false; }
+  else { el('cSummary').hidden = true; }
+
+  renderSkills();
+  el('profInfo').hidden = false;
   el('content').hidden = false;
   await Promise.all([loadApps(), loadAttachments()]);
 }
+
+/* ---- Навички ---- */
+function renderSkills() {
+  const arr = (current && current.skills) ? current.skills : [];
+  el('cSkills').innerHTML = arr.map(function (s, i) {
+    return '<span class="skill">' + escapeHtml(s) + '<button data-act="delskill" data-i="' + i + '" title="Прибрати">✕</button></span>';
+  }).join('') + '<span class="skill-add"><input id="skillInput" type="text" placeholder="+ навичка"></span>';
+}
+async function saveSkills(arr) {
+  const { error } = await sb.from('candidates').update({ skills: arr.length ? arr : null }).eq('id', candId);
+  if (error) { flash(el('msg'), error.message, false); return; }
+  current.skills = arr; renderSkills();
+  const inp = el('skillInput'); if (inp) inp.focus();
+}
+function addSkill(val) {
+  val = (val || '').trim(); if (!val) return;
+  const arr = (current.skills || []).slice();
+  if (arr.some(function (s) { return s.toLowerCase() === val.toLowerCase(); })) return;
+  arr.push(val); saveSkills(arr);
+}
+function removeSkill(i) { const arr = (current.skills || []).slice(); arr.splice(i, 1); saveSkills(arr); }
 
 /* ---- Заявки + нотатки ---- */
 async function loadApps() {
@@ -345,7 +407,9 @@ function openEdit() {
   el('e_email').value = current.email || '';
   el('e_phone').value = current.phone || '';
   el('e_location').value = current.location || '';
+  el('e_experience').value = current.experience || '';
   el('e_salary').value = current.expected_salary || '';
+  el('e_linkedin').value = current.linkedin || '';
   el('e_facebook').value = current.facebook || '';
   el('e_instagram').value = current.instagram || '';
   el('e_position').value = current.position_id ? String(current.position_id) : '';
@@ -366,7 +430,9 @@ async function saveEdit() {
     email: el('e_email').value.trim() || null,
     phone: el('e_phone').value.trim() || null,
     location: el('e_location').value.trim() || null,
+    experience: el('e_experience').value.trim() || null,
     expected_salary: el('e_salary').value ? Number(el('e_salary').value) : null,
+    linkedin: el('e_linkedin').value.trim() || null,
     facebook: el('e_facebook').value.trim() || null,
     instagram: el('e_instagram').value.trim() || null,
     position_id: el('e_position').value ? Number(el('e_position').value) : null,
@@ -397,6 +463,14 @@ document.addEventListener('DOMContentLoaded', function () {
   el('e_save').addEventListener('click', saveEdit);
   el('e_delete').addEventListener('click', deleteCandidate);
   el('addAppBtn').addEventListener('click', addApplication);
+
+  el('cSkills').addEventListener('click', function (e) {
+    const b = e.target.closest('button[data-act="delskill"]'); if (!b) return;
+    removeSkill(Number(b.dataset.i));
+  });
+  el('cSkills').addEventListener('keydown', function (e) {
+    if (e.target.id === 'skillInput' && e.key === 'Enter') { e.preventDefault(); addSkill(e.target.value); e.target.value = ''; }
+  });
 
   el('appsList').addEventListener('change', async function (e) {
     const sel = e.target.closest('select[data-role="stage"]'); if (!sel) return;

@@ -25,7 +25,7 @@ function renderTop(active) {
   return ''
     + '<div class="top">'
     +   '<div style="display:flex;align-items:center;gap:20px">'
-    +     '<div class="top__brand"><img src="../Вулик-лого.png" alt="Вулик" class="top__logo"> Applicant Tracking System</div>'
+    +     '<a href="stats.html" class="top__brand" style="text-decoration:none;color:inherit" title="Аналітика"><img src="../Вулик-лого.png" alt="Вулик" class="top__logo"> Applicant Tracking System</a>'
     +     '<nav class="nav">' + nav + '</nav>'
     +   '</div>'
     +   '<div class="top__right">'

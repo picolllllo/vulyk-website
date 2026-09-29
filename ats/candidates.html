@@ -89,6 +89,10 @@
           <option value="other">Інше</option>
         </select>
       </div>
+      <div class="fld">
+        <label for="skillFilter">Навичка</label>
+        <input id="skillFilter" type="text" placeholder="напр. Figma">
+      </div>
     </div>
 
     <table>
@@ -147,8 +151,12 @@ async function loadCandidates() {
 }
 
 function renderList() {
-  el('emptyMsg').hidden = candidates.length > 0;
-  el('candBody').innerHTML = candidates.map(function (c) {
+  const sk = el('skillFilter').value.trim().toLowerCase();
+  const list = sk
+    ? candidates.filter(function (c) { return (c.skills || []).some(function (s) { return s.toLowerCase().indexOf(sk) > -1; }); })
+    : candidates;
+  el('emptyMsg').hidden = list.length > 0;
+  el('candBody').innerHTML = list.map(function (c) {
     const d = new Date(c.created_at).toLocaleDateString('uk-UA');
     const posName = c.positions ? c.positions.name : '—';
     const cnt = (c.applications && c.applications[0]) ? c.applications[0].count : 0;
@@ -206,6 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
   el('q').addEventListener('input', function () { clearTimeout(t); t = setTimeout(loadCandidates, 250); });
   el('posFilter').addEventListener('change', loadCandidates);
   el('srcFilter').addEventListener('change', loadCandidates);
+  el('skillFilter').addEventListener('input', renderList);
 
   el('candBody').addEventListener('click', function (e) {
     const tr = e.target.closest('tr[data-id]'); if (!tr) return;
