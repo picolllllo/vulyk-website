@@ -20,6 +20,7 @@
     .muted{ color:var(--muted); font-size:14px; }
     .cand-name{ font-size:16px; font-weight:600; color:var(--text); }
     .cand-src{ font-size:12px; color:var(--muted); margin-top:2px; }
+    .ltag{ font-size:11px; font-weight:700; padding:2px 9px; border-radius:100px; margin-left:8px; vertical-align:middle; white-space:nowrap; }
   </style>
 </head>
 <body>
@@ -45,6 +46,10 @@
         <div class="full"><label for="f_name">Ім'я та прізвище *</label><input id="f_name" type="text" placeholder="напр. Оксана Петренко"></div>
         <div><label for="f_email">Email</label><input id="f_email" type="email" placeholder="name@example.com"></div>
         <div><label for="f_phone">Телефон</label><input id="f_phone" type="text" placeholder="+380…"></div>
+        <div><label for="f_location">Локація</label><input id="f_location" type="text" placeholder="напр. Львів"></div>
+        <div><label for="f_salary">Очікувана ЗП, грн</label><input id="f_salary" type="number" min="0" step="500" placeholder="напр. 25000"></div>
+        <div><label for="f_facebook">Facebook</label><input id="f_facebook" type="text" placeholder="посилання на профіль"></div>
+        <div><label for="f_instagram">Instagram</label><input id="f_instagram" type="text" placeholder="посилання або @нік"></div>
         <div><label for="f_position">Позиція</label><select id="f_position"><option value="">— не вказано —</option></select></div>
         <div>
           <label for="f_source">Джерело</label>
@@ -105,6 +110,12 @@ let candidates = [];
 let positions  = [];
 
 const SOURCE = { direct:'Прямий', agency:'Агенція', referral:'Рекомендація', other:'Інше' };
+const TAG = { employee:'Працівник', ex_employee:'Екс-працівник', blacklist:'Чорний список' };
+const TAG_TINT = {
+  employee:    { bg:'#e4f4ea', fg:'#1a7f37' },
+  ex_employee: { bg:'#eceef1', fg:'#5b6673' },
+  blacklist:   { bg:'#fde7e7', fg:'#b3261e' }
+};
 
 function initCandidates() {
   el('panel').hidden = false;
@@ -142,8 +153,10 @@ function renderList() {
     const posName = c.positions ? c.positions.name : '—';
     const cnt = (c.applications && c.applications[0]) ? c.applications[0].count : 0;
     const contact = [c.email, c.phone].filter(Boolean).map(escapeHtml).join('<br>') || '—';
+    const tagB = (c.tag && TAG[c.tag])
+      ? '<span class="ltag" style="background:' + TAG_TINT[c.tag].bg + ';color:' + TAG_TINT[c.tag].fg + '">' + TAG[c.tag] + '</span>' : '';
     return '<tr data-id="' + c.id + '">'
-      + '<td><div class="cand-name">' + escapeHtml(c.full_name) + '</div><div class="cand-src">' + SOURCE[c.source] + '</div></td>'
+      + '<td><div class="cand-name">' + escapeHtml(c.full_name) + tagB + '</div><div class="cand-src">' + SOURCE[c.source] + '</div></td>'
       + '<td>' + escapeHtml(posName) + '</td>'
       + '<td style="font-size:13px">' + contact + '</td>'
       + '<td style="text-align:center">' + cnt + '</td>'
@@ -168,6 +181,10 @@ async function saveCandidate() {
     full_name: name,
     email: el('f_email').value.trim() || null,
     phone: el('f_phone').value.trim() || null,
+    location: el('f_location').value.trim() || null,
+    expected_salary: el('f_salary').value ? Number(el('f_salary').value) : null,
+    facebook: el('f_facebook').value.trim() || null,
+    instagram: el('f_instagram').value.trim() || null,
     position_id: el('f_position').value ? Number(el('f_position').value) : null,
     source: el('f_source').value,
     summary: el('f_summary').value.trim() || null

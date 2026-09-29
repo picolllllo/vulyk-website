@@ -73,6 +73,8 @@
           <input id="c_salary" type="number" min="0" step="500" placeholder="напр. 25000">
           <label for="c_resume">Резюме (PDF/DOC)</label>
           <input id="c_resume" type="file" accept=".pdf,.doc,.docx,.rtf,.odt" style="border:none;padding:0">
+          <label for="c_comment">Коментар</label>
+          <textarea id="c_comment" placeholder="Чому радите цього кандидата, досвід, деталі…"></textarea>
           <div style="margin-top:16px"><button id="submitBtn" class="btn btn--primary">Подати кандидата</button></div>
           <div id="subMsg" class="msg"></div>
         </div>
@@ -180,8 +182,12 @@ async function submitCandidate() {
 
   const btn = el('submitBtn'); btn.disabled = true; const old = btn.textContent; btn.textContent = 'Надсилаємо…';
   const cid = (crypto.randomUUID ? crypto.randomUUID() : ('' + Date.now() + Math.random()).replace('.', ''));
+  const comment = el('c_comment').value.trim();
 
-  const c = await sb.from('candidates').insert({ id: cid, full_name: name, email: email || null, phone: phone || null, source: 'agency' });
+  const c = await sb.from('candidates').insert({
+    id: cid, full_name: name, email: email || null, phone: phone || null, source: 'agency',
+    summary: comment ? ('Коментар агенції: ' + comment) : null
+  });
   if (c.error) {
     btn.disabled = false; btn.textContent = old;
     flash(el('subMsg'), c.error.message.indexOf('duplicate') > -1
@@ -205,7 +211,7 @@ async function submitCandidate() {
     }
   }
 
-  el('c_name').value = ''; el('c_email').value = ''; el('c_phone').value = ''; el('c_salary').value = ''; el('c_resume').value = '';
+  el('c_name').value = ''; el('c_email').value = ''; el('c_phone').value = ''; el('c_salary').value = ''; el('c_resume').value = ''; el('c_comment').value = '';
   btn.disabled = false; btn.textContent = old;
   flash(el('subMsg'), 'Кандидата подано ✓', true);
   loadMyCandidates();

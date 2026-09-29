@@ -14,6 +14,7 @@
     .back:hover{ color:var(--accent-deep); }
     .chead{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:8px; }
     .cname{ font-size:24px; margin:0 0 6px; }
+    .tagbadge{ font-size:12px; font-weight:700; padding:3px 12px; border-radius:100px; margin-left:12px; vertical-align:middle; white-space:nowrap; }
     .cmeta{ color:var(--muted); font-size:14px; display:flex; gap:16px; flex-wrap:wrap; align-items:center; }
     .cmeta a{ color:var(--accent-deep); text-decoration:none; }
     .cols{ display:grid; grid-template-columns:1.4fr 1fr; gap:22px; align-items:start; }
@@ -71,7 +72,20 @@
         <div class="full"><label for="e_name">Ім'я та прізвище *</label><input id="e_name" type="text"></div>
         <div><label for="e_email">Email</label><input id="e_email" type="email" placeholder="name@example.com"></div>
         <div><label for="e_phone">Телефон</label><input id="e_phone" type="text" placeholder="+380…"></div>
+        <div><label for="e_location">Локація</label><input id="e_location" type="text" placeholder="напр. Львів"></div>
+        <div><label for="e_salary">Очікувана ЗП, грн</label><input id="e_salary" type="number" min="0" step="500" placeholder="напр. 25000"></div>
+        <div><label for="e_facebook">Facebook</label><input id="e_facebook" type="text" placeholder="посилання на профіль"></div>
+        <div><label for="e_instagram">Instagram</label><input id="e_instagram" type="text" placeholder="посилання або @нік"></div>
         <div><label for="e_position">Позиція</label><select id="e_position"><option value="">— не вказано —</option></select></div>
+        <div>
+          <label for="e_tag">Тег кандидата</label>
+          <select id="e_tag">
+            <option value="">— без тегу —</option>
+            <option value="employee">Працівник</option>
+            <option value="ex_employee">Екс-працівник</option>
+            <option value="blacklist">Чорний список</option>
+          </select>
+        </div>
         <div>
           <label for="e_source">Джерело</label>
           <select id="e_source">
@@ -153,6 +167,14 @@ const STAGE_TINT = {
   rejected:  { bg:'#fde7e7', fg:'#b3261e' }
 };
 const SOURCE = { direct:'Прямий', agency:'Агенція', referral:'Рекомендація', other:'Інше' };
+const TAG = { employee:'Працівник', ex_employee:'Екс-працівник', blacklist:'Чорний список' };
+const TAG_TINT = {
+  employee:    { bg:'#e4f4ea', fg:'#1a7f37' },
+  ex_employee: { bg:'#eceef1', fg:'#5b6673' },
+  blacklist:   { bg:'#fde7e7', fg:'#b3261e' }
+};
+
+function normalizeUrl(v) { return /^https?:\/\//i.test(v) ? v : ('https://' + v.replace(/^@/, '')); }
 
 function initCandidate() {
   el('panel').hidden = false;
@@ -180,12 +202,21 @@ async function loadCandidate() {
   current = c;
 
   document.title = 'ATS · ' + c.full_name + ' · Вулик';
-  el('cName').textContent = c.full_name;
+  let tagBadge = '';
+  if (c.tag && TAG[c.tag]) {
+    const tt = TAG_TINT[c.tag];
+    tagBadge = '<span class="tagbadge" style="background:' + tt.bg + ';color:' + tt.fg + '">' + TAG[c.tag] + '</span>';
+  }
+  el('cName').innerHTML = escapeHtml(c.full_name) + tagBadge;
   const meta = [];
   if (c.positions) meta.push('<span>' + escapeHtml(c.positions.name) + '</span>');
+  if (c.location) meta.push('<span>' + escapeHtml(c.location) + '</span>');
+  if (c.expected_salary) meta.push('<span>Очікує: ' + c.expected_salary.toLocaleString('uk-UA') + ' грн</span>');
   meta.push('<span>Джерело: ' + SOURCE[c.source] + '</span>');
   if (c.email) meta.push('<a href="mailto:' + escapeHtml(c.email) + '">' + escapeHtml(c.email) + '</a>');
   if (c.phone) meta.push('<a href="tel:' + escapeHtml(c.phone) + '">' + escapeHtml(c.phone) + '</a>');
+  if (c.facebook) meta.push('<a href="' + escapeHtml(normalizeUrl(c.facebook)) + '" target="_blank" rel="noopener">Facebook</a>');
+  if (c.instagram) meta.push('<a href="' + escapeHtml(normalizeUrl(c.instagram)) + '" target="_blank" rel="noopener">Instagram</a>');
   el('cMeta').innerHTML = meta.join('');
 
   if (c.summary) { el('cSummary').textContent = c.summary; el('summaryBox').hidden = false; }
@@ -261,8 +292,11 @@ async function loadAttachments() {
   el('attList').innerHTML = data.map(function (f) {
     const nm = f.file_name || 'файл';
     return '<div class="att" data-att="' + f.id + '" data-url="' + escapeHtml(f.file_url) + '">'
-      + '<a href="#" data-act="download">' + escapeHtml(nm) + '</a>'
-      + '<button class="btn btn--danger btn--sm" data-act="delfile">✕</button>'
+      + '<a href="#" data-act="view" title="Відкрити у браузері">' + escapeHtml(nm) + '</a>'
+      + '<span style="display:flex;gap:6px">'
+      +   '<button class="btn btn--ghost btn--sm" data-act="view">Переглянути</button>'
+      +   '<button class="btn btn--danger btn--sm" data-act="delfile">✕</button>'
+      + '</span>'
       + '</div>';
   }).join('');
 }
@@ -283,10 +317,11 @@ async function uploadFile(file) {
   loadAttachments();
 }
 
-async function downloadFile(path) {
-  const { data, error } = await sb.storage.from('resumes').createSignedUrl(path, 120);
-  if (error) { flash(el('attMsg'), error.message, false); return; }
-  window.open(data.signedUrl, '_blank');
+async function viewFile(path) {
+  const w = window.open('', '_blank');   // відкриваємо одразу, щоб не блокував popup-фільтр
+  const { data, error } = await sb.storage.from('resumes').createSignedUrl(path, 300, { download: false });
+  if (error) { if (w) w.close(); flash(el('attMsg'), error.message, false); return; }
+  if (w) w.location = data.signedUrl; else window.open(data.signedUrl, '_blank');
 }
 
 async function deleteFile(attId, path) {
@@ -303,7 +338,12 @@ function openEdit() {
   el('e_name').value = current.full_name || '';
   el('e_email').value = current.email || '';
   el('e_phone').value = current.phone || '';
+  el('e_location').value = current.location || '';
+  el('e_salary').value = current.expected_salary || '';
+  el('e_facebook').value = current.facebook || '';
+  el('e_instagram').value = current.instagram || '';
   el('e_position').value = current.position_id ? String(current.position_id) : '';
+  el('e_tag').value = current.tag || '';
   el('e_source').value = current.source;
   el('e_summary').value = current.summary || '';
   el('e_msg').textContent = '';
@@ -319,7 +359,12 @@ async function saveEdit() {
     full_name: name,
     email: el('e_email').value.trim() || null,
     phone: el('e_phone').value.trim() || null,
+    location: el('e_location').value.trim() || null,
+    expected_salary: el('e_salary').value ? Number(el('e_salary').value) : null,
+    facebook: el('e_facebook').value.trim() || null,
+    instagram: el('e_instagram').value.trim() || null,
     position_id: el('e_position').value ? Number(el('e_position').value) : null,
+    tag: el('e_tag').value || null,
     source: el('e_source').value,
     summary: el('e_summary').value.trim() || null
   };
@@ -373,7 +418,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const a = e.target.closest('[data-act]'); if (!a) return;
     e.preventDefault();
     const row = e.target.closest('.att');
-    if (a.dataset.act === 'download') downloadFile(row.dataset.url);
+    if (a.dataset.act === 'view') viewFile(row.dataset.url);
     else if (a.dataset.act === 'delfile') deleteFile(row.dataset.att, row.dataset.url);
   });
 

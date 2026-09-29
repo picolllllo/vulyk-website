@@ -177,10 +177,23 @@ document.addEventListener('DOMContentLoaded', function () {
       const uid = card.querySelector('input[data-role="uid"]').value.trim();
       const email = card.querySelector('input[data-role="uemail"]').value.trim();
       if (!uid || !email) { flash(el('listMsg'), 'Вкажіть UUID та email', false); return; }
+
+      const ROLE = { hr:'HR', agency:'агенція' };
+      const { data: existing } = await sb.from('users').select('id,role,agency_id').eq('id', uid).maybeSingle();
+      if (existing) {
+        if (existing.role === 'agency' && existing.agency_id === btn.dataset.ag) {
+          flash(el('listMsg'), 'Цей логін уже прив’язаний до цієї агенції', true); loadAll(); return;
+        }
+        if (!confirm('Цей UID уже має профіль (роль: ' + (ROLE[existing.role] || existing.role) + ').\n\n'
+          + 'Переконайтесь, що це саме той користувач. Переприв’язати його до цієї агенції як «агенція»?')) return;
+        const { error } = await sb.from('users').update({ email: email, role: 'agency', agency_id: btn.dataset.ag }).eq('id', uid);
+        flash(el('listMsg'), error ? error.message : 'Логін переприв’язано', !error); loadAll(); return;
+      }
+
       const { error } = await sb.from('users').insert({ id: uid, email: email, role: 'agency', agency_id: btn.dataset.ag });
       if (error) {
         flash(el('listMsg'), error.message.indexOf('foreign key') > -1
-          ? 'Такого користувача немає в Authentication. Спершу створіть його у Dashboard.' : error.message, false);
+          ? 'Такого користувача немає в Authentication. Спершу створіть його у Dashboard (Add user).' : error.message, false);
         return;
       }
       flash(el('listMsg'), 'Логін прив’язано', true); loadAll();
