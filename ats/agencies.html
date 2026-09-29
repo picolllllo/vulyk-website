@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ATS · Агенції · Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ats.css">
+  <style>
+    .acard{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:16px; }
+    .acard__head{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .acard__name{ font-size:17px; font-weight:700; }
+    .acard__sub{ font-size:13px; color:var(--muted); margin-top:2px; }
+    .asec{ margin-top:16px; }
+    .asec__t{ font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin-bottom:8px; }
+    .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+    .chip{ display:inline-flex; align-items:center; gap:8px; background:var(--head); border:1px solid var(--line);
+      border-radius:100px; padding:5px 12px; font-size:13px; font-weight:600; }
+    .chip button{ background:none; border:none; cursor:pointer; color:var(--muted); font:inherit; font-weight:800; line-height:1; padding:0; }
+    .chip button:hover{ color:var(--red); }
+    .rowline{ display:flex; gap:8px; flex-wrap:wrap; align-items:flex-end; }
+    .rowline .fld{ display:flex; flex-direction:column; }
+    .rowline label{ margin:0 0 4px; }
+    .rowline select, .rowline input{ min-width:200px; }
+    .userline{ display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:14px; padding:6px 0; border-bottom:1px solid var(--line); }
+    .userline:last-child{ border-bottom:none; }
+    .muted{ color:var(--muted); font-size:13px; }
+    .hintbox{ background:#fff8e6; border:1px solid var(--accent); border-radius:10px; padding:12px 14px; font-size:13px; margin-top:8px; }
+    code{ background:var(--head); padding:1px 6px; border-radius:5px; }
+  </style>
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="wrap">
+  <div id="noAccess" class="notice" hidden>
+    <h2>Немає доступу</h2>
+    <p>Цей акаунт не має ролі <b>hr</b>. Зверніться до адміністратора.</p>
+  </div>
+
+  <div id="panel" hidden>
+    <div class="panel__head">
+      <h2>Агенції</h2>
+      <button id="newBtn" class="btn btn--primary">+ Нова агенція</button>
+    </div>
+
+    <div id="form" class="form-panel" hidden>
+      <h3>Нова агенція</h3>
+      <div class="form-grid">
+        <div><label for="f_name">Назва *</label><input id="f_name" type="text" placeholder="напр. ToroUkraine"></div>
+        <div><label for="f_email">Контактний email</label><input id="f_email" type="email" placeholder="hr@agency.com"></div>
+      </div>
+      <div class="form-actions">
+        <button id="saveBtn" class="btn btn--primary">Створити</button>
+        <button id="cancelBtn" class="btn btn--ghost">Скасувати</button>
+        <span id="formMsg" class="msg" style="margin:0"></span>
+      </div>
+    </div>
+
+    <div id="list"></div>
+    <div id="emptyMsg" class="muted" hidden>Ще немає агенцій. Натисніть «Нова агенція».</div>
+    <div id="listMsg" class="msg"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+let agencies = [];
+let jobs = [];
+let jobAgency = [];   // [{job_id, agency_id}]
+let agencyUsers = []; // [{id,email,agency_id}]
+
+function initAgencies() {
+  el('panel').hidden = false;
+  loadAll();
+}
+
+async function loadAll() {
+  const [a, j, ja, u] = await Promise.all([
+    sb.from('agencies').select('*').order('created_at', { ascending: true }),
+    sb.from('jobs').select('id,title').order('title'),
+    sb.from('job_agency').select('job_id,agency_id'),
+    sb.from('users').select('id,email,agency_id').eq('role', 'agency')
+  ]);
+  if (a.error) { flash(el('listMsg'), a.error.message, false); return; }
+  agencies = a.data || []; jobs = j.data || []; jobAgency = ja.data || []; agencyUsers = u.data || [];
+  render();
+}
+
+function jobTitle(id) { const j = jobs.find(function (x) { return x.id === id; }); return j ? j.title : '(вакансія)'; }
+
+function render() {
+  el('emptyMsg').hidden = agencies.length > 0;
+  el('list').innerHTML = agencies.map(function (ag) {
+    const assigned = jobAgency.filter(function (x) { return x.agency_id === ag.id; });
+    const assignedIds = assigned.map(function (x) { return x.job_id; });
+    const chips = assigned.length
+      ? assigned.map(function (x) {
+          return '<span class="chip">' + escapeHtml(jobTitle(x.job_id))
+            + '<button data-act="unassign" data-job="' + x.job_id + '" data-ag="' + ag.id + '" title="Прибрати">✕</button></span>';
+        }).join('')
+      : '<span class="muted">Ще не призначено жодної вакансії.</span>';
+    const jobOpts = jobs.filter(function (j) { return assignedIds.indexOf(j.id) < 0; })
+      .map(function (j) { return '<option value="' + j.id + '">' + escapeHtml(j.title) + '</option>'; }).join('');
+    const users = agencyUsers.filter(function (u) { return u.agency_id === ag.id; });
+    const usersHtml = users.length
+      ? users.map(function (u) {
+          return '<div class="userline"><span>' + escapeHtml(u.email) + '</span>'
+            + '<button class="btn btn--ghost btn--sm" data-act="unlink" data-uid="' + u.id + '">Відв’язати</button></div>';
+        }).join('')
+      : '<div class="muted">Логінів ще немає.</div>';
+
+    return '<div class="acard" data-ag="' + ag.id + '">'
+      + '<div class="acard__head">'
+      +   '<div><div class="acard__name">' + escapeHtml(ag.name) + '</div>'
+      +     '<div class="acard__sub">' + escapeHtml(ag.contact_email || 'без email') + '</div></div>'
+      +   '<button class="btn btn--danger btn--sm" data-act="del-agency" data-ag="' + ag.id + '">Видалити</button>'
+      + '</div>'
+
+      + '<div class="asec"><div class="asec__t">Вакансії агенції</div>'
+      +   '<div class="chips">' + chips + '</div>'
+      +   '<div class="rowline">'
+      +     '<div class="fld"><label>Призначити вакансію</label>'
+      +       '<select data-role="jobsel" ' + (jobOpts ? '' : 'disabled') + '>'
+      +         (jobOpts ? '<option value="">— оберіть —</option>' + jobOpts : '<option>усі вже призначені</option>') + '</select></div>'
+      +     '<button class="btn btn--ghost btn--sm" data-act="assign" data-ag="' + ag.id + '" ' + (jobOpts ? '' : 'disabled') + '>Додати</button>'
+      +   '</div>'
+      + '</div>'
+
+      + '<div class="asec"><div class="asec__t">Доступи (логіни агенції)</div>'
+      +   usersHtml
+      +   '<div class="rowline" style="margin-top:10px">'
+      +     '<div class="fld"><label>UUID користувача</label><input data-role="uid" type="text" placeholder="з Dashboard → Authentication"></div>'
+      +     '<div class="fld"><label>Email</label><input data-role="uemail" type="email" placeholder="login@agency.com"></div>'
+      +     '<button class="btn btn--ghost btn--sm" data-act="link" data-ag="' + ag.id + '">Прив’язати</button>'
+      +   '</div>'
+      +   '<div class="hintbox">Створіть користувача у <b>Supabase → Authentication → Add user</b> (email + пароль), скопіюйте його <code>User UID</code> і вставте сюди разом з email.</div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+/* створення агенції */
+function openForm() { el('f_name').value = ''; el('f_email').value = ''; el('formMsg').textContent = ''; el('form').hidden = false; el('f_name').focus(); }
+async function saveAgency() {
+  const name = el('f_name').value.trim();
+  if (!name) { flash(el('formMsg'), 'Вкажіть назву', false); return; }
+  const { error } = await sb.from('agencies').insert({ name: name, contact_email: el('f_email').value.trim() || null });
+  if (error) { flash(el('formMsg'), error.message, false); return; }
+  el('form').hidden = true; loadAll();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  el('newBtn').addEventListener('click', openForm);
+  el('saveBtn').addEventListener('click', saveAgency);
+  el('cancelBtn').addEventListener('click', function () { el('form').hidden = true; });
+
+  el('list').addEventListener('click', async function (e) {
+    const btn = e.target.closest('button[data-act]'); if (!btn) return;
+    const act = btn.dataset.act;
+    const card = btn.closest('.acard');
+
+    if (act === 'assign') {
+      const sel = card.querySelector('select[data-role="jobsel"]');
+      const jobId = sel.value; if (!jobId) return;
+      const { error } = await sb.from('job_agency').insert({ job_id: jobId, agency_id: btn.dataset.ag });
+      flash(el('listMsg'), error ? error.message : 'Вакансію призначено', !error); loadAll();
+    } else if (act === 'unassign') {
+      const { error } = await sb.from('job_agency').delete().eq('job_id', btn.dataset.job).eq('agency_id', btn.dataset.ag);
+      flash(el('listMsg'), error ? error.message : 'Прибрано', !error); loadAll();
+    } else if (act === 'link') {
+      const uid = card.querySelector('input[data-role="uid"]').value.trim();
+      const email = card.querySelector('input[data-role="uemail"]').value.trim();
+      if (!uid || !email) { flash(el('listMsg'), 'Вкажіть UUID та email', false); return; }
+      const { error } = await sb.from('users').insert({ id: uid, email: email, role: 'agency', agency_id: btn.dataset.ag });
+      if (error) {
+        flash(el('listMsg'), error.message.indexOf('foreign key') > -1
+          ? 'Такого користувача немає в Authentication. Спершу створіть його у Dashboard.' : error.message, false);
+        return;
+      }
+      flash(el('listMsg'), 'Логін прив’язано', true); loadAll();
+    } else if (act === 'unlink') {
+      if (!confirm('Відв’язати цей логін від агенції?')) return;
+      const { error } = await sb.from('users').delete().eq('id', btn.dataset.uid);
+      flash(el('listMsg'), error ? error.message : 'Відв’язано', !error); loadAll();
+    } else if (act === 'del-agency') {
+      if (!confirm('Видалити агенцію? Спершу відв’яжіть її логіни.')) return;
+      const { error } = await sb.from('agencies').delete().eq('id', btn.dataset.ag);
+      if (error) {
+        flash(el('listMsg'), error.message.indexOf('foreign key') > -1
+          ? 'Не можна видалити: до агенції прив’язані логіни або заявки. Спершу відв’яжіть їх.' : error.message, false);
+        return;
+      }
+      flash(el('listMsg'), 'Видалено', true); loadAll();
+    }
+  });
+
+  atsGuard('agencies.html', initAgencies);
+});
+</script>
+</body>
+</html>

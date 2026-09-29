@@ -33,21 +33,26 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="app.js"></script>
 <script>
+async function routeByRole(userId) {
+  const { data: me } = await sb.from('users').select('role').eq('id', userId).maybeSingle();
+  location.href = (me && me.role === 'agency') ? 'agency.html' : 'jobs.html';
+}
+
 (async function () {
   if (!SB_ANON || SB_ANON.indexOf('PASTE') === 0) { el('cfgWarn').hidden = false; return; }
-  // якщо вже залогінений — одразу до вакансій
+  // якщо вже залогінений — за роллю
   const { data: { session } } = await sb.auth.getSession();
-  if (session) { location.href = 'jobs.html'; return; }
+  if (session) { routeByRole(session.user.id); return; }
   el('loginView').hidden = false;
 
   el('loginForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     const m = el('loginMsg'); m.className = 'msg'; m.textContent = 'Вхід…';
-    const { error } = await sb.auth.signInWithPassword({
+    const { data, error } = await sb.auth.signInWithPassword({
       email: el('email').value.trim(), password: el('pass').value
     });
     if (error) { m.className = 'msg msg--err'; m.textContent = 'Не вдалося увійти: ' + error.message; return; }
-    location.href = 'jobs.html';
+    routeByRole(data.user.id);
   });
 })();
 </script>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Кабінет агенції · Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ats.css">
+  <style>
+    .jobbar{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:4px; }
+    .jobbar h2{ margin:0; font-size:23px; }
+    .jmeta{ color:var(--muted); font-size:14px; display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:18px; }
+    .cols{ display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start; }
+    @media (max-width:820px){ .cols{ grid-template-columns:1fr; } }
+    .box{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:20px; }
+    .box h3{ margin:0 0 14px; font-size:15px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+    details.desc{ padding:0; margin-bottom:20px; }
+    details.desc > summary{ list-style:none; cursor:pointer; padding:16px 22px; font-size:15px; font-weight:800;
+      text-transform:uppercase; letter-spacing:.04em; color:var(--muted); display:flex; align-items:center; justify-content:space-between; }
+    details.desc > summary::-webkit-details-marker{ display:none; }
+    details.desc .desc-body{ padding:0 22px 20px; }
+    .desc-body .vac-section{ margin:0 0 16px; } .desc-body .vac-section__title{ font-size:15px; font-weight:800; margin:0 0 8px; color:var(--text); }
+    .desc-body p{ margin:0 0 10px; line-height:1.6; font-size:14px; } .desc-body ul{ margin:0 0 10px; padding-left:20px; } .desc-body li{ margin:4px 0; font-size:14px; }
+    .cand{ border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:10px; }
+    .cand__head{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .cand__name{ font-weight:700; font-size:15px; }
+    .cand__meta{ font-size:13px; color:var(--muted); margin-top:2px; }
+    .spill{ font-size:12px; font-weight:700; padding:3px 11px; border-radius:100px; white-space:nowrap; }
+    .muted{ color:var(--muted); font-size:14px; }
+  </style>
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="wrap">
+  <div id="noAccess" class="notice" hidden>
+    <h2>Немає доступу</h2>
+    <p>Цей акаунт не прив'язаний до агенції. Зверніться до менеджера Вулика.</p>
+  </div>
+
+  <div id="panel" hidden>
+    <div id="noJobs" class="notice" hidden>
+      <h2>Вам ще не призначено вакансій</h2>
+      <p>Щойно менеджер Вулика призначить вакансію вашій агенції — вона з'явиться тут.</p>
+    </div>
+
+    <div id="content" hidden>
+      <div class="jobbar">
+        <h2 id="jTitle"></h2>
+        <select id="jobSel" style="max-width:320px" hidden></select>
+      </div>
+      <div class="jmeta" id="jMeta"></div>
+
+      <details class="desc box" id="descBox">
+        <summary>Опис вакансії <span style="color:var(--accent-deep)">▼</span></summary>
+        <div class="desc-body" id="jDesc"></div>
+      </details>
+
+      <div class="cols">
+        <div class="box">
+          <h3>Подати кандидата</h3>
+          <label for="c_name">Ім'я та прізвище *</label>
+          <input id="c_name" type="text" placeholder="напр. Оксана Петренко">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div><label for="c_email">Email</label><input id="c_email" type="email" placeholder="name@example.com"></div>
+            <div><label for="c_phone">Телефон</label><input id="c_phone" type="text" placeholder="+380…"></div>
+          </div>
+          <label for="c_salary">Очікувана ЗП, грн</label>
+          <input id="c_salary" type="number" min="0" step="500" placeholder="напр. 25000">
+          <label for="c_resume">Резюме (PDF/DOC)</label>
+          <input id="c_resume" type="file" accept=".pdf,.doc,.docx,.rtf,.odt" style="border:none;padding:0">
+          <div style="margin-top:16px"><button id="submitBtn" class="btn btn--primary">Подати кандидата</button></div>
+          <div id="subMsg" class="msg"></div>
+        </div>
+
+        <div class="box">
+          <h3>Мої кандидати</h3>
+          <div id="myList"><div class="muted">Завантаження…</div></div>
+        </div>
+      </div>
+    </div>
+    <div id="msg" class="msg"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+const STAGE = { new:'Новий', review:'Розгляд', interview:'Співбесіда', offer:'Оффер', hired:'Найнято', rejected:'Відмова' };
+const STAGE_TINT = {
+  new:       { bg:'#eceef1', fg:'#5b6673' },
+  review:    { bg:'#e5edff', fg:'#2563eb' },
+  interview: { bg:'#f0e9ff', fg:'#7c3aed' },
+  offer:     { bg:'#fbedcf', fg:'#8C6006' },
+  hired:     { bg:'#e4f4ea', fg:'#1a7f37' },
+  rejected:  { bg:'#fde7e7', fg:'#b3261e' }
+};
+let myJobs = [];
+let selectedJob = null;
+
+function initAgency() {
+  el('panel').hidden = false;
+  loadJobs();
+}
+
+function inlineMd(s) { return escapeHtml(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
+function renderMarkdown(md) {
+  const lines = String(md || '').replace(/\r/g, '').split('\n');
+  let html = '', list = null, para = [], sec = false;
+  function flushPara() { if (para.length) { html += '<p>' + inlineMd(para.join(' ')) + '</p>'; para = []; } }
+  function flushList() { if (list) { html += '<ul>' + list + '</ul>'; list = null; } }
+  function closeSec() { flushPara(); flushList(); if (sec) { html += '</div>'; sec = false; } }
+  lines.forEach(function (raw) {
+    const line = raw.trim();
+    if (line === '') { flushPara(); flushList(); return; }
+    if (line.indexOf('## ') === 0) { closeSec(); html += '<div class="vac-section"><h4 class="vac-section__title">' + escapeHtml(line.slice(3)) + '</h4>'; sec = true; return; }
+    if (line.indexOf('- ') === 0) { flushPara(); list = (list || '') + '<li>' + inlineMd(line.slice(2)) + '</li>'; return; }
+    para.push(line);
+  });
+  closeSec();
+  return html;
+}
+
+async function loadJobs() {
+  const { data, error } = await sb.from('job_agency').select('job_id, jobs(id,title,description,employment,location,status)');
+  if (error) { flash(el('msg'), error.message, false); return; }
+  myJobs = (data || []).map(function (r) { return r.jobs; }).filter(Boolean);
+  if (!myJobs.length) { el('noJobs').hidden = false; return; }
+  el('content').hidden = false;
+
+  if (myJobs.length > 1) {
+    el('jobSel').hidden = false;
+    el('jobSel').innerHTML = myJobs.map(function (j) { return '<option value="' + j.id + '">' + escapeHtml(j.title) + '</option>'; }).join('');
+  }
+  selectJob(myJobs[0].id);
+}
+
+function selectJob(id) {
+  selectedJob = myJobs.find(function (j) { return j.id === id; });
+  if (!selectedJob) return;
+  el('jTitle').textContent = selectedJob.title;
+  const meta = [];
+  if (selectedJob.location) meta.push('<span>' + escapeHtml(selectedJob.location) + '</span>');
+  if (selectedJob.employment) meta.push('<span>' + escapeHtml(selectedJob.employment) + '</span>');
+  el('jMeta').innerHTML = meta.join('');
+  el('jDesc').innerHTML = selectedJob.description ? renderMarkdown(selectedJob.description) : '<p class="muted">Опис не заповнено.</p>';
+  loadMyCandidates();
+}
+
+async function loadMyCandidates() {
+  const { data, error } = await sb.from('applications')
+    .select('id,stage,salary_expectation,salary_currency,created_at, candidates(full_name,email,phone)')
+    .eq('job_id', selectedJob.id).order('created_at', { ascending: false });
+  if (error) { el('myList').innerHTML = '<div class="muted">' + escapeHtml(error.message) + '</div>'; return; }
+  if (!data || !data.length) { el('myList').innerHTML = '<div class="muted">Ви ще не подали кандидатів на цю вакансію.</div>'; return; }
+  el('myList').innerHTML = data.map(function (a) {
+    const c = a.candidates || {};
+    const t = STAGE_TINT[a.stage] || STAGE_TINT.new;
+    const sal = a.salary_expectation ? (a.salary_expectation.toLocaleString('uk-UA') + ' ' + a.salary_currency) : '';
+    const contact = [c.email, c.phone].filter(Boolean).map(escapeHtml).join(' · ');
+    const bits = []; if (contact) bits.push(contact); if (sal) bits.push('Очік.: ' + sal);
+    return '<div class="cand">'
+      + '<div class="cand__head"><span class="cand__name">' + escapeHtml(c.full_name || '—') + '</span>'
+      +   '<span class="spill" style="background:' + t.bg + ';color:' + t.fg + '">' + STAGE[a.stage] + '</span></div>'
+      + (bits.length ? '<div class="cand__meta">' + bits.join(' · ') + '</div>' : '')
+      + '</div>';
+  }).join('');
+}
+
+async function submitCandidate() {
+  const name = el('c_name').value.trim();
+  if (!name) { flash(el('subMsg'), 'Вкажіть ім’я', false); return; }
+  const email = el('c_email').value.trim().toLowerCase();
+  const phone = el('c_phone').value.trim();
+  if (!email && !phone) { flash(el('subMsg'), 'Вкажіть email або телефон', false); return; }
+
+  const btn = el('submitBtn'); btn.disabled = true; const old = btn.textContent; btn.textContent = 'Надсилаємо…';
+  const cid = (crypto.randomUUID ? crypto.randomUUID() : ('' + Date.now() + Math.random()).replace('.', ''));
+
+  const c = await sb.from('candidates').insert({ id: cid, full_name: name, email: email || null, phone: phone || null, source: 'agency' });
+  if (c.error) {
+    btn.disabled = false; btn.textContent = old;
+    flash(el('subMsg'), c.error.message.indexOf('duplicate') > -1
+      ? 'Кандидат із таким email уже є в системі. Змініть email або зверніться до Вулика.' : c.error.message, false);
+    return;
+  }
+
+  const sal = el('c_salary').value ? Number(el('c_salary').value) : null;
+  const app = await sb.from('applications')
+    .insert({ job_id: selectedJob.id, candidate_id: cid, agency_id: ATS.me.agency_id, stage: 'new', salary_expectation: sal })
+    .select('id').maybeSingle();
+  if (app.error) { btn.disabled = false; btn.textContent = old; flash(el('subMsg'), app.error.message, false); return; }
+
+  const file = el('c_resume').files[0];
+  if (file && app.data) {
+    const safe = file.name.replace(/[^\w.\-]+/g, '_');
+    const path = cid + '/' + Date.now() + '_' + safe;
+    const up = await sb.storage.from('resumes').upload(path, file, { upsert: false });
+    if (!up.error) {
+      await sb.from('attachments').insert({ candidate_id: cid, application_id: app.data.id, kind: 'resume', file_url: path, file_name: file.name });
+    }
+  }
+
+  el('c_name').value = ''; el('c_email').value = ''; el('c_phone').value = ''; el('c_salary').value = ''; el('c_resume').value = '';
+  btn.disabled = false; btn.textContent = old;
+  flash(el('subMsg'), 'Кандидата подано ✓', true);
+  loadMyCandidates();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  el('submitBtn').addEventListener('click', submitCandidate);
+  el('jobSel').addEventListener('change', function () { selectJob(el('jobSel').value); });
+  agencyGuard(initAgency);
+});
+</script>
+</body>
+</html>
