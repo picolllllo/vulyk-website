@@ -262,7 +262,7 @@ function renderBoard() {
       const bits = [SOURCE[c.source] || ''];
       if (sal) bits.push('Очік.: ' + sal);
       return '<div class="card">'
-        + '<a class="card__name" href="candidates.html?candidate=' + c.id + '">' + escapeHtml(c.full_name || '—') + '</a>'
+        + '<a class="card__name" href="candidate.html?id=' + c.id + '">' + escapeHtml(c.full_name || '—') + '</a>'
         + '<div class="card__meta">' + bits.filter(Boolean).map(escapeHtml).join(' · ') + '</div>'
         + '<div class="card__foot"><select data-app="' + a.id + '">' + opts + '</select></div>'
         + '</div>';

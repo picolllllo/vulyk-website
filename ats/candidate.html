@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ATS · Кандидат · Вулик</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ats.css">
+  <style>
+    .back{ background:none; border:none; color:var(--muted); cursor:pointer; font:inherit; font-weight:600; padding:0; margin-bottom:14px; }
+    .back:hover{ color:var(--accent-deep); }
+    .chead{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:8px; }
+    .cname{ font-size:24px; margin:0 0 6px; }
+    .cmeta{ color:var(--muted); font-size:14px; display:flex; gap:16px; flex-wrap:wrap; align-items:center; }
+    .cmeta a{ color:var(--accent-deep); text-decoration:none; }
+    .cols{ display:grid; grid-template-columns:1.4fr 1fr; gap:22px; align-items:start; }
+    @media (max-width:860px){ .cols{ grid-template-columns:1fr; } }
+    .box{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:20px; }
+    .box h3{ margin:0 0 14px; font-size:15px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+    .app-item{ border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin-bottom:14px; }
+    .app-item__head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:6px; }
+    .app-item__title{ font-weight:700; font-size:15px; }
+    .app-item__title a{ color:var(--text); text-decoration:none; }
+    .app-item__title a:hover{ color:var(--accent-deep); }
+    .app-sub{ font-size:13px; color:var(--muted); margin-top:2px; }
+    .stage-sel{ font:inherit; font-size:12px; font-weight:700; padding:4px 10px; border-radius:100px; border:1px solid; cursor:pointer; }
+    .note{ border-left:3px solid var(--line); padding:5px 0 5px 12px; margin:10px 0; }
+    .note__meta{ font-size:12px; color:var(--muted); margin-bottom:2px; }
+    .note__text{ font-size:14px; white-space:pre-wrap; }
+    .note-add{ display:flex; gap:8px; margin-top:10px; }
+    .note-add textarea{ min-height:40px; }
+    .att{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid var(--line); font-size:14px; }
+    .att:last-child{ border-bottom:none; }
+    .att a{ color:var(--accent-deep); text-decoration:none; font-weight:600; }
+    .muted{ color:var(--muted); font-size:14px; }
+    .inline-add{ display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; }
+    .inline-add .fld{ display:flex; flex-direction:column; }
+    .inline-add label{ margin:0 0 4px; }
+  </style>
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="wrap">
+  <div id="noAccess" class="notice" hidden>
+    <h2>Немає доступу</h2>
+    <p>Цей акаунт не має ролі <b>hr</b>. Зверніться до адміністратора.</p>
+  </div>
+
+  <div id="panel" hidden>
+    <button class="back" id="backBtn">← До кандидатів</button>
+
+    <div class="chead">
+      <div>
+        <h2 class="cname" id="cName"></h2>
+        <div class="cmeta" id="cMeta"></div>
+      </div>
+      <button id="editBtn" class="btn btn--ghost btn--sm">Редагувати</button>
+    </div>
+
+    <div id="notFound" class="notice" hidden><h2>Кандидата не знайдено</h2></div>
+
+    <!-- Форма редагування профілю -->
+    <div id="editPanel" class="form-panel" hidden style="margin:16px 0 22px">
+      <h3>Редагувати профіль</h3>
+      <div class="form-grid">
+        <div class="full"><label for="e_name">Ім'я та прізвище *</label><input id="e_name" type="text"></div>
+        <div><label for="e_email">Email</label><input id="e_email" type="email" placeholder="name@example.com"></div>
+        <div><label for="e_phone">Телефон</label><input id="e_phone" type="text" placeholder="+380…"></div>
+        <div><label for="e_position">Позиція</label><select id="e_position"><option value="">— не вказано —</option></select></div>
+        <div>
+          <label for="e_source">Джерело</label>
+          <select id="e_source">
+            <option value="direct">Прямий</option>
+            <option value="agency">Агенція</option>
+            <option value="referral">Рекомендація</option>
+            <option value="other">Інше</option>
+          </select>
+        </div>
+        <div class="full"><label for="e_summary">Про кандидата / коментар</label><textarea id="e_summary"></textarea></div>
+      </div>
+      <div class="form-actions" style="justify-content:space-between; align-items:center">
+        <div style="display:flex; gap:10px; align-items:center">
+          <button id="e_save" class="btn btn--primary">Зберегти</button>
+          <button id="e_cancel" class="btn btn--ghost">Скасувати</button>
+          <span id="e_msg" class="msg" style="margin:0"></span>
+        </div>
+        <button id="e_delete" class="btn btn--danger">Видалити кандидата</button>
+      </div>
+    </div>
+
+    <div id="content" hidden>
+      <div id="summaryBox" class="box" hidden>
+        <h3>Про кандидата</h3>
+        <div id="cSummary" style="white-space:pre-wrap; font-size:14px"></div>
+      </div>
+
+      <div class="cols">
+        <div>
+          <div class="box">
+            <h3>Заявки на вакансії</h3>
+            <div id="appsList"></div>
+            <div class="inline-add" style="margin-top:6px">
+              <div class="fld grow" style="flex:1; min-width:220px">
+                <label for="a_job">Прив'язати до вакансії</label>
+                <select id="a_job"><option value="">— оберіть вакансію —</option></select>
+              </div>
+              <div class="fld">
+                <label for="a_salary">Очік. ЗП</label>
+                <input id="a_salary" type="number" min="0" step="500" style="min-width:120px" placeholder="грн">
+              </div>
+              <button id="addAppBtn" class="btn btn--primary">Додати</button>
+            </div>
+            <div id="appMsg" class="msg"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="box">
+            <h3>Резюме та файли</h3>
+            <div id="attList"></div>
+            <label for="fileInput" style="margin-top:12px">Завантажити файл</label>
+            <input id="fileInput" type="file" style="border:none; padding:0">
+            <div id="attMsg" class="msg"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="msg" class="msg"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+<script>
+const candId = new URLSearchParams(location.search).get('id');
+let current = null;
+let positions = [];
+let openJobs = [];
+
+const STAGE = { new:'Новий', review:'Розгляд', interview:'Співбесіда', offer:'Оффер', hired:'Найнято', rejected:'Відмова' };
+const STAGE_ORDER = ['new','review','interview','offer','hired','rejected'];
+const STAGE_TINT = {
+  new:       { bg:'#eceef1', fg:'#5b6673' },
+  review:    { bg:'#e5edff', fg:'#2563eb' },
+  interview: { bg:'#f0e9ff', fg:'#7c3aed' },
+  offer:     { bg:'#fbedcf', fg:'#8C6006' },
+  hired:     { bg:'#e4f4ea', fg:'#1a7f37' },
+  rejected:  { bg:'#fde7e7', fg:'#b3261e' }
+};
+const SOURCE = { direct:'Прямий', agency:'Агенція', referral:'Рекомендація', other:'Інше' };
+
+function initCandidate() {
+  el('panel').hidden = false;
+  if (!candId) { el('notFound').hidden = false; return; }
+  loadRefs().then(loadCandidate);
+}
+
+async function loadRefs() {
+  const [{ data: pos }, { data: jobs }] = await Promise.all([
+    sb.from('positions').select('id,name').order('sort_order').order('name'),
+    sb.from('jobs').select('id,title,status').in('status', ['open','paused']).order('title')
+  ]);
+  positions = pos || [];
+  openJobs = jobs || [];
+  el('e_position').innerHTML = '<option value="">— не вказано —</option>'
+    + positions.map(function (p) { return '<option value="' + p.id + '">' + escapeHtml(p.name) + '</option>'; }).join('');
+  el('a_job').innerHTML = '<option value="">— оберіть вакансію —</option>'
+    + openJobs.map(function (j) { return '<option value="' + j.id + '">' + escapeHtml(j.title) + '</option>'; }).join('');
+}
+
+async function loadCandidate() {
+  const { data: c, error } = await sb.from('candidates').select('*, positions(name)').eq('id', candId).maybeSingle();
+  if (error) { flash(el('msg'), error.message, false); return; }
+  if (!c) { el('notFound').hidden = false; return; }
+  current = c;
+
+  document.title = 'ATS · ' + c.full_name + ' · Вулик';
+  el('cName').textContent = c.full_name;
+  const meta = [];
+  if (c.positions) meta.push('<span>' + escapeHtml(c.positions.name) + '</span>');
+  meta.push('<span>Джерело: ' + SOURCE[c.source] + '</span>');
+  if (c.email) meta.push('<a href="mailto:' + escapeHtml(c.email) + '">' + escapeHtml(c.email) + '</a>');
+  if (c.phone) meta.push('<a href="tel:' + escapeHtml(c.phone) + '">' + escapeHtml(c.phone) + '</a>');
+  el('cMeta').innerHTML = meta.join('');
+
+  if (c.summary) { el('cSummary').textContent = c.summary; el('summaryBox').hidden = false; }
+  else { el('summaryBox').hidden = true; }
+
+  el('content').hidden = false;
+  await Promise.all([loadApps(), loadAttachments()]);
+}
+
+/* ---- Заявки + нотатки ---- */
+async function loadApps() {
+  const { data: apps, error } = await sb.from('applications')
+    .select('*, jobs(title)').eq('candidate_id', candId).order('created_at', { ascending: false });
+  if (error) { el('appsList').innerHTML = '<div class="muted">' + escapeHtml(error.message) + '</div>'; return; }
+  const { data: notes } = await sb.from('notes')
+    .select('*').eq('candidate_id', candId).order('created_at', { ascending: true });
+  const byApp = {};
+  (notes || []).forEach(function (n) { (byApp[n.application_id] = byApp[n.application_id] || []).push(n); });
+
+  if (!apps || !apps.length) {
+    el('appsList').innerHTML = '<div class="muted">Заявок ще немає. Прив’яжіть кандидата до вакансії нижче.</div>';
+    return;
+  }
+  el('appsList').innerHTML = apps.map(function (a) {
+    const t = STAGE_TINT[a.stage] || STAGE_TINT.new;
+    const jobTitle = a.jobs ? a.jobs.title : '(вакансію видалено)';
+    const jobLink = a.job_id ? '<a href="job.html?id=' + a.job_id + '">' + escapeHtml(jobTitle) + '</a>' : escapeHtml(jobTitle);
+    const stageOpts = STAGE_ORDER.map(function (s) {
+      return '<option value="' + s + '"' + (s === a.stage ? ' selected' : '') + '>' + STAGE[s] + '</option>';
+    }).join('');
+    const salary = a.salary_expectation ? (a.salary_expectation.toLocaleString('uk-UA') + ' ' + a.salary_currency) : '—';
+    const notesHtml = (byApp[a.id] || []).map(function (n) {
+      const nd = new Date(n.created_at).toLocaleString('uk-UA', { dateStyle:'short', timeStyle:'short' });
+      return '<div class="note"><div class="note__meta">' + nd + '</div><div class="note__text">' + escapeHtml(n.text) + '</div></div>';
+    }).join('');
+    return '<div class="app-item" data-app="' + a.id + '">'
+      + '<div class="app-item__head">'
+      +   '<div><div class="app-item__title">' + jobLink + '</div>'
+      +       '<div class="app-sub">Очік. ЗП: ' + salary + '</div></div>'
+      +   '<select data-role="stage" class="stage-sel" style="background:' + t.bg + ';color:' + t.fg + ';border-color:' + t.bg + '">' + stageOpts + '</select>'
+      + '</div>'
+      + notesHtml
+      + '<div class="note-add">'
+      +   '<textarea data-role="note" placeholder="Додати нотатку…"></textarea>'
+      +   '<button class="btn btn--ghost btn--sm" data-act="addnote">Додати</button>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+async function addApplication() {
+  const jobId = el('a_job').value;
+  if (!jobId) { flash(el('appMsg'), 'Оберіть вакансію', false); return; }
+  const sal = el('a_salary').value ? Number(el('a_salary').value) : null;
+  const { error } = await sb.from('applications').insert({
+    job_id: jobId, candidate_id: candId, stage: 'new', salary_expectation: sal
+  });
+  if (error) {
+    flash(el('appMsg'), (error.message.indexOf('duplicate') > -1 || error.message.indexOf('unique') > -1)
+      ? 'Кандидат уже має заявку на цю вакансію' : error.message, false);
+    return;
+  }
+  el('a_job').value = ''; el('a_salary').value = '';
+  flash(el('appMsg'), 'Заявку додано', true);
+  loadApps();
+}
+
+/* ---- Резюме ---- */
+async function loadAttachments() {
+  const { data, error } = await sb.from('attachments').select('*').eq('candidate_id', candId).order('created_at', { ascending: false });
+  if (error) { el('attList').innerHTML = '<div class="muted">' + escapeHtml(error.message) + '</div>'; return; }
+  if (!data || !data.length) { el('attList').innerHTML = '<div class="muted">Файлів ще немає.</div>'; return; }
+  el('attList').innerHTML = data.map(function (f) {
+    const nm = f.file_name || 'файл';
+    return '<div class="att" data-att="' + f.id + '" data-url="' + escapeHtml(f.file_url) + '">'
+      + '<a href="#" data-act="download">' + escapeHtml(nm) + '</a>'
+      + '<button class="btn btn--danger btn--sm" data-act="delfile">✕</button>'
+      + '</div>';
+  }).join('');
+}
+
+async function uploadFile(file) {
+  if (!file) return;
+  flash(el('attMsg'), 'Завантаження…', true);
+  const safe = file.name.replace(/[^\w.\-]+/g, '_');
+  const path = candId + '/' + Date.now() + '_' + safe;
+  const up = await sb.storage.from('resumes').upload(path, file, { upsert: false });
+  if (up.error) { flash(el('attMsg'), up.error.message, false); return; }
+  const { error } = await sb.from('attachments').insert({
+    candidate_id: candId, kind: 'resume', file_url: path, file_name: file.name, uploaded_by: ATS.user.id
+  });
+  if (error) { flash(el('attMsg'), error.message, false); return; }
+  el('fileInput').value = '';
+  flash(el('attMsg'), 'Завантажено', true);
+  loadAttachments();
+}
+
+async function downloadFile(path) {
+  const { data, error } = await sb.storage.from('resumes').createSignedUrl(path, 120);
+  if (error) { flash(el('attMsg'), error.message, false); return; }
+  window.open(data.signedUrl, '_blank');
+}
+
+async function deleteFile(attId, path) {
+  if (!confirm('Видалити файл?')) return;
+  await sb.storage.from('resumes').remove([path]);
+  const { error } = await sb.from('attachments').delete().eq('id', attId);
+  flash(el('attMsg'), error ? error.message : 'Видалено', !error);
+  loadAttachments();
+}
+
+/* ---- Редагування / видалення профілю ---- */
+function openEdit() {
+  if (!current) return;
+  el('e_name').value = current.full_name || '';
+  el('e_email').value = current.email || '';
+  el('e_phone').value = current.phone || '';
+  el('e_position').value = current.position_id ? String(current.position_id) : '';
+  el('e_source').value = current.source;
+  el('e_summary').value = current.summary || '';
+  el('e_msg').textContent = '';
+  el('editPanel').hidden = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  el('e_name').focus();
+}
+
+async function saveEdit() {
+  const name = el('e_name').value.trim();
+  if (!name) { flash(el('e_msg'), 'Вкажіть ім’я', false); return; }
+  const payload = {
+    full_name: name,
+    email: el('e_email').value.trim() || null,
+    phone: el('e_phone').value.trim() || null,
+    position_id: el('e_position').value ? Number(el('e_position').value) : null,
+    source: el('e_source').value,
+    summary: el('e_summary').value.trim() || null
+  };
+  const { error } = await sb.from('candidates').update(payload).eq('id', candId);
+  if (error) {
+    flash(el('e_msg'), error.message.indexOf('duplicate') > -1 ? 'Кандидат із таким email вже існує' : error.message, false);
+    return;
+  }
+  el('editPanel').hidden = true;
+  loadCandidate();
+}
+
+async function deleteCandidate() {
+  if (!confirm('Видалити кандидата «' + (current ? current.full_name : '') + '»?\n\nРазом з ним видаляться його заявки, нотатки та файли. Дію не можна скасувати.')) return;
+  const { error } = await sb.from('candidates').delete().eq('id', candId);
+  if (error) { flash(el('e_msg'), error.message, false); return; }
+  location.href = 'candidates.html';
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  el('backBtn').addEventListener('click', function () { location.href = 'candidates.html'; });
+  el('editBtn').addEventListener('click', openEdit);
+  el('e_cancel').addEventListener('click', function () { el('editPanel').hidden = true; });
+  el('e_save').addEventListener('click', saveEdit);
+  el('e_delete').addEventListener('click', deleteCandidate);
+  el('addAppBtn').addEventListener('click', addApplication);
+
+  el('appsList').addEventListener('change', async function (e) {
+    const sel = e.target.closest('select[data-role="stage"]'); if (!sel) return;
+    const appId = e.target.closest('.app-item').dataset.app;
+    const { error } = await sb.from('applications').update({ stage: sel.value }).eq('id', appId);
+    if (error) { flash(el('appMsg'), error.message, false); return; }
+    flash(el('appMsg'), 'Етап оновлено', true);
+    loadApps();
+  });
+  el('appsList').addEventListener('click', async function (e) {
+    const btn = e.target.closest('button[data-act="addnote"]'); if (!btn) return;
+    const item = e.target.closest('.app-item');
+    const ta = item.querySelector('textarea[data-role="note"]');
+    const text = ta.value.trim(); if (!text) return;
+    const { error } = await sb.from('notes').insert({
+      application_id: item.dataset.app, candidate_id: candId, author_id: ATS.user.id, text: text
+    });
+    if (error) { flash(el('appMsg'), error.message, false); return; }
+    ta.value = '';
+    loadApps();
+  });
+
+  el('fileInput').addEventListener('change', function (e) { uploadFile(e.target.files[0]); });
+  el('attList').addEventListener('click', function (e) {
+    const a = e.target.closest('[data-act]'); if (!a) return;
+    e.preventDefault();
+    const row = e.target.closest('.att');
+    if (a.dataset.act === 'download') downloadFile(row.dataset.url);
+    else if (a.dataset.act === 'delfile') deleteFile(row.dataset.att, row.dataset.url);
+  });
+
+  atsGuard('candidates.html', initCandidate);
+});
+</script>
+</body>
+</html>
