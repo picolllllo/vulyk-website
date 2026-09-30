@@ -74,6 +74,31 @@
             <option value="closed">Закрита</option>
           </select>
         </div>
+        <div>
+          <label for="f_budget">Бюджет на ЗП, грн</label>
+          <input id="f_budget" type="number" min="0" step="500" placeholder="напр. 30000">
+        </div>
+        <div>
+          <label for="f_openings">Кількість місць</label>
+          <input id="f_openings" type="number" min="1" step="1" value="1">
+        </div>
+        <div>
+          <label for="f_close">Бажана дата закриття</label>
+          <input id="f_close" type="date">
+        </div>
+        <div>
+          <label for="f_hm">Hiring Manager</label>
+          <select id="f_hm"><option value="">— не призначено —</option></select>
+        </div>
+        <div>
+          <label for="f_recruiter">Відповідальний за вакансію</label>
+          <select id="f_recruiter"><option value="">— не призначено —</option></select>
+        </div>
+        <div>
+          <label for="f_agency">Агенція</label>
+          <select id="f_agency"><option value="">— без агенції —</option></select>
+          <div class="sub" style="margin-top:6px">Обрана агенція автоматично отримає доступ до цієї вакансії.</div>
+        </div>
         <div class="full">
           <label for="f_description">Опис</label>
           <textarea id="f_description" placeholder="Обов'язки, вимоги, умови…" style="min-height:220px"></textarea>
@@ -125,7 +150,21 @@ const FILTERS = [
 
 function initJobs() {
   el('panel').hidden = false;
+  loadRefs();
   loadJobs();
+}
+
+async function loadRefs() {
+  const [u, a] = await Promise.all([
+    sb.from('users').select('id,full_name,email').eq('role', 'hr').order('full_name'),
+    sb.from('agencies').select('id,name').order('name')
+  ]);
+  const userOpts = '<option value="">— не призначено —</option>'
+    + (u.data || []).map(function (x) { return '<option value="' + x.id + '">' + escapeHtml(x.full_name || x.email) + '</option>'; }).join('');
+  el('f_hm').innerHTML = userOpts;
+  el('f_recruiter').innerHTML = userOpts;
+  el('f_agency').innerHTML = '<option value="">— без агенції —</option>'
+    + (a.data || []).map(function (x) { return '<option value="' + x.id + '">' + escapeHtml(x.name) + '</option>'; }).join('');
 }
 
 async function loadJobs() {
@@ -181,6 +220,12 @@ function openForm(job) {
   el('f_location').value = job ? (job.location || '') : '';
   el('f_employment').value = job ? (job.employment || '') : '';
   el('f_status').value = job ? job.status : 'draft';
+  el('f_budget').value = '';
+  el('f_openings').value = '1';
+  el('f_close').value = '';
+  el('f_hm').value = '';
+  el('f_recruiter').value = '';
+  el('f_agency').value = '';
   el('f_description').value = job ? (job.description || '') : '';
   el('formMsg').textContent = '';
   el('form').hidden = false;
@@ -196,16 +241,27 @@ async function saveJob() {
     location: el('f_location').value.trim() || null,
     employment: el('f_employment').value.trim() || null,
     status: el('f_status').value,
+    salary_budget: el('f_budget').value ? Number(el('f_budget').value) : null,
+    openings: el('f_openings').value ? Number(el('f_openings').value) : 1,
+    target_close_date: el('f_close').value || null,
+    hiring_manager_id: el('f_hm').value || null,
+    recruiter_id: el('f_recruiter').value || null,
     description: el('f_description').value.trim() || null
   };
-  let error;
+  const agencyId = el('f_agency').value || null;
+
   if (editingId) {
-    ({ error } = await sb.from('jobs').update(payload).eq('id', editingId));
+    const { error } = await sb.from('jobs').update(payload).eq('id', editingId);
+    if (error) { flash(el('formMsg'), error.message, false); return; }
   } else {
     payload.created_by = ATS.user.id;
-    ({ error } = await sb.from('jobs').insert(payload));
+    const { data, error } = await sb.from('jobs').insert(payload).select('id').single();
+    if (error) { flash(el('formMsg'), error.message, false); return; }
+    if (agencyId && data) {
+      const ja = await sb.from('job_agency').insert({ job_id: data.id, agency_id: agencyId });
+      if (ja.error) { flash(el('formMsg'), 'Вакансію створено, але не вдалося прив’язати агенцію: ' + ja.error.message, false); loadJobs(); return; }
+    }
   }
-  if (error) { flash(el('formMsg'), error.message, false); return; }
   closeForm(); loadJobs();
 }
 

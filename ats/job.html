@@ -116,6 +116,18 @@
             <option value="closed">Закрита</option>
           </select>
         </div>
+        <div>
+          <label for="e_budget">Бюджет на ЗП, грн</label>
+          <input id="e_budget" type="number" min="0" step="500" placeholder="напр. 30000">
+        </div>
+        <div>
+          <label for="e_openings">Кількість місць</label>
+          <input id="e_openings" type="number" min="1" step="1" value="1">
+        </div>
+        <div>
+          <label for="e_close">Бажана дата закриття</label>
+          <input id="e_close" type="date">
+        </div>
         <div class="full">
           <label for="e_hm">Hiring Manager</label>
           <select id="e_hm"><option value="">— не призначено —</option></select>
@@ -245,12 +257,19 @@ async function loadJob() {
   meta.push('<span class="pill pill--' + job.status + '">' + JOBSTATUS[job.status] + '</span>');
   if (job.location) meta.push('<span>' + escapeHtml(job.location) + '</span>');
   if (job.employment) meta.push('<span>' + escapeHtml(job.employment) + '</span>');
+  meta.push('<span>Місць: ' + (job.openings || 1) + '</span>');
+  if (job.salary_budget) meta.push('<span>Бюджет: ' + job.salary_budget.toLocaleString('uk-UA') + ' грн</span>');
+  if (job.target_close_date) meta.push('<span>Закрити до: ' + new Date(job.target_close_date).toLocaleDateString('uk-UA') + '</span>');
   el('jMeta').innerHTML = meta.join('');
   el('statusQuick').value = job.status;
+
+  const { data: ja } = await sb.from('job_agency').select('agencies(name)').eq('job_id', jobId);
+  const agNames = (ja || []).map(function (x) { return x.agencies && x.agencies.name; }).filter(Boolean);
 
   const team = [];
   team.push('<span><b style="color:var(--text)">Hiring Manager:</b> ' + (job.hiring_manager_id && userName[job.hiring_manager_id] ? escapeHtml(userName[job.hiring_manager_id]) : '—') + '</span>');
   team.push('<span><b style="color:var(--text)">Відповідальний:</b> ' + (job.recruiter_id && userName[job.recruiter_id] ? escapeHtml(userName[job.recruiter_id]) : '—') + '</span>');
+  if (agNames.length) team.push('<span><b style="color:var(--text)">Агенції:</b> ' + agNames.map(escapeHtml).join(', ') + '</span>');
   el('jTeam').innerHTML = team.join('');
 
   const vp = el('viewPublic');
@@ -354,6 +373,9 @@ function openEdit() {
   el('e_location').value = currentJob.location || '';
   el('e_employment').value = currentJob.employment || '';
   el('e_status').value = currentJob.status;
+  el('e_budget').value = currentJob.salary_budget || '';
+  el('e_openings').value = currentJob.openings || 1;
+  el('e_close').value = currentJob.target_close_date || '';
   el('e_hm').value = currentJob.hiring_manager_id || '';
   el('e_recruiter').value = currentJob.recruiter_id || '';
   el('e_description').value = currentJob.description || '';
@@ -371,6 +393,9 @@ async function saveEdit() {
     location: el('e_location').value.trim() || null,
     employment: el('e_employment').value.trim() || null,
     status: el('e_status').value,
+    salary_budget: el('e_budget').value ? Number(el('e_budget').value) : null,
+    openings: el('e_openings').value ? Number(el('e_openings').value) : 1,
+    target_close_date: el('e_close').value || null,
     hiring_manager_id: el('e_hm').value || null,
     recruiter_id: el('e_recruiter').value || null,
     description: el('e_description').value.trim() || null
