@@ -60,6 +60,19 @@
     .skill button:hover{ color:var(--red); }
     .skill-add{ display:inline-flex; align-items:center; border:1px dashed rgba(0,0,0,.25); border-radius:8px; padding:4px 8px; }
     .skill-add input{ border:none; outline:none; font:inherit; font-size:13px; width:130px; background:transparent; padding:2px 0; }
+
+    /* Нотатки команди */
+    .tnote{ border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:10px; background:#fcfcfb; }
+    .tnote__head{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); margin-bottom:5px; }
+    .tnote__author{ font-weight:800; color:var(--text); }
+    .tnote__acts{ margin-left:auto; display:flex; gap:4px; }
+    .tnote__acts button{ background:none; border:none; cursor:pointer; color:var(--muted); font:inherit; font-size:12px; font-weight:700; padding:2px 6px; border-radius:6px; }
+    .tnote__acts button:hover{ background:var(--hover); color:var(--accent-deep); }
+    .tnote__text{ font-size:14px; white-space:pre-wrap; line-height:1.5; }
+    .tnote__edited{ font-style:italic; }
+    .cnote-add{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; margin-top:6px; }
+    .cnote-add textarea{ min-height:70px; }
+    .edit-actions{ display:flex; gap:8px; margin-top:8px; }
   </style>
 </head>
 <body>
@@ -170,6 +183,16 @@
           </div>
         </div>
       </div>
+
+      <div class="box">
+        <h3>Нотатки команди</h3>
+        <div id="cnotesList"></div>
+        <div class="cnote-add">
+          <textarea id="cnoteInput" placeholder="Нотатка про кандидата для команди…"></textarea>
+          <button id="cnoteAdd" class="btn btn--primary">Додати</button>
+        </div>
+        <div id="cnotesMsg" class="msg"></div>
+      </div>
     </div>
     <div id="msg" class="msg"></div>
   </div>
@@ -182,6 +205,8 @@ const candId = new URLSearchParams(location.search).get('id');
 let current = null;
 let positions = [];
 let openJobs = [];
+let cnotes = [];
+let editingCNote = null;
 
 const STAGE = { new:'Новий', review:'Розгляд', interview:'Співбесіда', offer:'Оффер', hired:'Найнято', rejected:'Відмова' };
 const STAGE_ORDER = ['new','review','interview','offer','hired','rejected'];
@@ -264,7 +289,7 @@ async function loadCandidate() {
   renderSkills();
   el('profInfo').hidden = false;
   el('content').hidden = false;
-  await Promise.all([loadApps(), loadAttachments()]);
+  await Promise.all([loadApps(), loadAttachments(), loadCNotes()]);
 }
 
 /* ---- Навички ---- */
@@ -287,6 +312,41 @@ function addSkill(val) {
   arr.push(val); saveSkills(arr);
 }
 function removeSkill(i) { const arr = (current.skills || []).slice(); arr.splice(i, 1); saveSkills(arr); }
+
+/* ---- Загальні нотатки команди ---- */
+async function loadCNotes() {
+  const { data, error } = await sb.from('candidate_notes')
+    .select('*, users(full_name,email)').eq('candidate_id', candId).order('created_at', { ascending: true });
+  if (error) { el('cnotesList').innerHTML = '<div class="muted">Не вдалося завантажити нотатки: ' + escapeHtml(error.message) + '</div>'; return; }
+  cnotes = data || []; renderCNotes();
+}
+function cnoteAuthor(n) { const u = n.users || {}; return u.full_name || u.email || 'HR'; }
+function renderCNotes() {
+  if (!cnotes.length) { el('cnotesList').innerHTML = '<div class="muted" style="margin-bottom:10px">Поки що немає нотаток.</div>'; return; }
+  el('cnotesList').innerHTML = cnotes.map(function (n) {
+    const dt = new Date(n.created_at).toLocaleString('uk-UA', { dateStyle: 'short', timeStyle: 'short' });
+    const edited = (n.updated_at && n.updated_at !== n.created_at) ? ' <span class="tnote__edited">· ред.</span>' : '';
+    const mine = ATS.user && n.author_id === ATS.user.id;
+    if (editingCNote === n.id) {
+      return '<div class="tnote" data-id="' + n.id + '">'
+        + '<div class="tnote__head"><span class="tnote__author">' + escapeHtml(cnoteAuthor(n)) + '</span><span>' + dt + '</span></div>'
+        + '<textarea data-role="editbox">' + escapeHtml(n.text) + '</textarea>'
+        + '<div class="edit-actions"><button class="btn btn--primary btn--sm" data-act="save">Зберегти</button>'
+        + '<button class="btn btn--ghost btn--sm" data-act="canceledit">Скасувати</button></div></div>';
+    }
+    const acts = mine
+      ? '<span class="tnote__acts"><button data-act="edit">Редагувати</button><button data-act="del">Видалити</button></span>' : '';
+    return '<div class="tnote" data-id="' + n.id + '">'
+      + '<div class="tnote__head"><span class="tnote__author">' + escapeHtml(cnoteAuthor(n)) + '</span><span>' + dt + edited + '</span>' + acts + '</div>'
+      + '<div class="tnote__text">' + escapeHtml(n.text) + '</div></div>';
+  }).join('');
+}
+async function addCNote() {
+  const text = el('cnoteInput').value.trim(); if (!text) return;
+  const { error } = await sb.from('candidate_notes').insert({ candidate_id: candId, author_id: ATS.user.id, text: text });
+  if (error) { flash(el('cnotesMsg'), error.message, false); return; }
+  el('cnoteInput').value = ''; loadCNotes();
+}
 
 /* ---- Заявки + нотатки ---- */
 async function loadApps() {
@@ -470,6 +530,26 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   el('cSkills').addEventListener('keydown', function (e) {
     if (e.target.id === 'skillInput' && e.key === 'Enter') { e.preventDefault(); addSkill(e.target.value); e.target.value = ''; }
+  });
+
+  el('cnoteAdd').addEventListener('click', addCNote);
+  el('cnotesList').addEventListener('click', async function (e) {
+    const btn = e.target.closest('button[data-act]'); if (!btn) return;
+    const wrap = e.target.closest('.tnote'); const id = wrap.getAttribute('data-id');
+    const act = btn.getAttribute('data-act');
+    if (act === 'edit') { editingCNote = id; renderCNotes(); }
+    else if (act === 'canceledit') { editingCNote = null; renderCNotes(); }
+    else if (act === 'save') {
+      const val = wrap.querySelector('textarea[data-role="editbox"]').value.trim(); if (!val) return;
+      const { error } = await sb.from('candidate_notes').update({ text: val }).eq('id', id);
+      if (error) { flash(el('cnotesMsg'), error.message, false); return; }
+      editingCNote = null; loadCNotes();
+    } else if (act === 'del') {
+      if (!confirm('Видалити нотатку?')) return;
+      const { error } = await sb.from('candidate_notes').delete().eq('id', id);
+      if (error) { flash(el('cnotesMsg'), error.message, false); return; }
+      loadCNotes();
+    }
   });
 
   el('appsList').addEventListener('change', async function (e) {
