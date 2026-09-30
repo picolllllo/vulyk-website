@@ -19,8 +19,8 @@
     .cmeta a{ color:var(--accent-deep); text-decoration:none; }
     .cols{ display:grid; grid-template-columns:1.4fr 1fr; gap:22px; align-items:start; }
     @media (max-width:860px){ .cols{ grid-template-columns:1fr; } }
-    .box{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:20px; }
-    .box h3{ margin:0 0 14px; font-size:15px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+    .box{ background:transparent; border:none; border-radius:0; padding:0; margin-bottom:26px; }
+    .box h3{ margin:0 0 12px; font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:800; }
     .app-item{ border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin-bottom:14px; }
     .app-item__head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:6px; }
     .app-item__title{ font-weight:700; font-size:15px; }
@@ -73,6 +73,17 @@
     .cnote-add{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; margin-top:6px; }
     .cnote-add textarea{ min-height:70px; }
     .edit-actions{ display:flex; gap:8px; margin-top:8px; }
+
+    /* Двоколонковий макет профілю */
+    .layout{ display:grid; grid-template-columns:1.7fr 1fr; gap:22px; align-items:start; }
+    @media (max-width:900px){ .layout{ grid-template-columns:1fr; } }
+    .side{ position:sticky; top:16px; }
+    @media (max-width:900px){ .side{ position:static; } }
+    .detail-row{ display:grid; grid-template-columns:160px 1fr; gap:14px; padding:11px 0; border-bottom:1px solid var(--line); font-size:14px; }
+    .detail-row:last-child{ border-bottom:none; }
+    .detail-row__l{ color:var(--muted); font-weight:600; }
+    .detail-row__v a{ color:var(--accent-deep); text-decoration:none; }
+    .detail-row__v a:hover{ text-decoration:underline; }
   </style>
 </head>
 <body>
@@ -97,16 +108,6 @@
     </div>
 
     <div id="notFound" class="notice" hidden><h2>Кандидата не знайдено</h2></div>
-
-    <div id="profInfo" hidden>
-      <div class="infogrid" id="cInfo"></div>
-      <div class="contactrow" id="cContact"></div>
-      <div class="prof-summary" id="cSummary" hidden></div>
-      <div class="skills-sec">
-        <div class="skills-sec__t">Навички</div>
-        <div class="skills" id="cSkills"></div>
-      </div>
-    </div>
 
     <!-- Форма редагування профілю -->
     <div id="editPanel" class="form-panel" hidden style="margin:16px 0 22px">
@@ -153,27 +154,24 @@
     </div>
 
     <div id="content" hidden>
-      <div class="cols">
-        <div>
+      <div class="layout">
+        <!-- Ліва колонка -->
+        <div class="main">
           <div class="box">
-            <h3>Заявки на вакансії</h3>
-            <div id="appsList"></div>
-            <div class="inline-add" style="margin-top:6px">
-              <div class="fld grow" style="flex:1; min-width:220px">
-                <label for="a_job">Прив'язати до вакансії</label>
-                <select id="a_job"><option value="">— оберіть вакансію —</option></select>
-              </div>
-              <div class="fld">
-                <label for="a_salary">Очік. ЗП</label>
-                <input id="a_salary" type="number" min="0" step="500" style="min-width:120px" placeholder="грн">
-              </div>
-              <button id="addAppBtn" class="btn btn--primary">Додати</button>
-            </div>
-            <div id="appMsg" class="msg"></div>
+            <h3>Деталі</h3>
+            <div id="cDetails"></div>
           </div>
-        </div>
 
-        <div>
+          <div class="box">
+            <h3>Про кандидата</h3>
+            <div class="prof-summary" id="cSummary" style="margin:0"></div>
+          </div>
+
+          <div class="box">
+            <h3>Навички</h3>
+            <div class="skills" id="cSkills"></div>
+          </div>
+
           <div class="box">
             <h3>Резюме та файли</h3>
             <div id="attList"></div>
@@ -181,17 +179,37 @@
             <input id="fileInput" type="file" style="border:none; padding:0">
             <div id="attMsg" class="msg"></div>
           </div>
-        </div>
-      </div>
 
-      <div class="box">
-        <h3>Нотатки команди</h3>
-        <div id="cnotesList"></div>
-        <div class="cnote-add">
-          <textarea id="cnoteInput" placeholder="Нотатка про кандидата для команди…"></textarea>
-          <button id="cnoteAdd" class="btn btn--primary">Додати</button>
+          <div class="box">
+            <h3>Заявки на вакансії</h3>
+            <div id="appsList"></div>
+            <div class="inline-add" style="margin-top:6px">
+              <div class="fld grow" style="flex:1; min-width:200px">
+                <label for="a_job">Прив'язати до вакансії</label>
+                <select id="a_job"><option value="">— оберіть вакансію —</option></select>
+              </div>
+              <div class="fld">
+                <label for="a_salary">Очік. ЗП</label>
+                <input id="a_salary" type="number" min="0" step="500" style="min-width:110px" placeholder="грн">
+              </div>
+              <button id="addAppBtn" class="btn btn--primary">Додати</button>
+            </div>
+            <div id="appMsg" class="msg"></div>
+          </div>
         </div>
-        <div id="cnotesMsg" class="msg"></div>
+
+        <!-- Права колонка: нотатки -->
+        <div class="side">
+          <div class="box">
+            <h3>Нотатки команди</h3>
+            <div id="cnotesList"></div>
+            <div class="cnote-add">
+              <textarea id="cnoteInput" placeholder="Нотатка про кандидата…"></textarea>
+              <button id="cnoteAdd" class="btn btn--primary">Додати</button>
+            </div>
+            <div id="cnotesMsg" class="msg"></div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="msg" class="msg"></div>
@@ -262,32 +280,29 @@ async function loadCandidate() {
   el('cName').innerHTML = escapeHtml(c.full_name) + tagBadge;
   el('cPos').textContent = c.positions ? c.positions.name : '';
 
-  // Інфо-сітка
-  function infoItem(l, v) { return '<div><div class="info__l">' + l + '</div><div class="info__v">' + v + '</div></div>'; }
-  el('cInfo').innerHTML = [
-    infoItem('Локація', c.location ? escapeHtml(c.location) : '—'),
-    infoItem('Досвід', c.experience ? escapeHtml(c.experience) : '—'),
-    infoItem('Категорія', c.positions ? escapeHtml(c.positions.name) : '—'),
-    infoItem('ЗП', c.expected_salary ? (c.expected_salary.toLocaleString('uk-UA') + ' грн') : '—'),
-    infoItem('Джерело', SOURCE[c.source])
+  // Деталі — усі поля вертикально (навіть порожні)
+  const dash = '<span style="color:var(--muted)">—</span>';
+  function link(u, label) { return '<a href="' + escapeHtml(normalizeUrl(u)) + '" target="_blank" rel="noopener">' + label + ' ↗</a>'; }
+  function row(l, v) { return '<div class="detail-row"><div class="detail-row__l">' + l + '</div><div class="detail-row__v">' + v + '</div></div>'; }
+  el('cDetails').innerHTML = [
+    row('Локація', c.location ? escapeHtml(c.location) : dash),
+    row('Досвід', c.experience ? escapeHtml(c.experience) : dash),
+    row('Категорія', c.positions ? escapeHtml(c.positions.name) : dash),
+    row('Очікувана ЗП', c.expected_salary ? (c.expected_salary.toLocaleString('uk-UA') + ' грн') : dash),
+    row('Джерело', SOURCE[c.source]),
+    row('Email', c.email ? '<a href="mailto:' + escapeHtml(c.email) + '">' + escapeHtml(c.email) + '</a>' : dash),
+    row('Телефон', c.phone ? '<a href="tel:' + escapeHtml(c.phone) + '">' + escapeHtml(c.phone) + '</a>' : dash),
+    row('LinkedIn', c.linkedin ? link(c.linkedin, 'Профіль') : dash),
+    row('Facebook', c.facebook ? link(c.facebook, 'Профіль') : dash),
+    row('Instagram', c.instagram ? link(c.instagram, 'Профіль') : dash),
+    row('Додано', new Date(c.created_at).toLocaleDateString('uk-UA'))
   ].join('');
 
-  // Контакти
-  const cr = [];
-  if (c.email) cr.push('<a href="mailto:' + escapeHtml(c.email) + '">✉ ' + escapeHtml(c.email) + '</a>');
-  if (c.phone) cr.push('<a href="tel:' + escapeHtml(c.phone) + '">☎ ' + escapeHtml(c.phone) + '</a>');
-  if (c.linkedin) cr.push('<a href="' + escapeHtml(normalizeUrl(c.linkedin)) + '" target="_blank" rel="noopener">in LinkedIn</a>');
-  if (c.facebook) cr.push('<a href="' + escapeHtml(normalizeUrl(c.facebook)) + '" target="_blank" rel="noopener">Facebook</a>');
-  if (c.instagram) cr.push('<a href="' + escapeHtml(normalizeUrl(c.instagram)) + '" target="_blank" rel="noopener">Instagram</a>');
-  el('cContact').innerHTML = cr.join('');
-  el('cContact').style.display = cr.length ? 'flex' : 'none';
-
-  // Про кандидата
-  if (c.summary) { el('cSummary').textContent = c.summary; el('cSummary').hidden = false; }
-  else { el('cSummary').hidden = true; }
+  // Про кандидата (показуємо завжди)
+  if (c.summary) { el('cSummary').textContent = c.summary; }
+  else { el('cSummary').innerHTML = '<span style="color:var(--muted)">Немає опису</span>'; }
 
   renderSkills();
-  el('profInfo').hidden = false;
   el('content').hidden = false;
   await Promise.all([loadApps(), loadAttachments(), loadCNotes()]);
 }

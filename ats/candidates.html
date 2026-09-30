@@ -42,6 +42,7 @@
     <!-- Форма створення -->
     <div id="form" class="form-panel" hidden>
       <h3>Новий кандидат</h3>
+
       <div class="form-grid">
         <div class="full"><label for="f_name">Ім'я та прізвище *</label><input id="f_name" type="text" placeholder="напр. Оксана Петренко"></div>
         <div><label for="f_email">Email</label><input id="f_email" type="email" placeholder="name@example.com"></div>
@@ -61,6 +62,7 @@
           </select>
         </div>
         <div class="full"><label for="f_summary">Про кандидата / коментар</label><textarea id="f_summary" placeholder="Нотатка HR, видима у профілі"></textarea></div>
+        <div class="full"><label for="f_resume">Резюме (PDF/DOC — необов'язково)</label><input id="f_resume" type="file" accept=".pdf,.doc,.docx,.rtf,.odt" style="border:none; padding:0"></div>
       </div>
       <div class="form-actions">
         <button id="saveBtn" class="btn btn--primary">Зберегти</button>
@@ -175,8 +177,8 @@ function renderList() {
 
 /* ---- Створення кандидата ---- */
 function openForm() {
-  el('f_name').value = ''; el('f_email').value = ''; el('f_phone').value = '';
-  el('f_position').value = ''; el('f_source').value = 'direct'; el('f_summary').value = '';
+  ['f_name','f_email','f_phone','f_location','f_salary','f_facebook','f_instagram','f_summary','f_resume'].forEach(function (id) { el(id).value = ''; });
+  el('f_position').value = ''; el('f_source').value = 'direct';
   el('formMsg').textContent = '';
   el('form').hidden = false;
   el('f_name').focus();
@@ -201,6 +203,18 @@ async function saveCandidate() {
   if (error) {
     flash(el('formMsg'), error.message.indexOf('duplicate') > -1 ? 'Кандидат із таким email вже існує' : error.message, false);
     return;
+  }
+
+  // Завантажити резюме (якщо додано)
+  const file = el('f_resume').files[0];
+  if (file) {
+    flash(el('formMsg'), 'Завантаження резюме…', true);
+    const safe = file.name.replace(/[^\w.\-]+/g, '_');
+    const path = data.id + '/' + Date.now() + '_' + safe;
+    const up = await sb.storage.from('resumes').upload(path, file, { upsert: false });
+    if (!up.error) {
+      await sb.from('attachments').insert({ candidate_id: data.id, kind: 'resume', file_url: path, file_name: file.name, uploaded_by: ATS.user.id });
+    }
   }
   location.href = 'candidate.html?id=' + data.id;
 }
