@@ -83,6 +83,7 @@
       <div>
         <h2 class="job-title" id="jTitle"></h2>
         <div class="job-meta" id="jMeta"></div>
+        <div class="job-team" id="jTeam" style="margin-top:8px; font-size:13px; color:var(--muted); display:flex; gap:18px; flex-wrap:wrap"></div>
       </div>
       <div style="display:flex; gap:8px; white-space:nowrap; align-items:center">
         <a id="viewPublic" class="btn btn--ghost btn--sm" target="_blank" rel="noopener">Сторінка на сайті ↗</a>
@@ -114,6 +115,16 @@
             <option value="paused">Пауза</option>
             <option value="closed">Закрита</option>
           </select>
+        </div>
+        <div class="full">
+          <label for="e_hm">Hiring Manager</label>
+          <select id="e_hm"><option value="">— не призначено —</option></select>
+          <div class="sub" style="margin-top:6px">Ініціатор запиту на рекрутинг на позицію; проводить фінальну співбесіду та приймає рішення про найм.</div>
+        </div>
+        <div class="full">
+          <label for="e_recruiter">Відповідальний за вакансію</label>
+          <select id="e_recruiter"><option value="">— не призначено —</option></select>
+          <div class="sub" style="margin-top:6px">Веде первинну комунікацію з кандидатами та рекрутинговою агенцією; заповнює необхідні поля у профілях вакансії й кандидатів; переміщає кандидатів по стадіях найму; відкриває та закриває вакансію.</div>
         </div>
         <div class="full">
           <label for="e_description">Опис</label>
@@ -183,11 +194,24 @@ let apps = [];
 let notes = [];
 let editingNote = null;
 let currentJob = null;
+let teamUsers = [];   // користувачі-HR для ролей
+let userName = {};    // id -> ім'я
 
 function initJob() {
   el('panel').hidden = false;
   if (!jobId) { el('notFound').hidden = false; return; }
-  loadJob();
+  loadUsers().then(loadJob);
+}
+
+async function loadUsers() {
+  const { data } = await sb.from('users').select('id,full_name,email').eq('role', 'hr').order('full_name');
+  teamUsers = data || [];
+  userName = {};
+  teamUsers.forEach(function (u) { userName[u.id] = u.full_name || u.email; });
+  const opts = '<option value="">— не призначено —</option>'
+    + teamUsers.map(function (u) { return '<option value="' + u.id + '">' + escapeHtml(u.full_name || u.email) + '</option>'; }).join('');
+  el('e_hm').innerHTML = opts;
+  el('e_recruiter').innerHTML = opts;
 }
 
 /* --- markdown --- */
@@ -223,6 +247,11 @@ async function loadJob() {
   if (job.employment) meta.push('<span>' + escapeHtml(job.employment) + '</span>');
   el('jMeta').innerHTML = meta.join('');
   el('statusQuick').value = job.status;
+
+  const team = [];
+  team.push('<span><b style="color:var(--text)">Hiring Manager:</b> ' + (job.hiring_manager_id && userName[job.hiring_manager_id] ? escapeHtml(userName[job.hiring_manager_id]) : '—') + '</span>');
+  team.push('<span><b style="color:var(--text)">Відповідальний:</b> ' + (job.recruiter_id && userName[job.recruiter_id] ? escapeHtml(userName[job.recruiter_id]) : '—') + '</span>');
+  el('jTeam').innerHTML = team.join('');
 
   const vp = el('viewPublic');
   if (job.status === 'open') { vp.href = '../vacancy.html?job=' + job.id; vp.style.display = ''; }
@@ -325,6 +354,8 @@ function openEdit() {
   el('e_location').value = currentJob.location || '';
   el('e_employment').value = currentJob.employment || '';
   el('e_status').value = currentJob.status;
+  el('e_hm').value = currentJob.hiring_manager_id || '';
+  el('e_recruiter').value = currentJob.recruiter_id || '';
   el('e_description').value = currentJob.description || '';
   el('e_msg').textContent = '';
   el('editPanel').hidden = false;
@@ -340,6 +371,8 @@ async function saveEdit() {
     location: el('e_location').value.trim() || null,
     employment: el('e_employment').value.trim() || null,
     status: el('e_status').value,
+    hiring_manager_id: el('e_hm').value || null,
+    recruiter_id: el('e_recruiter').value || null,
     description: el('e_description').value.trim() || null
   };
   const { error } = await sb.from('jobs').update(payload).eq('id', jobId);
