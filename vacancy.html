@@ -345,9 +345,20 @@
     if (res.error || !job || job.status !== 'open') { showMissing(); return; }
     document.title = 'Вакансія: ' + job.title + ' — Вулик, Львів';
     $('vTitle').textContent = job.title;
+    var FORMAT_LBL = { office: 'Офіс', remote: 'Віддалено', hybrid: 'Гібрид' };
+    var LEVEL_LBL = { junior: 'Junior', middle: 'Middle', senior: 'Senior' };
+    var MONEY = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>';
+    var sr = '';
+    if (job.salary_min && job.salary_max) sr = job.salary_min.toLocaleString('uk-UA') + '–' + job.salary_max.toLocaleString('uk-UA') + ' грн';
+    else if (job.salary_min) sr = 'від ' + job.salary_min.toLocaleString('uk-UA') + ' грн';
+    else if (job.salary_max) sr = 'до ' + job.salary_max.toLocaleString('uk-UA') + ' грн';
+
     var badges = [];
     if (job.location) badges.push(badge(PIN, job.location));
     if (job.employment) badges.push(badge(CLK, job.employment));
+    if (sr) badges.push(badge(MONEY, sr));
+    if (job.work_format && FORMAT_LBL[job.work_format]) badges.push(badge('', FORMAT_LBL[job.work_format]));
+    if (job.level && LEVEL_LBL[job.level]) badges.push(badge('', LEVEL_LBL[job.level]));
     $('vMeta').innerHTML = badges.join('');
     $('vBody').innerHTML = renderMarkdown(job.description);
     $('vApplyBtn').href = 'apply.html?job=' + job.id;

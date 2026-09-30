@@ -128,6 +128,34 @@
           <label for="e_close">Бажана дата закриття</label>
           <input id="e_close" type="date">
         </div>
+        <div>
+          <label for="e_priority">Пріоритет</label>
+          <select id="e_priority"><option value="">— не вказано —</option><option value="high">Високий</option><option value="medium">Середній</option><option value="low">Низький</option></select>
+        </div>
+        <div>
+          <label for="e_level">Рівень</label>
+          <select id="e_level"><option value="">— не вказано —</option><option value="junior">Junior</option><option value="middle">Middle</option><option value="senior">Senior</option></select>
+        </div>
+        <div>
+          <label for="e_format">Формат роботи</label>
+          <select id="e_format"><option value="">— не вказано —</option><option value="office">Офіс</option><option value="remote">Віддалено</option><option value="hybrid">Гібрид</option></select>
+        </div>
+        <div>
+          <label for="e_reason">Причина відкриття</label>
+          <select id="e_reason"><option value="">— не вказано —</option><option value="new">Нова позиція</option><option value="replacement">Заміна</option><option value="expansion">Розширення</option></select>
+        </div>
+        <div>
+          <label for="e_salmin">ЗП від, грн (публічно)</label>
+          <input id="e_salmin" type="number" min="0" step="500">
+        </div>
+        <div>
+          <label for="e_salmax">ЗП до, грн (публічно)</label>
+          <input id="e_salmax" type="number" min="0" step="500">
+        </div>
+        <div class="full">
+          <label for="e_skills">Необхідні навички (через кому)</label>
+          <input id="e_skills" type="text" placeholder="Педіатрія, Невідкладна допомога, Доказова медицина">
+        </div>
         <div class="full">
           <label for="e_hm">Hiring Manager</label>
           <select id="e_hm"><option value="">— не призначено —</option></select>
@@ -161,6 +189,16 @@
         <summary>Опис вакансії <span class="chev">▼</span></summary>
         <div class="desc-body" id="jDesc"></div>
       </details>
+
+      <!-- Необхідні навички + матчинг -->
+      <div class="pipe" id="skillsBox" hidden>
+        <h3 class="pipe__title">Необхідні навички</h3>
+        <div id="jSkills" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px"></div>
+        <div id="matchWrap">
+          <div style="font-size:13px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-bottom:8px">Кандидати зі збігом навичок</div>
+          <div id="matchList"></div>
+        </div>
+      </div>
 
       <!-- Воронка (без зовнішньої рамки) -->
       <div class="pipe">
@@ -202,6 +240,16 @@ const SOURCE = { direct:'Прямий', agency:'Агенція', referral:'Ре�
 
 const jobId = new URLSearchParams(location.search).get('id');
 const JOBSTATUS = { draft:'Чернетка', open:'Відкрита', paused:'Пауза', closed:'Закрита' };
+const PRIORITY_LBL = { high:'Високий', medium:'Середній', low:'Низький' };
+const LEVEL_LBL = { junior:'Junior', middle:'Middle', senior:'Senior' };
+const FORMAT_LBL = { office:'Офіс', remote:'Віддалено', hybrid:'Гібрид' };
+const REASON_LBL = { new:'Нова позиція', replacement:'Заміна', expansion:'Розширення' };
+function salaryRange(mn, mx) {
+  if (mn && mx) return mn.toLocaleString('uk-UA') + '–' + mx.toLocaleString('uk-UA') + ' грн';
+  if (mn) return 'від ' + mn.toLocaleString('uk-UA') + ' грн';
+  if (mx) return 'до ' + mx.toLocaleString('uk-UA') + ' грн';
+  return '';
+}
 let apps = [];
 let notes = [];
 let editingNote = null;
@@ -257,8 +305,13 @@ async function loadJob() {
   meta.push('<span class="pill pill--' + job.status + '">' + JOBSTATUS[job.status] + '</span>');
   if (job.location) meta.push('<span>' + escapeHtml(job.location) + '</span>');
   if (job.employment) meta.push('<span>' + escapeHtml(job.employment) + '</span>');
+  if (job.level && LEVEL_LBL[job.level]) meta.push('<span>' + LEVEL_LBL[job.level] + '</span>');
+  if (job.work_format && FORMAT_LBL[job.work_format]) meta.push('<span>' + FORMAT_LBL[job.work_format] + '</span>');
   meta.push('<span>Місць: ' + (job.openings || 1) + '</span>');
-  if (job.salary_budget) meta.push('<span>Бюджет: ' + job.salary_budget.toLocaleString('uk-UA') + ' грн</span>');
+  const sr = salaryRange(job.salary_min, job.salary_max);
+  if (sr) meta.push('<span>ЗП: ' + sr + '</span>');
+  if (job.salary_budget) meta.push('<span title="Внутрішній бюджет">Бюджет: ' + job.salary_budget.toLocaleString('uk-UA') + ' грн</span>');
+  if (job.priority && PRIORITY_LBL[job.priority]) meta.push('<span>Пріоритет: ' + PRIORITY_LBL[job.priority] + '</span>');
   if (job.target_close_date) meta.push('<span>Закрити до: ' + new Date(job.target_close_date).toLocaleDateString('uk-UA') + '</span>');
   el('jMeta').innerHTML = meta.join('');
   el('statusQuick').value = job.status;
@@ -270,6 +323,7 @@ async function loadJob() {
   team.push('<span><b style="color:var(--text)">Hiring Manager:</b> ' + (job.hiring_manager_id && userName[job.hiring_manager_id] ? escapeHtml(userName[job.hiring_manager_id]) : '—') + '</span>');
   team.push('<span><b style="color:var(--text)">Відповідальний:</b> ' + (job.recruiter_id && userName[job.recruiter_id] ? escapeHtml(userName[job.recruiter_id]) : '—') + '</span>');
   if (agNames.length) team.push('<span><b style="color:var(--text)">Агенції:</b> ' + agNames.map(escapeHtml).join(', ') + '</span>');
+  if (job.open_reason && REASON_LBL[job.open_reason]) team.push('<span><b style="color:var(--text)">Причина відкриття:</b> ' + REASON_LBL[job.open_reason] + '</span>');
   el('jTeam').innerHTML = team.join('');
 
   const vp = el('viewPublic');
@@ -279,8 +333,38 @@ async function loadJob() {
   el('jDesc').innerHTML = job.description ? renderMarkdown(job.description) : '<p class="pipe-empty">Опис не заповнено.</p>';
   el('content').hidden = false;
 
+  renderJobSkills(job);
   await loadPipeline();
   await loadNotes();
+}
+
+function renderJobSkills(job) {
+  const skills = job.skills || [];
+  if (!skills.length) { el('skillsBox').hidden = true; return; }
+  el('skillsBox').hidden = false;
+  el('jSkills').innerHTML = skills.map(function (s) {
+    return '<span class="stage-pill" style="background:#f0f0ee;color:var(--text)">' + escapeHtml(s) + '</span>';
+  }).join('');
+  loadMatching(skills);
+}
+
+async function loadMatching(skills) {
+  const { data, error } = await sb.from('candidates')
+    .select('id,full_name,skills, positions(name)').overlaps('skills', skills);
+  if (error) { el('matchList').innerHTML = '<div class="pipe-empty">' + escapeHtml(error.message) + '</div>'; return; }
+  const low = skills.map(function (s) { return s.toLowerCase(); });
+  const rows = (data || []).map(function (c) {
+    const n = (c.skills || []).filter(function (s) { return low.indexOf(s.toLowerCase()) > -1; }).length;
+    return { c: c, n: n };
+  }).filter(function (r) { return r.n > 0; }).sort(function (a, b) { return b.n - a.n; });
+  if (!rows.length) { el('matchList').innerHTML = '<div class="pipe-empty">Поки немає кандидатів зі збігом навичок.</div>'; return; }
+  el('matchList').innerHTML = rows.map(function (r) {
+    const pos = r.c.positions ? (' · ' + escapeHtml(r.c.positions.name)) : '';
+    return '<div style="display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line)">'
+      + '<a href="candidate.html?id=' + r.c.id + '" style="font-weight:700; color:var(--text); text-decoration:none">' + escapeHtml(r.c.full_name) + '<span style="color:var(--muted); font-weight:400; font-size:13px">' + pos + '</span></a>'
+      + '<span class="stage-pill" style="background:#e4f4ea; color:#1a7f37">' + r.n + ' збіг' + (r.n === 1 ? '' : (r.n < 5 ? 'и' : 'ів')) + '</span>'
+      + '</div>';
+  }).join('');
 }
 
 async function loadPipeline() {
@@ -376,6 +460,13 @@ function openEdit() {
   el('e_budget').value = currentJob.salary_budget || '';
   el('e_openings').value = currentJob.openings || 1;
   el('e_close').value = currentJob.target_close_date || '';
+  el('e_priority').value = currentJob.priority || '';
+  el('e_level').value = currentJob.level || '';
+  el('e_format').value = currentJob.work_format || '';
+  el('e_reason').value = currentJob.open_reason || '';
+  el('e_salmin').value = currentJob.salary_min || '';
+  el('e_salmax').value = currentJob.salary_max || '';
+  el('e_skills').value = (currentJob.skills || []).join(', ');
   el('e_hm').value = currentJob.hiring_manager_id || '';
   el('e_recruiter').value = currentJob.recruiter_id || '';
   el('e_description').value = currentJob.description || '';
@@ -394,8 +485,15 @@ async function saveEdit() {
     employment: el('e_employment').value.trim() || null,
     status: el('e_status').value,
     salary_budget: el('e_budget').value ? Number(el('e_budget').value) : null,
+    salary_min: el('e_salmin').value ? Number(el('e_salmin').value) : null,
+    salary_max: el('e_salmax').value ? Number(el('e_salmax').value) : null,
     openings: el('e_openings').value ? Number(el('e_openings').value) : 1,
     target_close_date: el('e_close').value || null,
+    priority: el('e_priority').value || null,
+    level: el('e_level').value || null,
+    work_format: el('e_format').value || null,
+    open_reason: el('e_reason').value || null,
+    skills: (function () { const a = el('e_skills').value.split(',').map(function (s) { return s.trim(); }).filter(Boolean); return a.length ? a : null; })(),
     hiring_manager_id: el('e_hm').value || null,
     recruiter_id: el('e_recruiter').value || null,
     description: el('e_description').value.trim() || null

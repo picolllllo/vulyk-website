@@ -75,8 +75,51 @@
           </select>
         </div>
         <div>
-          <label for="f_budget">Бюджет на ЗП, грн</label>
-          <input id="f_budget" type="number" min="0" step="500" placeholder="напр. 30000">
+          <label for="f_priority">Пріоритет</label>
+          <select id="f_priority">
+            <option value="medium">Середній</option>
+            <option value="high">Високий</option>
+            <option value="low">Низький</option>
+          </select>
+        </div>
+        <div>
+          <label for="f_level">Рівень</label>
+          <select id="f_level">
+            <option value="">— не вказано —</option>
+            <option value="junior">Junior</option>
+            <option value="middle">Middle</option>
+            <option value="senior">Senior</option>
+          </select>
+        </div>
+        <div>
+          <label for="f_format">Формат роботи</label>
+          <select id="f_format">
+            <option value="">— не вказано —</option>
+            <option value="office">Офіс</option>
+            <option value="remote">Віддалено</option>
+            <option value="hybrid">Гібрид</option>
+          </select>
+        </div>
+        <div>
+          <label for="f_reason">Причина відкриття</label>
+          <select id="f_reason">
+            <option value="">— не вказано —</option>
+            <option value="new">Нова позиція</option>
+            <option value="replacement">Заміна</option>
+            <option value="expansion">Розширення</option>
+          </select>
+        </div>
+        <div>
+          <label for="f_salmin">ЗП від, грн (публічно)</label>
+          <input id="f_salmin" type="number" min="0" step="500" placeholder="напр. 20000">
+        </div>
+        <div>
+          <label for="f_salmax">ЗП до, грн (публічно)</label>
+          <input id="f_salmax" type="number" min="0" step="500" placeholder="напр. 30000">
+        </div>
+        <div>
+          <label for="f_budget">Бюджет на ЗП (внутрішній), грн</label>
+          <input id="f_budget" type="number" min="0" step="500" placeholder="напр. 35000">
         </div>
         <div>
           <label for="f_openings">Кількість місць</label>
@@ -98,6 +141,11 @@
           <label for="f_agency">Агенція</label>
           <select id="f_agency"><option value="">— без агенції —</option></select>
           <div class="sub" style="margin-top:6px">Обрана агенція автоматично отримає доступ до цієї вакансії.</div>
+        </div>
+        <div class="full">
+          <label for="f_skills">Необхідні навички</label>
+          <input id="f_skills" type="text" placeholder="через кому: Педіатрія, Невідкладна допомога, Доказова медицина">
+          <div class="sub" style="margin-top:6px">Для пошуку кандидатів зі збігом навичок.</div>
         </div>
         <div class="full">
           <label for="f_description">Опис</label>
@@ -130,6 +178,8 @@ let activeFilter = '';
 let editingId = null;   // null = режим створення
 
 const STATUS = { draft:'Чернетка', open:'Відкрита', paused:'Пауза', closed:'Закрита' };
+const PRIORITY = { high:'Високий', medium:'Середній', low:'Низький' };
+const PRIORITY_TINT = { high:{ bg:'#fde7e7', fg:'#b3261e' }, medium:{ bg:'#fbedcf', fg:'#8C6006' }, low:{ bg:'#eceef1', fg:'#5b6673' } };
 const STAGE = { new:'Новий', review:'Розгляд', interview:'Співбесіда', offer:'Оффер', hired:'Найнято', rejected:'Відмова' };
 const STAGE_ORDER = ['new','review','interview','offer','hired','rejected'];
 const STAGE_TINT = {
@@ -203,10 +253,12 @@ function render() {
     }).join('');
     const loc = j.location ? '<span class="loc">· ' + escapeHtml(j.location) + '</span>' : '';
     const candWord = st.total === 1 ? 'кандидат' : (st.total >= 2 && st.total <= 4 ? 'кандидати' : 'кандидатів');
+    const prio = (j.priority && PRIORITY[j.priority])
+      ? '<span class="spill" style="background:' + PRIORITY_TINT[j.priority].bg + ';color:' + PRIORITY_TINT[j.priority].fg + '">' + PRIORITY[j.priority] + '</span>' : '';
     return '<div class="jcard" data-id="' + j.id + '">'
       + '<div>'
       +   '<div class="jcard__title">' + escapeHtml(j.title) + loc + '</div>'
-      +   '<div class="jcard__sub"><span class="jcard__cands">' + st.total + ' ' + candWord + '</span>' + stagePills + '</div>'
+      +   '<div class="jcard__sub">' + prio + '<span class="jcard__cands">' + st.total + ' ' + candWord + '</span>' + stagePills + '</div>'
       + '</div>'
       + '<span class="pill pill--' + j.status + ' jcard__status">' + STATUS[j.status] + '</span>'
       + '</div>';
@@ -226,6 +278,13 @@ function openForm(job) {
   el('f_hm').value = '';
   el('f_recruiter').value = '';
   el('f_agency').value = '';
+  el('f_priority').value = 'medium';
+  el('f_level').value = '';
+  el('f_format').value = '';
+  el('f_reason').value = '';
+  el('f_salmin').value = '';
+  el('f_salmax').value = '';
+  el('f_skills').value = '';
   el('f_description').value = job ? (job.description || '') : '';
   el('formMsg').textContent = '';
   el('form').hidden = false;
@@ -242,8 +301,15 @@ async function saveJob() {
     employment: el('f_employment').value.trim() || null,
     status: el('f_status').value,
     salary_budget: el('f_budget').value ? Number(el('f_budget').value) : null,
+    salary_min: el('f_salmin').value ? Number(el('f_salmin').value) : null,
+    salary_max: el('f_salmax').value ? Number(el('f_salmax').value) : null,
     openings: el('f_openings').value ? Number(el('f_openings').value) : 1,
     target_close_date: el('f_close').value || null,
+    priority: el('f_priority').value || null,
+    level: el('f_level').value || null,
+    work_format: el('f_format').value || null,
+    open_reason: el('f_reason').value || null,
+    skills: (function () { const a = el('f_skills').value.split(',').map(function (s) { return s.trim(); }).filter(Boolean); return a.length ? a : null; })(),
     hiring_manager_id: el('f_hm').value || null,
     recruiter_id: el('f_recruiter').value || null,
     description: el('f_description').value.trim() || null
