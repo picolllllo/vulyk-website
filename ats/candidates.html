@@ -187,10 +187,35 @@ function openForm() {
 async function saveCandidate() {
   const name = el('f_name').value.trim();
   if (!name) { flash(el('formMsg'), 'Вкажіть ім’я', false); return; }
+
+  const emailVal = el('f_email').value.trim().toLowerCase();
+  const phoneVal = el('f_phone').value.trim();
+
+  // Перевірка на дублі: email (точно) + телефон (останні 9 цифр)
+  if (emailVal) {
+    const { data: ex } = await sb.from('candidates').select('id,full_name').eq('email', emailVal).maybeSingle();
+    if (ex) {
+      flash(el('formMsg'), 'Кандидат із таким email уже є: ' + ex.full_name, false);
+      if (confirm('Кандидат із таким email уже є: ' + ex.full_name + '.\n\nВідкрити його профіль?')) location.href = 'candidate.html?id=' + ex.id;
+      return;
+    }
+  }
+  if (phoneVal) {
+    const norm = phoneVal.replace(/\D/g, '').slice(-9);
+    if (norm.length >= 7) {
+      const { data: all } = await sb.from('candidates').select('id,full_name,phone').not('phone', 'is', null);
+      const dup = (all || []).find(function (c) { return c.phone && c.phone.replace(/\D/g, '').slice(-9) === norm; });
+      if (dup) {
+        const go = confirm('Кандидат із таким телефоном уже є: ' + dup.full_name + '.\n\nOK — відкрити його профіль.\nСкасувати — все одно створити нового (напр. спільний номер родини).');
+        if (go) { location.href = 'candidate.html?id=' + dup.id; return; }
+      }
+    }
+  }
+
   const payload = {
     full_name: name,
-    email: el('f_email').value.trim() || null,
-    phone: el('f_phone').value.trim() || null,
+    email: emailVal || null,
+    phone: phoneVal || null,
     location: el('f_location').value.trim() || null,
     expected_salary: el('f_salary').value ? Number(el('f_salary').value) : null,
     facebook: el('f_facebook').value.trim() || null,

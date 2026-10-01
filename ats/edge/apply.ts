@@ -61,11 +61,18 @@ Deno.serve(async (req) => {
     if (!fullName) return json({ error: 'Вкажіть імʼя' }, 400);
     if (!email && !phone) return json({ error: 'Вкажіть email або телефон' }, 400);
 
-    // 1) знайти або створити кандидата (дедуп за email)
+    // 1) знайти або створити кандидата (дедуп за email, потім за телефоном)
     let candidate: any = null;
     if (email) {
       const { data } = await admin.from('candidates').select('*').eq('email', email).maybeSingle();
       candidate = data;
+    }
+    if (!candidate && phone) {
+      const norm = phone.replace(/\D/g, '').slice(-9);
+      if (norm.length >= 7) {
+        const { data: list } = await admin.from('candidates').select('*').not('phone', 'is', null);
+        candidate = (list || []).find((c: any) => c.phone && c.phone.replace(/\D/g, '').slice(-9) === norm) || null;
+      }
     }
     if (!candidate) {
       const { data, error } = await admin.from('candidates').insert({
