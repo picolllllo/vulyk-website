@@ -212,7 +212,7 @@
         <h3 class="pipe__title">Нотатки команди</h3>
         <div id="notesList"></div>
         <div class="note-add">
-          <textarea id="noteInput" placeholder="Написати нотатку для команди…"></textarea>
+          <div id="noteEditor" style="width:100%"></div>
           <button id="addNoteBtn" class="btn btn--primary">Додати</button>
         </div>
         <div id="notesMsg" class="msg"></div>
@@ -224,7 +224,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=2"></script>
+<script src="app.js?v=4"></script>
 <script>
 const STAGE = { new:'Новий', review:'Розгляд', interview:'Співбесіда', offer:'Оффер', hired:'Найнято', rejected:'Відмова' };
 const STAGE_ORDER = ['new','review','interview','offer','hired','rejected'];
@@ -256,6 +256,8 @@ let editingNote = null;
 let currentJob = null;
 let teamUsers = [];   // користувачі-HR для ролей
 let userName = {};    // id -> ім'я
+let noteEditor = null;
+let editEditor = null;
 
 function initJob() {
   el('panel').hidden = false;
@@ -435,7 +437,7 @@ function renderNotes() {
     if (editingNote === n.id) {
       return '<div class="tnote" data-id="' + n.id + '">'
         + '<div class="tnote__head"><span class="tnote__author">' + escapeHtml(noteAuthor(n)) + '</span><span>' + dt + '</span></div>'
-        + '<textarea data-role="editbox">' + escapeHtml(n.text) + '</textarea>'
+        + '<div data-role="editmount"></div>'
         + '<div class="edit-actions"><button class="btn btn--primary btn--sm" data-act="save">Зберегти</button>'
         + '<button class="btn btn--ghost btn--sm" data-act="canceledit">Скасувати</button></div>'
         + '</div>';
@@ -445,9 +447,19 @@ function renderNotes() {
       : '';
     return '<div class="tnote" data-id="' + n.id + '">'
       + '<div class="tnote__head"><span class="tnote__author">' + escapeHtml(noteAuthor(n)) + '</span><span>' + dt + edited + '</span>' + acts + '</div>'
-      + '<div class="tnote__text">' + escapeHtml(n.text) + '</div>'
+      + '<div class="tnote__text">' + sanitizeNoteHtml(n.text) + '</div>'
       + '</div>';
   }).join('');
+
+  if (editingNote) {
+    const mount = el('notesList').querySelector('[data-role="editmount"]');
+    if (mount) {
+      editEditor = makeRichEditor(mount, '');
+      const n = notes.find(function (x) { return x.id === editingNote; });
+      editEditor.setHTML(n ? n.text : '');
+      editEditor.focus();
+    }
+  }
 }
 
 /* --- Редагування / видалення вакансії --- */
@@ -516,16 +528,17 @@ async function deleteJob() {
 }
 
 async function addNote() {
-  const text = el('noteInput').value.trim();
-  if (!text) return;
+  const text = noteEditor.getHTML();
+  if (!text || noteEditor.isEmpty()) return;
   const { error } = await sb.from('job_notes').insert({ job_id: jobId, author_id: ATS.user.id, text: text });
   if (error) { flash(el('notesMsg'), error.message, false); return; }
-  el('noteInput').value = '';
+  noteEditor.clear();
   loadNotes();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   el('backBtn').addEventListener('click', function () { location.href = 'jobs.html'; });
+  noteEditor = makeRichEditor(el('noteEditor'), 'Написати нотатку для команди…');
   el('addNoteBtn').addEventListener('click', addNote);
   el('editBtn').addEventListener('click', openEdit);
   el('statusQuick').addEventListener('change', async function () {
@@ -557,11 +570,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (act === 'edit') { editingNote = id; renderNotes(); }
     else if (act === 'canceledit') { editingNote = null; renderNotes(); }
     else if (act === 'save') {
-      const val = wrap.querySelector('textarea[data-role="editbox"]').value.trim();
-      if (!val) return;
+      const val = editEditor ? editEditor.getHTML() : '';
+      if (!val || (editEditor && editEditor.isEmpty())) return;
       const { error } = await sb.from('job_notes').update({ text: val }).eq('id', id);
       if (error) { flash(el('notesMsg'), error.message, false); return; }
-      editingNote = null; loadNotes();
+      editingNote = null; editEditor = null; loadNotes();
     } else if (act === 'del') {
       if (!confirm('Видалити нотатку?')) return;
       const { error } = await sb.from('job_notes').delete().eq('id', id);
