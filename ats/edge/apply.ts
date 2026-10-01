@@ -13,6 +13,9 @@
 //    supabase functions deploy apply
 //
 //  SUPABASE_URL та SUPABASE_SERVICE_ROLE_KEY додаються Supabase автоматично.
+//  Опційно: секрет SLACK_WEBHOOK_URL — тоді на кожну заявку приходить
+//    сповіщення у Slack-канал (#рекрутмент). Без нього все працює так само,
+//    лише без сповіщення.
 //  Приймає multipart/form-data з полями:
 //    full_name*, email|phone*, phone, job_id, position_id,
 //    salary_expectation, message, resume (файл)
@@ -86,9 +89,12 @@ Deno.serve(async (req) => {
 
     // 2) заявка на вакансію (лише якщо вакансія відкрита)
     let applicationId: string | null = null;
+    let jobTitle = '';
+    let resumeUploaded = false;
     if (jobId) {
-      const { data: job } = await admin.from('jobs').select('id,status').eq('id', jobId).maybeSingle();
+      const { data: job } = await admin.from('jobs').select('id,status,title').eq('id', jobId).maybeSingle();
       if (!job || job.status !== 'open') return json({ error: 'Вакансію не знайдено або вона закрита' }, 400);
+      jobTitle = job.title || '';
 
       const { data: existingApp } = await admin.from('applications')
         .select('id').eq('job_id', jobId).eq('candidate_id', candidate.id).maybeSingle();
@@ -125,6 +131,7 @@ Deno.serve(async (req) => {
         upsert: false,
       });
       if (!up.error) {
+        resumeUploaded = true;
         await admin.from('attachments').insert({
           candidate_id: candidate.id,
           application_id: applicationId,
@@ -133,6 +140,27 @@ Deno.serve(async (req) => {
           file_name: f.name,
         });
       }
+    }
+
+    // 4) сповіщення в Slack #рекрутмент (best-effort — не критичне)
+    const hook = Deno.env.get('SLACK_WEBHOOK_URL');
+    if (hook) {
+      try {
+        const contacts = [candidate.email, candidate.phone].filter(Boolean).join(' · ') || '—';
+        const lines = [
+          '🆕 *Нова заявка кандидата*',
+          '*Ім’я:* ' + fullName,
+          '*Вакансія:* ' + (jobTitle || 'Загальна подача (talent pool)'),
+          '*Контакти:* ' + contacts,
+          '*Резюме:* ' + (resumeUploaded ? '✅ додано' : '—'),
+          '<https://www.vulyk.clinic/ats/candidate.html?id=' + candidate.id + '|Відкрити кандидата в ATS →>',
+        ];
+        await fetch(hook, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ text: lines.join('\n') }),
+        });
+      } catch (_e) { /* сповіщення не критичне */ }
     }
 
     return json({ ok: true });
