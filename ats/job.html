@@ -167,9 +167,8 @@
           <div class="sub" style="margin-top:6px">Веде первинну комунікацію з кандидатами та рекрутинговою агенцією; заповнює необхідні поля у профілях вакансії й кандидатів; переміщає кандидатів по стадіях найму; відкриває та закриває вакансію.</div>
         </div>
         <div class="full">
-          <label for="e_description">Опис</label>
-          <textarea id="e_description" style="min-height:220px"></textarea>
-          <div class="sub" style="margin-top:6px">Форматування: <code>## Заголовок розділу</code> · <code>- пункт списку</code> · <code>**жирний**</code>. Порожній рядок = новий абзац.</div>
+          <label>Опис <span class="sub" style="font-weight:600">(показується на публічній сторінці вакансії)</span></label>
+          <div id="e_description_editor"></div>
         </div>
       </div>
       <div class="form-actions" style="justify-content:space-between; align-items:center">
@@ -224,7 +223,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 <script>
 const STAGE = { new:'Новий', review:'Розгляд', interview:'Співбесіда', offer:'Оффер', hired:'Найнято', rejected:'Відмова' };
 const STAGE_ORDER = ['new','review','interview','offer','hired','rejected'];
@@ -258,6 +257,7 @@ let teamUsers = [];   // користувачі-HR для ролей
 let userName = {};    // id -> ім'я
 let noteEditor = null;
 let editEditor = null;
+let descEditor = null;
 
 function initJob() {
   el('panel').hidden = false;
@@ -332,7 +332,9 @@ async function loadJob() {
   if (job.status === 'open') { vp.href = '../vacancy.html?job=' + job.id; vp.style.display = ''; }
   else { vp.style.display = 'none'; }
 
-  el('jDesc').innerHTML = job.description ? renderMarkdown(job.description) : '<p class="pipe-empty">Опис не заповнено.</p>';
+  el('jDesc').innerHTML = job.description
+    ? (hasHtmlMarkup(job.description) ? sanitizeNoteHtml(job.description) : renderMarkdown(job.description))
+    : '<p class="pipe-empty">Опис не заповнено.</p>';
   el('content').hidden = false;
 
   renderJobSkills(job);
@@ -481,7 +483,7 @@ function openEdit() {
   el('e_skills').value = (currentJob.skills || []).join(', ');
   el('e_hm').value = currentJob.hiring_manager_id || '';
   el('e_recruiter').value = currentJob.recruiter_id || '';
-  el('e_description').value = currentJob.description || '';
+  descEditor.setHTML(currentJob.description || '');
   el('e_msg').textContent = '';
   el('editPanel').hidden = false;
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -508,7 +510,7 @@ async function saveEdit() {
     skills: (function () { const a = el('e_skills').value.split(',').map(function (s) { return s.trim(); }).filter(Boolean); return a.length ? a : null; })(),
     hiring_manager_id: el('e_hm').value || null,
     recruiter_id: el('e_recruiter').value || null,
-    description: el('e_description').value.trim() || null
+    description: descEditor.isEmpty() ? null : descEditor.getHTML()
   };
   const { error } = await sb.from('jobs').update(payload).eq('id', jobId);
   if (error) { flash(el('e_msg'), error.message, false); return; }
@@ -539,6 +541,7 @@ async function addNote() {
 document.addEventListener('DOMContentLoaded', function () {
   el('backBtn').addEventListener('click', function () { location.href = 'jobs.html'; });
   noteEditor = makeRichEditor(el('noteEditor'), 'Написати нотатку для команди…');
+  descEditor = makeRichEditor(el('e_description_editor'), 'Опишіть вакансію: обов’язки, вимоги, умови…');
   el('addNoteBtn').addEventListener('click', addNote);
   el('editBtn').addEventListener('click', openEdit);
   el('statusQuick').addEventListener('change', async function () {

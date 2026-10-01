@@ -311,6 +311,29 @@
   function esc(s) { return (s == null ? '' : ('' + s)).replace(/[&<>"]/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]; }); }
   function inline(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
 
+  function hasHtmlMarkup(s) { return /<[a-z][\s\S]*>/i.test(s || ''); }
+  function sanitizeHtml(html) {
+    var ALLOWED = { B:1, STRONG:1, I:1, EM:1, U:1, S:1, STRIKE:1, DEL:1, A:1, UL:1, OL:1, LI:1, BR:1, P:1, DIV:1, BLOCKQUOTE:1, SPAN:1 };
+    var tmp = document.createElement('div');
+    tmp.innerHTML = html || '';
+    (function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (ch) {
+        if (ch.nodeType === 1) {
+          var tag = ch.tagName;
+          if (!ALLOWED[tag]) { while (ch.firstChild) node.insertBefore(ch.firstChild, ch); node.removeChild(ch); return; }
+          Array.prototype.slice.call(ch.attributes).forEach(function (a) {
+            if (tag === 'A' && a.name === 'href' && /^(https?:|mailto:)/i.test(a.value)) return;
+            ch.removeAttribute(a.name);
+          });
+          if (tag === 'A') { ch.setAttribute('target', '_blank'); ch.setAttribute('rel', 'noopener'); }
+          walk(ch);
+        } else if (ch.nodeType !== 3) { node.removeChild(ch); }
+      });
+    })(tmp);
+    return tmp.innerHTML;
+  }
+  function renderDescription(d) { return hasHtmlMarkup(d) ? sanitizeHtml(d) : renderMarkdown(d); }
+
   function renderMarkdown(md) {
     var lines = String(md || '').replace(/\r/g, '').split('\n');
     var html = '', list = null, para = [], sec = false;
@@ -360,7 +383,7 @@
     if (job.work_format && FORMAT_LBL[job.work_format]) badges.push(badge('', FORMAT_LBL[job.work_format]));
     if (job.level && LEVEL_LBL[job.level]) badges.push(badge('', LEVEL_LBL[job.level]));
     $('vMeta').innerHTML = badges.join('');
-    $('vBody').innerHTML = renderMarkdown(job.description);
+    $('vBody').innerHTML = renderDescription(job.description);
     $('vApplyBtn').href = 'apply.html?job=' + job.id;
     $('vApply').hidden = false;
   })();

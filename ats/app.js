@@ -185,6 +185,11 @@ function sanitizeNoteHtml(html) {
   return tmp.innerHTML;
 }
 
+/* Відображення збереженого тексту: новий формат — HTML (з редактора),
+   старий — легкий markdown-субсет. Автовизначення за наявністю тегів. */
+function hasHtmlMarkup(s) { return /<[a-z][\s\S]*>/i.test(s || ''); }
+function renderStoredNote(s) { return hasHtmlMarkup(s) ? sanitizeNoteHtml(s) : renderNoteText(s); }
+
 function makeRichEditor(mount, placeholder) {
   injectRteStyles();
   function b(cmd, label, title) { return '<button type="button" data-cmd="' + cmd + '" title="' + title + '">' + label + '</button>'; }

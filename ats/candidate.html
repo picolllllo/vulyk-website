@@ -30,9 +30,9 @@
     .stage-sel{ font:inherit; font-size:12px; font-weight:700; padding:4px 10px; border-radius:100px; border:1px solid; cursor:pointer; }
     .note{ border-left:3px solid var(--line); padding:5px 0 5px 12px; margin:10px 0; }
     .note__meta{ font-size:12px; color:var(--muted); margin-bottom:2px; }
-    .note__text{ font-size:14px; white-space:pre-wrap; }
-    .note-add{ display:flex; gap:8px; margin-top:10px; }
-    .note-add textarea{ min-height:40px; }
+    .note-add{ display:flex; flex-direction:column; align-items:flex-start; gap:8px; margin-top:10px; }
+    .note__text{ font-size:14px; line-height:1.5; }
+    .note__text ul,.note__text ol{ margin:4px 0; padding-left:20px; }
     .att{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid var(--line); font-size:14px; }
     .att:last-child{ border-bottom:none; }
     .att a{ color:var(--accent-deep); text-decoration:none; font-weight:600; }
@@ -51,7 +51,8 @@
     .contactrow{ display:flex; gap:22px; flex-wrap:wrap; align-items:center; margin-bottom:18px; font-size:14px; }
     .contactrow a{ color:var(--accent-deep); text-decoration:none; display:inline-flex; align-items:center; gap:7px; }
     .contactrow a:hover{ text-decoration:underline; }
-    .prof-summary{ font-size:14px; line-height:1.65; margin:0 0 20px; white-space:pre-wrap; }
+    .prof-summary{ font-size:14px; line-height:1.65; margin:0 0 20px; }
+    .prof-summary ul,.prof-summary ol{ margin:6px 0; padding-left:22px; }
     .skills-sec{ margin-bottom:22px; }
     .skills-sec__t{ font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin-bottom:10px; }
     .skills{ display:flex; flex-wrap:wrap; gap:8px; }
@@ -141,7 +142,7 @@
             <option value="other">Інше</option>
           </select>
         </div>
-        <div class="full"><label for="e_summary">Про кандидата / коментар</label><textarea id="e_summary"></textarea></div>
+        <div class="full"><label>Про кандидата / коментар</label><div id="e_summary_editor"></div></div>
       </div>
       <div class="form-actions" style="justify-content:space-between; align-items:center">
         <div style="display:flex; gap:10px; align-items:center">
@@ -217,7 +218,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 <script>
 const candId = new URLSearchParams(location.search).get('id');
 let current = null;
@@ -227,6 +228,8 @@ let cnotes = [];
 let editingCNote = null;
 let cnoteEditor = null;
 let editCEditor = null;
+let summaryEditor = null;
+let appNoteEditors = {};
 
 const STAGE = { new:'Новий', review:'Розгляд', interview:'Співбесіда', offer:'Оффер', hired:'Найнято', rejected:'Відмова' };
 const STAGE_ORDER = ['new','review','interview','offer','hired','rejected'];
@@ -301,7 +304,7 @@ async function loadCandidate() {
   ].join('');
 
   // Про кандидата (показуємо завжди)
-  if (c.summary) { el('cSummary').textContent = c.summary; }
+  if (c.summary) { el('cSummary').innerHTML = renderStoredNote(c.summary); }
   else { el('cSummary').innerHTML = '<span style="color:var(--muted)">Немає опису</span>'; }
 
   renderSkills();
@@ -399,7 +402,7 @@ async function loadApps() {
     const salary = a.salary_expectation ? (a.salary_expectation.toLocaleString('uk-UA') + ' ' + a.salary_currency) : '—';
     const notesHtml = (byApp[a.id] || []).map(function (n) {
       const nd = new Date(n.created_at).toLocaleString('uk-UA', { dateStyle:'short', timeStyle:'short' });
-      return '<div class="note"><div class="note__meta">' + nd + '</div><div class="note__text">' + renderNoteText(n.text) + '</div></div>';
+      return '<div class="note"><div class="note__meta">' + nd + '</div><div class="note__text">' + renderStoredNote(n.text) + '</div></div>';
     }).join('');
     return '<div class="app-item" data-app="' + a.id + '">'
       + '<div class="app-item__head">'
@@ -409,11 +412,18 @@ async function loadApps() {
       + '</div>'
       + notesHtml
       + '<div class="note-add">'
-      +   '<textarea data-role="note" placeholder="Додати нотатку…"></textarea>'
+      +   '<div data-role="noteeditor" style="width:100%"></div>'
       +   '<button class="btn btn--ghost btn--sm" data-act="addnote">Додати</button>'
       + '</div>'
       + '</div>';
   }).join('');
+
+  // міні-редактори для нотаток кожної заявки
+  appNoteEditors = {};
+  Array.prototype.forEach.call(el('appsList').querySelectorAll('.app-item'), function (item) {
+    const mount = item.querySelector('[data-role="noteeditor"]');
+    if (mount) appNoteEditors[item.dataset.app] = makeRichEditor(mount, 'Додати нотатку…');
+  });
 }
 
 async function addApplication() {
@@ -502,7 +512,7 @@ function openEdit() {
   el('e_position').value = current.position_id ? String(current.position_id) : '';
   el('e_tag').value = current.tag || '';
   el('e_source').value = current.source;
-  el('e_summary').value = current.summary || '';
+  summaryEditor.setHTML(current.summary || '');
   el('e_msg').textContent = '';
   el('editPanel').hidden = false;
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -525,7 +535,7 @@ async function saveEdit() {
     position_id: el('e_position').value ? Number(el('e_position').value) : null,
     tag: el('e_tag').value || null,
     source: el('e_source').value,
-    summary: el('e_summary').value.trim() || null
+    summary: summaryEditor.isEmpty() ? null : summaryEditor.getHTML()
   };
   const { error } = await sb.from('candidates').update(payload).eq('id', candId);
   if (error) {
@@ -560,6 +570,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   cnoteEditor = makeRichEditor(el('cnoteEditor'), 'Нотатка про кандидата…');
+  summaryEditor = makeRichEditor(el('e_summary_editor'), 'Короткий опис, враження, деталі…');
   el('cnoteAdd').addEventListener('click', addCNote);
   el('cnotesList').addEventListener('click', async function (e) {
     const btn = e.target.closest('button[data-act]'); if (!btn) return;
@@ -591,13 +602,12 @@ document.addEventListener('DOMContentLoaded', function () {
   el('appsList').addEventListener('click', async function (e) {
     const btn = e.target.closest('button[data-act="addnote"]'); if (!btn) return;
     const item = e.target.closest('.app-item');
-    const ta = item.querySelector('textarea[data-role="note"]');
-    const text = ta.value.trim(); if (!text) return;
+    const ed = appNoteEditors[item.dataset.app];
+    const text = ed ? ed.getHTML() : ''; if (!text || ed.isEmpty()) return;
     const { error } = await sb.from('notes').insert({
       application_id: item.dataset.app, candidate_id: candId, author_id: ATS.user.id, text: text
     });
     if (error) { flash(el('appMsg'), error.message, false); return; }
-    ta.value = '';
     loadApps();
   });
 
