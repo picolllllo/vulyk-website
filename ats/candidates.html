@@ -110,18 +110,12 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=6"></script>
+<script src="app.js?v=7"></script>
 <script>
 let candidates = [];
 let positions  = [];
 
 const SOURCE = { direct:'Прямий', agency:'Агенція', referral:'Рекомендація', other:'Інше' };
-const TAG = { employee:'Працівник', ex_employee:'Екс-працівник', blacklist:'Чорний список' };
-const TAG_TINT = {
-  employee:    { bg:'#e4f4ea', fg:'#1a7f37' },
-  ex_employee: { bg:'#eceef1', fg:'#5b6673' },
-  blacklist:   { bg:'#fde7e7', fg:'#b3261e' }
-};
 
 function initCandidates() {
   el('panel').hidden = false;
@@ -129,6 +123,7 @@ function initCandidates() {
 }
 
 async function loadRefs() {
+  await loadTags();
   const { data: pos } = await sb.from('positions').select('id,name').order('sort_order').order('name');
   positions = pos || [];
   const posOpts = positions.map(function (p) { return '<option value="' + p.id + '">' + escapeHtml(p.name) + '</option>'; }).join('');
@@ -163,8 +158,7 @@ function renderList() {
     const posName = c.positions ? c.positions.name : '—';
     const cnt = (c.applications && c.applications[0]) ? c.applications[0].count : 0;
     const contact = [c.email, c.phone].filter(Boolean).map(escapeHtml).join('<br>') || '—';
-    const tagB = (c.tag && TAG[c.tag])
-      ? '<span class="ltag" style="background:' + TAG_TINT[c.tag].bg + ';color:' + TAG_TINT[c.tag].fg + '">' + TAG[c.tag] + '</span>' : '';
+    const tagB = c.tag ? tagBadgeHtml(c.tag, 'ltag') : '';
     return '<tr data-id="' + c.id + '">'
       + '<td><div class="cand-name">' + escapeHtml(c.full_name) + tagB + '</div><div class="cand-src">' + SOURCE[c.source] + '</div></td>'
       + '<td>' + escapeHtml(posName) + '</td>'

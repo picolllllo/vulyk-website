@@ -126,12 +126,7 @@
         <div><label for="e_position">Позиція</label><select id="e_position"><option value="">— не вказано —</option></select></div>
         <div>
           <label for="e_tag">Тег кандидата</label>
-          <select id="e_tag">
-            <option value="">— без тегу —</option>
-            <option value="employee">Працівник</option>
-            <option value="ex_employee">Екс-працівник</option>
-            <option value="blacklist">Чорний список</option>
-          </select>
+          <select id="e_tag"><option value="">— без тегу —</option></select>
         </div>
         <div>
           <label for="e_source">Джерело</label>
@@ -218,7 +213,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=6"></script>
+<script src="app.js?v=7"></script>
 <script>
 const candId = new URLSearchParams(location.search).get('id');
 let current = null;
@@ -242,12 +237,6 @@ const STAGE_TINT = {
   rejected:  { bg:'#fde7e7', fg:'#b3261e' }
 };
 const SOURCE = { direct:'Прямий', agency:'Агенція', referral:'Рекомендація', other:'Інше' };
-const TAG = { employee:'Працівник', ex_employee:'Екс-працівник', blacklist:'Чорний список' };
-const TAG_TINT = {
-  employee:    { bg:'#e4f4ea', fg:'#1a7f37' },
-  ex_employee: { bg:'#eceef1', fg:'#5b6673' },
-  blacklist:   { bg:'#fde7e7', fg:'#b3261e' }
-};
 
 function normalizeUrl(v) { return /^https?:\/\//i.test(v) ? v : ('https://' + v.replace(/^@/, '')); }
 
@@ -260,7 +249,8 @@ function initCandidate() {
 async function loadRefs() {
   const [{ data: pos }, { data: jobs }] = await Promise.all([
     sb.from('positions').select('id,name').order('sort_order').order('name'),
-    sb.from('jobs').select('id,title,status').in('status', ['open','paused']).order('title')
+    sb.from('jobs').select('id,title,status').in('status', ['open','paused']).order('title'),
+    loadTags()
   ]);
   positions = pos || [];
   openJobs = jobs || [];
@@ -277,12 +267,7 @@ async function loadCandidate() {
   current = c;
 
   document.title = 'ATS · ' + c.full_name + ' · Вулик';
-  let tagBadge = '';
-  if (c.tag && TAG[c.tag]) {
-    const tt = TAG_TINT[c.tag];
-    tagBadge = '<span class="tagbadge" style="background:' + tt.bg + ';color:' + tt.fg + '">' + TAG[c.tag] + '</span>';
-  }
-  el('cName').innerHTML = escapeHtml(c.full_name) + tagBadge;
+  el('cName').innerHTML = escapeHtml(c.full_name) + (c.tag ? ' ' + tagBadgeHtml(c.tag, 'tagbadge') : '');
   el('cPos').textContent = c.positions ? c.positions.name : '';
 
   // Деталі — усі поля вертикально (навіть порожні)
@@ -510,7 +495,7 @@ function openEdit() {
   el('e_facebook').value = current.facebook || '';
   el('e_instagram').value = current.instagram || '';
   el('e_position').value = current.position_id ? String(current.position_id) : '';
-  el('e_tag').value = current.tag || '';
+  el('e_tag').innerHTML = tagOptionsHtml(current.tag || '');
   el('e_source').value = current.source;
   summaryEditor.setHTML(current.summary || '');
   el('e_msg').textContent = '';

@@ -6,7 +6,27 @@ const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsIn
 /* ================================================== */
 
 const sb = supabase.createClient(SB_URL, SB_ANON);
-const ATS = { user: null, me: null };
+const ATS = { user: null, me: null, tags: null };
+
+/* Довідник тегів кандидата (керується в Налаштуваннях) */
+async function loadTags(force) {
+  if (ATS.tags && !force) return ATS.tags;
+  const { data } = await sb.from('candidate_tags').select('*').order('sort_order').order('name');
+  ATS.tags = data || [];
+  return ATS.tags;
+}
+function tagBySlug(slug) { return (ATS.tags || []).find(function (t) { return t.slug === slug; }); }
+function tagBadgeHtml(slug, cls) {
+  const t = tagBySlug(slug); if (!t) return '';
+  return '<span class="' + (cls || 'tagbadge') + '" style="background:' + t.color + '1a;color:' + t.color + '">'
+    + escapeHtml(t.name) + '</span>';
+}
+function tagOptionsHtml(selected) {
+  return '<option value="">— без тегу —</option>' + (ATS.tags || []).map(function (t) {
+    return '<option value="' + escapeHtml(t.slug) + '"' + (t.slug === selected ? ' selected' : '') + '>'
+      + escapeHtml(t.name) + '</option>';
+  }).join('');
+}
 
 function el(id) { return document.getElementById(id); }
 

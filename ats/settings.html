@@ -38,17 +38,63 @@
       <tbody id="posBody"></tbody>
     </table>
     <div id="panelMsg" class="msg"></div>
+
+    <div class="panel__head" style="margin-top:36px">
+      <h2>Теги кандидатів</h2>
+      <span class="sub">Мітки поза вакансіями (напр. працівник, чорний список). Застосовуються в профілі кандидата.</span>
+    </div>
+
+    <div class="add-row">
+      <input id="newTag" type="text" placeholder="Новий тег, напр. «Резерв»">
+      <input id="newTagColor" type="color" value="#E8A820" title="Колір" style="width:46px;height:38px;padding:3px;border:1px solid var(--line);border-radius:8px;cursor:pointer">
+      <button id="addTagBtn" class="btn btn--primary">Додати</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Тег</th><th style="width:90px">Колір</th><th style="width:120px;text-align:right">Дії</th></tr>
+      </thead>
+      <tbody id="tagBody"></tbody>
+    </table>
+    <div id="tagMsg" class="msg"></div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=6"></script>
+<script src="app.js?v=7"></script>
 <script>
 let positions = [];
+
+let tags = [];
 
 function initSettings() {
   el('panel').hidden = false;
   loadPositions();
+  loadTagsAdmin();
+}
+
+async function loadTagsAdmin() {
+  const { data, error } = await sb.from('candidate_tags').select('*').order('sort_order').order('name');
+  if (error) { flash(el('tagMsg'), 'Помилка завантаження тегів: ' + error.message); return; }
+  tags = data || [];
+  el('tagBody').innerHTML = tags.map(function (t) {
+    return '<tr data-slug="' + escapeHtml(t.slug) + '">'
+      + '<td class="name-cell"><input type="text" value="' + escapeHtml(t.name) + '" data-role="tname"></td>'
+      + '<td><input type="color" value="' + escapeHtml(t.color) + '" data-role="tcolor" style="width:42px;height:32px;padding:2px;border:1px solid var(--line);border-radius:7px;cursor:pointer"></td>'
+      + '<td><div class="actions" style="justify-content:flex-end">'
+      +   '<button class="btn btn--danger btn--sm" data-act="deltag">Видалити</button>'
+      + '</div></td></tr>';
+  }).join('') || '<tr><td colspan="3" class="sub" style="padding:12px">Тегів ще немає.</td></tr>';
+}
+
+async function addTag() {
+  const name = el('newTag').value.trim(); if (!name) return;
+  const slug = 'tag_' + Date.now().toString(36);
+  const color = el('newTagColor').value || '#5b6673';
+  const maxOrder = tags.reduce(function (m, t) { return Math.max(m, t.sort_order || 0); }, 0);
+  const { error } = await sb.from('candidate_tags').insert({ slug: slug, name: name, color: color, sort_order: maxOrder + 10 });
+  if (error) { flash(el('tagMsg'), error.message); return; }
+  el('newTag').value = ''; flash(el('tagMsg'), 'Додано', true); loadTagsAdmin();
 }
 
 async function loadPositions() {
@@ -106,6 +152,34 @@ document.addEventListener('DOMContentLoaded', function () {
       await sb.from('positions').update({ sort_order: a.sort_order }).eq('id', b.id);
       loadPositions();
     }
+  });
+
+  el('addTagBtn').addEventListener('click', addTag);
+  el('newTag').addEventListener('keydown', function (e) { if (e.key === 'Enter') addTag(); });
+
+  el('tagBody').addEventListener('change', async function (e) {
+    const tr = e.target.closest('tr[data-slug]'); if (!tr) return;
+    const slug = tr.dataset.slug;
+    const field = e.target.dataset.role === 'tname' ? 'name' : (e.target.dataset.role === 'tcolor' ? 'color' : null);
+    if (!field) return;
+    const val = e.target.value.trim(); if (field === 'name' && !val) { loadTagsAdmin(); return; }
+    const { error } = await sb.from('candidate_tags').update({ [field]: val }).eq('slug', slug);
+    flash(el('tagMsg'), error ? error.message : 'Збережено', !error);
+    if (error) loadTagsAdmin();
+  });
+
+  el('tagBody').addEventListener('click', async function (e) {
+    const btn = e.target.closest('button[data-act="deltag"]'); if (!btn) return;
+    const tr = btn.closest('tr[data-slug]'); const slug = tr.dataset.slug;
+    const t = tags.find(function (x) { return x.slug === slug; });
+    const { count } = await sb.from('candidates').select('id', { count: 'exact', head: true }).eq('tag', slug);
+    const ok = (count && count > 0)
+      ? confirm('Видалити тег «' + (t ? t.name : slug) + '»?\n\nУ ' + count + ' кандидат(ів) він зникне (профілі залишаться).')
+      : confirm('Видалити тег «' + (t ? t.name : slug) + '»?');
+    if (!ok) return;
+    if (count && count > 0) await sb.from('candidates').update({ tag: null }).eq('tag', slug);
+    const { error } = await sb.from('candidate_tags').delete().eq('slug', slug);
+    flash(el('tagMsg'), error ? error.message : 'Видалено', !error); loadTagsAdmin();
   });
 
   atsGuard('settings.html', initSettings);
