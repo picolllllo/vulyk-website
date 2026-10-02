@@ -224,6 +224,12 @@ async function loadJobs() {
   ]);
   if (jobsRes.error) { flash(el('listMsg'), 'Помилка: ' + jobsRes.error.message); return; }
   jobs = jobsRes.data || [];
+  // Відкриті — вгорі, далі пауза/чернетки, закриті — внизу (у межах статусу зберігаємо новіші першими)
+  const STATUS_RANK = { open: 0, paused: 1, draft: 2, closed: 3 };
+  jobs.sort(function (a, b) {
+    return (STATUS_RANK[a.status] != null ? STATUS_RANK[a.status] : 9)
+         - (STATUS_RANK[b.status] != null ? STATUS_RANK[b.status] : 9);
+  });
   appsByJob = {};
   (appsRes.data || []).forEach(function (a) {
     const e = appsByJob[a.job_id] || (appsByJob[a.job_id] = { total: 0, byStage: {} });
