@@ -153,8 +153,9 @@
           <input id="e_salmax" type="number" min="0" step="500">
         </div>
         <div class="full">
-          <label for="e_skills">Необхідні навички (через кому)</label>
-          <input id="e_skills" type="text" placeholder="Педіатрія, Невідкладна допомога, Доказова медицина">
+          <label>Необхідні навички</label>
+          <div id="e_skills"></div>
+          <div class="sub" style="margin-top:6px">Почніть вводити — підкаже зі спільного довідника. Enter або кома — додати.</div>
         </div>
         <div class="full">
           <label for="e_hm">Hiring Manager</label>
@@ -223,7 +224,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 <script>
 const STAGE = { new:'Новий', review:'Розгляд', interview:'Співбесіда', offer:'Оффер', hired:'Найнято', rejected:'Відмова' };
 const STAGE_ORDER = ['new','review','interview','offer','hired','rejected'];
@@ -258,6 +259,7 @@ let userName = {};    // id -> ім'я
 let noteEditor = null;
 let editEditor = null;
 let descEditor = null;
+let skillTags = null;
 
 function initJob() {
   el('panel').hidden = false;
@@ -480,7 +482,7 @@ function openEdit() {
   el('e_reason').value = currentJob.open_reason || '';
   el('e_salmin').value = currentJob.salary_min || '';
   el('e_salmax').value = currentJob.salary_max || '';
-  el('e_skills').value = (currentJob.skills || []).join(', ');
+  skillTags.setSkills(currentJob.skills || []);
   el('e_hm').value = currentJob.hiring_manager_id || '';
   el('e_recruiter').value = currentJob.recruiter_id || '';
   descEditor.setHTML(currentJob.description || '');
@@ -507,7 +509,7 @@ async function saveEdit() {
     level: el('e_level').value || null,
     work_format: el('e_format').value || null,
     open_reason: el('e_reason').value || null,
-    skills: (function () { const a = el('e_skills').value.split(',').map(function (s) { return s.trim(); }).filter(Boolean); return a.length ? a : null; })(),
+    skills: (function () { const a = skillTags.getSkills(); return a.length ? a : null; })(),
     hiring_manager_id: el('e_hm').value || null,
     recruiter_id: el('e_recruiter').value || null,
     description: descEditor.isEmpty() ? null : descEditor.getHTML()
@@ -542,6 +544,7 @@ document.addEventListener('DOMContentLoaded', function () {
   el('backBtn').addEventListener('click', function () { location.href = 'jobs.html'; });
   noteEditor = makeRichEditor(el('noteEditor'), 'Написати нотатку для команди…');
   descEditor = makeRichEditor(el('e_description_editor'), 'Опишіть вакансію: обов’язки, вимоги, умови…');
+  skillTags = makeSkillTags(el('e_skills'), []);
   el('addNoteBtn').addEventListener('click', addNote);
   el('editBtn').addEventListener('click', openEdit);
   el('statusQuick').addEventListener('change', async function () {

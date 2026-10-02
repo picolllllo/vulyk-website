@@ -218,7 +218,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 <script>
 const candId = new URLSearchParams(location.search).get('id');
 let current = null;
@@ -317,7 +317,7 @@ function renderSkills() {
   const arr = (current && current.skills) ? current.skills : [];
   el('cSkills').innerHTML = arr.map(function (s, i) {
     return '<span class="skill">' + escapeHtml(s) + '<button data-act="delskill" data-i="' + i + '" title="Прибрати">✕</button></span>';
-  }).join('') + '<span class="skill-add"><input id="skillInput" type="text" placeholder="+ навичка"></span>';
+  }).join('') + '<span class="skill-add"><input id="skillInput" type="text" list="atsSkills" placeholder="+ навичка"></span>';
 }
 async function saveSkills(arr) {
   const { error } = await sb.from('candidates').update({ skills: arr.length ? arr : null }).eq('id', candId);
@@ -566,8 +566,12 @@ document.addEventListener('DOMContentLoaded', function () {
     removeSkill(Number(b.dataset.i));
   });
   el('cSkills').addEventListener('keydown', function (e) {
-    if (e.target.id === 'skillInput' && e.key === 'Enter') { e.preventDefault(); addSkill(e.target.value); e.target.value = ''; }
+    if (e.target.id === 'skillInput' && (e.key === 'Enter' || e.key === ',')) { e.preventDefault(); addSkill(e.target.value); e.target.value = ''; }
   });
+  el('cSkills').addEventListener('change', function (e) {
+    if (e.target.id === 'skillInput' && e.target.value) { addSkill(e.target.value); e.target.value = ''; }
+  });
+  injectSkillsDatalist();
 
   cnoteEditor = makeRichEditor(el('cnoteEditor'), 'Нотатка про кандидата…');
   summaryEditor = makeRichEditor(el('e_summary_editor'), 'Короткий опис, враження, деталі…');

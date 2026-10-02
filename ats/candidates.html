@@ -93,7 +93,7 @@
       </div>
       <div class="fld">
         <label for="skillFilter">Навичка</label>
-        <input id="skillFilter" type="text" placeholder="напр. Figma">
+        <input id="skillFilter" type="text" list="atsSkills" placeholder="напр. Забір венозної крові">
       </div>
     </div>
 
@@ -110,7 +110,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 <script>
 let candidates = [];
 let positions  = [];
@@ -245,6 +245,7 @@ async function saveCandidate() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+  injectSkillsDatalist();
   el('newBtn').addEventListener('click', openForm);
   el('saveBtn').addEventListener('click', saveCandidate);
   el('cancelBtn').addEventListener('click', function () { el('form').hidden = true; });
