@@ -133,38 +133,39 @@
 
       /* Шапка з лого */
       .cal-print-head {
-        display: flex; align-items: center; gap: 14px;
-        padding: 0 0 11px; max-width: none; margin: 0 0 14px;
+        display: flex; align-items: center; gap: 13px;
+        padding: 0 0 9px; max-width: none; margin: 0 0 11px;
         border-bottom: 2.5px solid var(--accent);
       }
-      .cal-print-head img { height: 46px; width: auto; }
+      .cal-print-head img { height: 42px; width: auto; }
       .cal-print-head__txt { line-height: 1.3; }
-      .cal-print-head__title { font-size: 19px; font-weight: 800; color: var(--text); }
-      .cal-print-head__sub { font-size: 12px; color: var(--muted); }
+      .cal-print-head__title { font-size: 18px; font-weight: 800; color: var(--text); }
+      .cal-print-head__sub { font-size: 11.5px; color: var(--muted); }
 
       /* Зведення */
-      .cal-summary { margin: 0 0 13px; }
-      .cal-sum-grid { gap: 14px; }
-      .cal-sum-card { padding: 11px 15px; border-radius: 11px; box-shadow: none; break-inside: avoid; }
-      .cal-sum-card__l { font-size: 11px; margin-bottom: 4px; }
-      .cal-sum-card__v { font-size: 18px; margin-top: 0; }
-      .cal-sum-card__sub { font-size: 12px; margin-top: 3px; }
+      .cal-summary { margin: 0 0 10px; }
+      .cal-sum-grid { gap: 12px; }
+      .cal-sum-card { padding: 9px 13px; border-radius: 10px; box-shadow: none; break-inside: avoid; }
+      .cal-sum-card__l { font-size: 10.5px; margin-bottom: 3px; }
+      .cal-sum-card__v { font-size: 16px; margin-top: 0; }
+      .cal-sum-card__sub { font-size: 11px; margin-top: 2px; }
 
       /* Таймлайн — дві колонки, без лінії та крапок */
-      .cal-tl { column-count: 2; column-gap: 20px; }
+      .cal-tl { column-count: 2; column-gap: 18px; }
       .cal-tl::before { display: none; }
-      .cal-node { padding: 0 0 10px 0; break-inside: avoid; -webkit-column-break-inside: avoid; }
+      .cal-node { padding: 0 0 8px 0; break-inside: avoid; -webkit-column-break-inside: avoid; }
       .cal-node__dot { display: none; }
-      .cal-card { border: 1px solid rgba(0,0,0,.2); border-radius: 10px; padding: 9px 13px; box-shadow: none; break-inside: avoid; }
-      .cal-card__head { margin-bottom: 6px; gap: 8px; }
-      .cal-card__age { font-size: 15px; }
-      .cal-card__date { font-size: 12.5px; }
-      .cal-pill { font-size: 9.5px; padding: 2px 8px; }
-      .cal-vax { gap: 4px; }
-      .cal-vax li { font-size: 12px; padding-left: 16px; line-height: 1.4; }
-      .cal-vax li::before { width: 6px; height: 6px; top: 6px; }
+      .cal-card { border: 1px solid rgba(0,0,0,.2); border-radius: 9px; padding: 8px 11px; box-shadow: none; break-inside: avoid; }
+      /* У друці: рядок 1 — вік (ліворуч) + статус (праворуч), рядок 2 — дата */
+      .cal-card__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 5px 10px; margin-bottom: 5px; }
+      .cal-card__age { order: 1; font-size: 14px; }
+      .cal-pill { order: 2; font-size: 9px; padding: 1px 7px; }
+      .cal-card__date { order: 3; flex-basis: 100%; width: 100%; margin: 0; font-size: 11.5px; }
+      .cal-vax { gap: 3px; }
+      .cal-vax li { font-size: 11.5px; padding-left: 15px; line-height: 1.35; }
+      .cal-vax li::before { width: 5px; height: 5px; top: 6px; }
 
-      .cal-disclaimer { font-size: 10px; line-height: 1.5; margin: 14px 0 0; padding: 0; max-width: none; }
+      .cal-disclaimer { font-size: 9.5px; line-height: 1.45; margin: 11px 0 0; padding: 0; max-width: none; }
     }
   </style>
   <!-- Google tag (gtag.js) -->
