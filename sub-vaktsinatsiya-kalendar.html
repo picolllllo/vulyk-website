@@ -37,6 +37,90 @@
     .svc-hero__title { font-size: clamp(28px,3.4vw,44px); font-weight: 800; color: var(--text); margin-bottom: 16px; line-height: 1.15; }
     .svc-hero__sub { font-size: 16px; color: var(--muted); max-width: 680px; margin: 0 auto 0; line-height: 1.7; }
 
+    /* ── Промо-блоки (що дає інструмент) ───────────────── */
+    .vf-wrap { max-width: 1160px; margin: 0 auto; padding: 46px var(--pad) 6px; }
+    .vf { display: grid; grid-template-columns: 1fr 1.08fr; gap: 52px; align-items: center; padding: 38px 0; }
+    .vf + .vf { border-top: 1px solid rgba(0,0,0,.07); }
+    .vf--rev .vf__text { order: 2; }
+    @media (max-width: 900px) {
+      .vf { grid-template-columns: 1fr; gap: 26px; padding: 30px 0; }
+      .vf__visual, .vf--rev .vf__text { order: 0; }
+      .vf__visual { order: -1; }
+    }
+    .vf__eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+    .vf__num { font-size: 32px; font-weight: 800; line-height: 1; color: var(--accent-deep); }
+    .vf__tag { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent-deep); background: rgba(232,168,32,.14); padding: 5px 12px; border-radius: 100px; }
+    .vf__title { font-size: clamp(23px,2.5vw,32px); font-weight: 800; line-height: 1.18; color: var(--text); margin-bottom: 13px; }
+    .vf__sub { font-size: 16px; line-height: 1.7; color: var(--muted); margin-bottom: 20px; max-width: 470px; }
+    .vf__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+    .vf__list li { position: relative; padding-left: 30px; font-size: 15.5px; color: var(--text); line-height: 1.5; }
+    .vf__list li::before {
+      content: ''; position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(232,168,32,.16) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C8900A' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") no-repeat center;
+    }
+
+    /* візуальна підкладка */
+    .vf__visual { position: relative; }
+    .vf__visual::before {
+      content: ''; position: absolute; inset: -13% -11%; z-index: 0; border-radius: 32px; filter: blur(6px);
+      background: radial-gradient(60% 62% at 68% 32%, rgba(232,168,32,.24), transparent 72%),
+                  radial-gradient(55% 55% at 22% 83%, rgba(232,168,32,.15), transparent 76%);
+    }
+
+    /* вікно-мокап (chrome) */
+    .mock { position: relative; z-index: 1; }
+    .mock__chrome { display: flex; gap: 7px; padding: 11px 14px; background: #f5f5f3; border-radius: 14px 14px 0 0; border: 1px solid rgba(0,0,0,.08); border-bottom: none; }
+    .mock__chrome span { width: 11px; height: 11px; border-radius: 50%; background: #d8d8d8; }
+    .mock__chrome span:nth-child(1) { background: #ff5f57; }
+    .mock__chrome span:nth-child(2) { background: #febc2e; }
+    .mock__chrome span:nth-child(3) { background: #28c840; }
+
+    /* ── Міні-календар ── */
+    .mcal { background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 0 0 14px 14px; box-shadow: 0 20px 55px rgba(0,0,0,.13); padding: 15px 16px 18px; }
+    .mcal__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
+    .mcal__brand { display: flex; align-items: center; gap: 7px; font-weight: 800; font-size: 14px; color: var(--text); }
+    .mcal__brand img { width: 20px; height: 20px; }
+    .mcal__month { font-size: 12px; font-weight: 700; color: var(--muted); }
+    .mcal__days { display: grid; grid-template-columns: repeat(5,1fr); gap: 7px; margin-bottom: 7px; }
+    .mcal__days span { font-size: 10.5px; font-weight: 700; color: var(--muted); text-align: center; }
+    .mcal__days b { display: block; font-size: 13px; color: var(--text); margin-top: 1px; }
+    .mcal__days .is-day b { color: var(--accent-deep); }
+    .mcal__cols { display: grid; grid-template-columns: repeat(5,1fr); gap: 7px; }
+    .mcal__col { background: #fafaf8; border: 1px solid rgba(0,0,0,.04); border-radius: 9px; min-height: 164px; padding: 7px; display: flex; flex-direction: column; gap: 7px; }
+    .mcal__col.is-day { background: rgba(232,168,32,.06); border-color: rgba(232,168,32,.25); }
+    .mev { border-radius: 8px; padding: 7px 8px; font-size: 10.5px; line-height: 1.3; font-weight: 700; }
+    .mev small { display: block; font-size: 9px; font-weight: 600; opacity: .85; margin-top: 2px; }
+    .mev--vax { background: var(--accent); color: var(--on-gold); box-shadow: 0 5px 14px rgba(232,168,32,.4); }
+    .mev--rem { background: #fff; color: var(--accent-deep); border: 1px dashed rgba(200,144,10,.6); }
+    .mev--ghost { background: #eef0ec; height: 30px; border-radius: 8px; }
+    .mev--ghost.sm { height: 20px; opacity: .7; }
+
+    /* ── Міні-PDF ── */
+    .pdfwrap { position: relative; z-index: 1; padding: 6px 10px; }
+    .pdfdoc { background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 10px; box-shadow: 0 22px 55px rgba(0,0,0,.16); padding: 18px 18px 20px; transform: rotate(-1.4deg); }
+    .pdfdoc__head { display: flex; align-items: center; gap: 11px; border-bottom: 2.5px solid var(--accent); padding-bottom: 11px; margin-bottom: 13px; }
+    .pdfdoc__head img { width: 36px; height: 36px; }
+    .pdfdoc__title { font-size: 14px; font-weight: 800; color: var(--text); line-height: 1.2; }
+    .pdfdoc__sub { font-size: 9.5px; color: var(--muted); margin-top: 2px; }
+    .pdfdoc__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .pcard { border: 1px solid rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; }
+    .pcard__age { font-size: 11px; font-weight: 800; color: var(--text); }
+    .pcard__date { font-size: 9px; font-weight: 700; color: var(--accent-deep); margin-top: 1px; }
+    .pcard__ln { height: 5px; border-radius: 3px; background: #edefea; margin-top: 7px; }
+    .pcard__ln.s { width: 70%; }
+    .pdf-badge { position: absolute; top: -6px; right: 14px; z-index: 2; display: flex; align-items: center; gap: 6px;
+      background: #fff; border: 1px solid rgba(0,0,0,.1); box-shadow: 0 8px 22px rgba(0,0,0,.12);
+      border-radius: 100px; padding: 7px 13px; font-size: 12px; font-weight: 800; color: var(--text); transform: rotate(2deg); }
+    .pdf-badge .dot { width: 9px; height: 9px; border-radius: 2px; background: var(--accent); }
+
+    /* плаваючий чіп на мокапі */
+    .mock-chip { position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 7px;
+      background: #fff; border: 1px solid rgba(0,0,0,.08); box-shadow: 0 10px 26px rgba(0,0,0,.14);
+      border-radius: 100px; padding: 8px 14px; font-size: 12.5px; font-weight: 700; color: var(--text); }
+    .mock-chip--bell { top: -14px; right: 18px; transform: rotate(2deg); }
+    @media (max-width: 480px){ .mock-chip { font-size: 11px; padding: 6px 11px; } }
+
     /* ── Tool ─────────────────────────────────────────── */
     .cal { max-width: 816px; margin: 0 auto; padding: 48px var(--pad) 8px; }
 
@@ -53,6 +137,15 @@
       background: var(--warm-bg); min-width: 200px; cursor: pointer;
     }
     .cal-input input[type="date"]:focus { outline: none; border-color: var(--accent); }
+    .cal-seg { display: inline-flex; border: 1.5px solid rgba(0,0,0,.14); border-radius: 11px; overflow: hidden; background: var(--warm-bg); }
+    .cal-seg__btn {
+      font-family: var(--font); font-size: 15px; font-weight: 600; color: var(--text);
+      background: transparent; border: none; padding: 12px 18px; cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+    .cal-seg__btn + .cal-seg__btn { border-left: 1.5px solid rgba(0,0,0,.1); }
+    .cal-seg__btn:hover { background: rgba(232,168,32,.12); }
+    .cal-seg__btn.is-active { background: var(--accent); color: var(--on-gold); }
     .cal-hint { font-size: 13px; color: var(--muted); line-height: 1.5; flex: 1; min-width: 180px; }
 
     /* summary */
@@ -109,6 +202,10 @@
       display: inline-flex; align-items: center; gap: 8px;
     }
     .cal-btn-print:hover { border-color: var(--accent); color: var(--accent-deep); }
+    .cal-btn-ics { background: var(--accent); border-color: var(--accent); color: var(--on-gold); }
+    .cal-btn-ics:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: var(--on-gold); }
+    .cal-ics-note { flex-basis: 100%; width: 100%; margin: 6px 0 0; font-size: 13px; line-height: 1.55; color: var(--muted); }
+    .cal-ics-note b { color: var(--text); }
 
     .cal-disclaimer {
       max-width: 816px; margin: 30px auto 72px; padding: 0 var(--pad);
@@ -122,7 +219,7 @@
 
     @media print {
       @page { size: A4 portrait; margin: 12mm; }
-      .header, .footer, .svc-hero, .cal-input, .cal-actions, .doc-cta, .svc-crosslinks, .nav-toggle { display: none !important; }
+      .header, .footer, .svc-hero, .vf-wrap, .cal-input, .cal-actions, .doc-cta, .svc-crosslinks, .nav-toggle { display: none !important; }
       /* прибрати min-height:100vh + flex із базового body, інакше друкується порожня 2-га сторінка */
       html, body { height: auto !important; min-height: 0 !important; }
       /* Фіксована ширина = поле A4 (210 - 2*12 мм): друк однаковий на всіх пристроях, без масштабування */
@@ -322,6 +419,78 @@
   <p class="svc-hero__sub">Вкажіть дату народження дитини — і ми складемо персональний графік щеплень за <strong>оновленим Національним календарем</strong> МОЗ України (наказ № 396 від 05.03.2025, чинний з 1 січня 2026 р.): що вже час зробити, що наближається та що попереду.</p>
 </section>
 
+<!-- Промо: що дає інструмент -->
+<section class="vf-wrap">
+  <div class="vf">
+    <div class="vf__text">
+      <div class="vf__eyebrow"><span class="vf__num">01</span><span class="vf__tag">Нагадування</span></div>
+      <h2 class="vf__title">Додайте нагадування у свій календар</h2>
+      <p class="vf__sub">Завантажте файл із майбутніми щепленнями — і Google Calendar, Apple Календар чи Outlook нагадають заздалегідь, щоб ви нічого не пропустили.</p>
+      <ul class="vf__list">
+        <li>Усі планові щеплення — одним файлом</li>
+        <li>Нагадування за тиждень і за день до дати</li>
+        <li>Працює з Google&nbsp;Calendar, Apple та Outlook</li>
+      </ul>
+    </div>
+    <div class="vf__visual">
+      <div class="mock">
+        <div class="mock__chrome"><span></span><span></span><span></span></div>
+        <div class="mcal">
+          <div class="mcal__top">
+            <div class="mcal__brand"><img src="/favicon.png" alt="">Календар</div>
+            <div class="mcal__month">Листопад 2026</div>
+          </div>
+          <div class="mcal__days">
+            <span>Пн<b>24</b></span><span>Вт<b>25</b></span><span class="is-day">Ср<b>26</b></span><span>Чт<b>27</b></span><span>Пт<b>28</b></span>
+          </div>
+          <div class="mcal__cols">
+            <div class="mcal__col"><div class="mev--ghost sm"></div></div>
+            <div class="mcal__col"><div class="mev mev--rem">🔔 Нагадування<small>Щеплення вже за тиждень</small></div></div>
+            <div class="mcal__col is-day"><div class="mev mev--vax">🐝 Щеплення · 2 місяці<small>Гепатит B · АКДП · поліо · Hib</small></div></div>
+            <div class="mcal__col"><div class="mev--ghost"></div></div>
+            <div class="mcal__col"><div class="mev--ghost sm"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vf vf--rev">
+    <div class="vf__text">
+      <div class="vf__eyebrow"><span class="vf__num">02</span><span class="vf__tag">PDF</span></div>
+      <h2 class="vf__title">Завантажте персональний календар у PDF</h2>
+      <p class="vf__sub">Акуратний графік на одну сторінку A4 — з логотипом клініки, датами, вакцинами та статусами. Зручно роздрукувати чи зберегти на телефон.</p>
+      <ul class="vf__list">
+        <li>Усі щеплення за віком на одному аркуші</li>
+        <li>З датами, переліком вакцин і статусами</li>
+        <li>Готовий до друку або збереження у PDF</li>
+      </ul>
+    </div>
+    <div class="vf__visual">
+      <div class="pdfwrap">
+        <div class="pdf-badge"><span class="dot"></span>PDF · A4</div>
+        <div class="pdfdoc">
+          <div class="pdfdoc__head">
+            <img src="/favicon.png" alt="">
+            <div>
+              <div class="pdfdoc__title">Персональний календар щеплень</div>
+              <div class="pdfdoc__sub">Клініка «Вулик» · vulyk.clinic</div>
+            </div>
+          </div>
+          <div class="pdfdoc__cards">
+            <div class="pcard"><div class="pcard__age">2 доба</div><div class="pcard__date">5 лют 2026</div><div class="pcard__ln"></div></div>
+            <div class="pcard"><div class="pcard__age">2 місяці</div><div class="pcard__date">5 кві 2026</div><div class="pcard__ln"></div><div class="pcard__ln s"></div></div>
+            <div class="pcard"><div class="pcard__age">4 місяці</div><div class="pcard__date">5 чер 2026</div><div class="pcard__ln"></div><div class="pcard__ln s"></div></div>
+            <div class="pcard"><div class="pcard__age">6 місяців</div><div class="pcard__date">5 сер 2026</div><div class="pcard__ln"></div></div>
+            <div class="pcard"><div class="pcard__age">12 місяців</div><div class="pcard__date">5 лют 2027</div><div class="pcard__ln"></div></div>
+            <div class="pcard"><div class="pcard__age">18 місяців</div><div class="pcard__date">5 сер 2027</div><div class="pcard__ln"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <main class="cal">
 
   <div class="cal-input">
@@ -329,7 +498,15 @@
       <label for="bdate">Дата народження дитини</label>
       <input id="bdate" type="date">
     </div>
-    <p class="cal-hint">Розрахунок відбувається миттєво у вашому браузері. Ми нічого не зберігаємо й не надсилаємо.</p>
+    <div class="fld">
+      <label>Стать дитини</label>
+      <div class="cal-seg" id="sexSeg" role="group" aria-label="Стать дитини">
+        <button type="button" class="cal-seg__btn is-active" data-sex="all">Будь-яка</button>
+        <button type="button" class="cal-seg__btn" data-sex="boy">Хлопчик</button>
+        <button type="button" class="cal-seg__btn" data-sex="girl">Дівчинка</button>
+      </div>
+    </div>
+    <p class="cal-hint">Розрахунок відбувається миттєво у вашому браузері. Ми нічого не зберігаємо й не надсилаємо. <b>Стать</b> впливає на щеплення проти ВПЛ (лише для дівчат).</p>
   </div>
 
   <!-- Зведення -->
@@ -351,11 +528,16 @@
   <div class="cal-tl" id="timeline"></div>
 
   <div class="cal-actions" id="actions">
+    <button class="cal-btn-print cal-btn-ics" id="icsBtn" type="button">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+      Додати нагадування в календар
+    </button>
     <button class="cal-btn-print" id="printBtn" type="button">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       Роздрукувати / зберегти PDF
     </button>
     <a href="#" class="btn btn--primary">Записатися на вакцинацію</a>
+    <p class="cal-ics-note">Файл <b>.ics</b> додасть <b>майбутні</b> щеплення з нагадуваннями (за тиждень і за день) у Google&nbsp;Calendar, Apple&nbsp;Календар чи Outlook. У Google&nbsp;Calendar на комп'ютері: <b>Налаштування → Імпорт та експорт → Імпорт</b>; на телефоні зазвичай достатньо відкрити завантажений файл.</p>
   </div>
 
 </main>
@@ -459,7 +641,7 @@ var SCHEDULE = [
   { label: '18 місяців',            type: 'month', value: 18,  vaccines: ['Гепатит B — 4 доза', 'Кашлюк, дифтерія, правець — 4 доза', 'Поліомієліт — 4 доза', 'Хіб-інфекція (Hib) — 4 доза'] },
   { label: '4 роки',                type: 'month', value: 48,  vaccines: ['Кір, паротит, краснуха (КПК) — 2 доза'] },
   { label: '6 років',               type: 'month', value: 72,  vaccines: ['Дифтерія, правець (ДП) — ревакцинація', 'Поліомієліт (ІПВ) — ревакцинація'] },
-  { label: '12–13 років (дівчата)', type: 'month', value: 144, vaccines: ['ВПЛ-інфекція (вірус папіломи людини) — для дівчат'] },
+  { label: '12–13 років (дівчата)', type: 'month', value: 144, girlsOnly: true, vaccines: ['ВПЛ-інфекція (вірус папіломи людини) — для дівчат'] },
   { label: '16 років',              type: 'month', value: 192, vaccines: ['Дифтерія, правець (ДП) — ревакцинація'] }
 ];
 
@@ -515,22 +697,31 @@ function relText(due, today) {
 }
 
 var $ = function (id) { return document.getElementById(id); };
+var lastBirth = null;
+var sex = 'all'; // 'all' | 'boy' | 'girl'
+
+/* Щеплення, доступні для обраної статі (ВПЛ — лише дівчатам) */
+function activeSchedule() {
+  return SCHEDULE.filter(function (item) { return !(item.girlsOnly && sex === 'boy'); });
+}
 
 function render(birthStr) {
   var birth = startOfDay(new Date(birthStr));
   var today = startOfDay(new Date());
 
   if (isNaN(birth.getTime()) || birth > today) {
+    lastBirth = null;
     $('summary').classList.remove('on');
     $('timeline').classList.remove('on');
     $('actions').classList.remove('on');
     return;
   }
+  lastBirth = birth;
 
   $('sumAge').textContent = ageText(birth, today);
 
   var nextItem = null;
-  var html = SCHEDULE.map(function (item) {
+  var html = activeSchedule().map(function (item) {
     var due = dueDate(birth, item);
     var diff = daysBetween(today, due);
     var state, pill;
@@ -569,12 +760,81 @@ function render(birthStr) {
   $('actions').classList.add('on');
 }
 
+/* ── Експорт у календар (.ics) ── */
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+function icsDate(d) { return d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()); }
+function icsEsc(s) {
+  return String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+}
+
+function buildICS() {
+  if (!lastBirth) return;
+  var today = startOfDay(new Date());
+  var n = new Date();
+  var stamp = n.getUTCFullYear() + pad2(n.getUTCMonth() + 1) + pad2(n.getUTCDate())
+            + 'T' + pad2(n.getUTCHours()) + pad2(n.getUTCMinutes()) + pad2(n.getUTCSeconds()) + 'Z';
+
+  var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Vulyk Clinic//Kalendar scheplen//UK', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
+  var count = 0;
+
+  activeSchedule().forEach(function (item) {
+    var due = dueDate(lastBirth, item);
+    if (daysBetween(today, due) < 0) return; // лише майбутні
+    count++;
+    var next = new Date(due); next.setDate(next.getDate() + 1);
+    var desc = 'Щеплення за віком «' + item.label + '»:\n• ' + item.vaccines.join('\n• ')
+             + '\n\nЗа оновленим Національним календарем МОЗ. Точну дату та вакцини підтвердить лікар після огляду.\nЗапис: +380962817338 · vulyk.clinic';
+    lines.push('BEGIN:VEVENT');
+    lines.push('UID:vulyk-' + icsDate(lastBirth) + '-' + item.type + item.value + '@vulyk.clinic');
+    lines.push('DTSTAMP:' + stamp);
+    lines.push('DTSTART;VALUE=DATE:' + icsDate(due));
+    lines.push('DTEND;VALUE=DATE:' + icsDate(next));
+    lines.push('SUMMARY:' + icsEsc('Щеплення (' + item.label + ') — Вулик'));
+    lines.push('DESCRIPTION:' + icsEsc(desc));
+    lines.push('TRANSP:TRANSPARENT');
+    ['-P7D', '-P1D'].forEach(function (tr) {
+      lines.push('BEGIN:VALARM');
+      lines.push('ACTION:DISPLAY');
+      lines.push('DESCRIPTION:' + icsEsc('Нагадування: щеплення (' + item.label + ')'));
+      lines.push('TRIGGER:' + tr);
+      lines.push('END:VALARM');
+    });
+    lines.push('END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+
+  if (count === 0) {
+    alert('Усі планові щеплення за базовим календарем уже позаду — майбутніх подій для додавання немає.');
+    return;
+  }
+
+  var blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'kalendar-shcheplen-vulyk.ics';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(url); }, 3000);
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   var input = $('bdate');
   input.max = new Date().toISOString().slice(0, 10);
   input.addEventListener('change', function () { render(this.value); });
   input.addEventListener('input', function () { if (this.value) render(this.value); });
   $('printBtn').addEventListener('click', function () { window.print(); });
+  $('icsBtn').addEventListener('click', buildICS);
+
+  $('sexSeg').addEventListener('click', function (e) {
+    var btn = e.target.closest('.cal-seg__btn'); if (!btn) return;
+    sex = btn.dataset.sex;
+    Array.prototype.forEach.call(this.querySelectorAll('.cal-seg__btn'), function (b) {
+      b.classList.toggle('is-active', b === btn);
+    });
+    if (input.value) render(input.value);
+  });
 });
 </script>
 
