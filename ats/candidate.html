@@ -37,6 +37,16 @@
     .att:last-child{ border-bottom:none; }
     .att a{ color:var(--accent-deep); text-decoration:none; font-weight:600; }
     .muted{ color:var(--muted); font-size:14px; }
+
+    /* Вбудований переглядач файлів */
+    .vwr{ position:fixed; inset:0; z-index:1000; background:rgba(20,20,20,.72); display:flex; flex-direction:column; }
+    .vwr__bar{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; background:#fff; border-bottom:1px solid var(--line); }
+    .vwr__name{ font-weight:700; font-size:14px; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .vwr__acts{ display:flex; gap:8px; flex-shrink:0; align-items:center; }
+    .vwr__body{ flex:1; background:#f3f3f1; position:relative; min-height:0; }
+    .vwr__body iframe{ width:100%; height:100%; border:0; display:block; background:#fff; }
+    .vwr__msg{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px; padding:24px; text-align:center; line-height:1.5; }
+    @media (max-width:600px){ .vwr__name{ max-width:38vw; } .vwr__bar .btn{ padding:7px 10px; } }
     .inline-add{ display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; }
     .inline-add .fld{ display:flex; flex-direction:column; }
     .inline-add label{ margin:0 0 4px; }
@@ -436,9 +446,10 @@ async function loadAttachments() {
   el('attList').innerHTML = data.map(function (f) {
     const nm = f.file_name || 'файл';
     return '<div class="att" data-att="' + f.id + '" data-url="' + escapeHtml(f.file_url) + '" data-name="' + escapeHtml(nm) + '">'
-      + '<a href="#" data-act="view" title="Відкрити у браузері">' + escapeHtml(nm) + '</a>'
-      + '<span style="display:flex;gap:6px">'
+      + '<a href="#" data-act="view" title="Переглянути тут">' + escapeHtml(nm) + '</a>'
+      + '<span style="display:flex;gap:6px;flex-shrink:0">'
       +   '<button class="btn btn--ghost btn--sm" data-act="view">Переглянути</button>'
+      +   '<button class="btn btn--ghost btn--sm" data-act="download">Завантажити</button>'
       +   '<button class="btn btn--danger btn--sm" data-act="delfile">✕</button>'
       + '</span>'
       + '</div>';
@@ -461,17 +472,55 @@ async function uploadFile(file) {
   loadAttachments();
 }
 
-async function viewFile(path, name) {
-  const w = window.open('', '_blank');   // відкриваємо одразу, щоб не блокував popup-фільтр
-  const { data, error } = await sb.storage.from('resumes').createSignedUrl(path, 600, { download: false });
-  if (error) { if (w) w.close(); flash(el('attMsg'), error.message, false); return; }
+var OFFICE_EXT = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'rtf', 'odt', 'ods', 'odp'];
+var IMG_EXT = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif', 'bmp', 'svg'];
+
+/* Вбудований перегляд у модалці (без нової вкладки) */
+async function openViewer(path, name) {
+  el('vwrName').textContent = name || 'файл';
+  el('vwrBody').innerHTML = '<div class="vwr__msg">Завантаження…</div>';
+  el('vwrDl').removeAttribute('href');
+  el('vwrTab').removeAttribute('href');
+  el('viewer').hidden = false;
+  document.body.style.overflow = 'hidden';
+
+  const { data, error } = await sb.storage.from('resumes').createSignedUrl(path, 3600, { download: false });
+  if (error || !data) { el('vwrBody').innerHTML = '<div class="vwr__msg">Не вдалося відкрити: ' + escapeHtml((error && error.message) || 'помилка') + '</div>'; return; }
+  const url = data.signedUrl;
   const ext = (name || path).split('.').pop().toLowerCase();
-  let target = data.signedUrl;
-  // Word/Excel/PowerPoint — через онлайн-перегляд Microsoft Office (браузер їх сам не показує)
-  if (['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].indexOf(ext) > -1) {
-    target = 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(data.signedUrl);
+
+  el('vwrTab').href = url;
+  const dl = await sb.storage.from('resumes').createSignedUrl(path, 3600, { download: name || true });
+  el('vwrDl').href = (dl.data && dl.data.signedUrl) || url;
+  el('vwrDl').setAttribute('download', name || '');
+
+  let inner;
+  if (ext === 'pdf' || IMG_EXT.indexOf(ext) > -1) {
+    inner = '<iframe src="' + encodeURI(url) + '" title="' + escapeHtml(name || '') + '"></iframe>';
+  } else if (OFFICE_EXT.indexOf(ext) > -1) {
+    inner = '<iframe src="https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(url) + '" title="' + escapeHtml(name || '') + '"></iframe>';
+  } else {
+    inner = '<div class="vwr__msg">Цей формат не показується у вбудованому перегляді.<br>Натисніть «Завантажити» вгорі.</div>';
   }
-  if (w) w.location = target; else window.open(target, '_blank');
+  el('vwrBody').innerHTML = inner;
+}
+
+function closeViewer() {
+  el('viewer').hidden = true;
+  el('vwrBody').innerHTML = '';
+  document.body.style.overflow = '';
+}
+
+/* Завантаження файлу на пристрій (комп'ютер / телефон) */
+async function downloadFile(path, name) {
+  flash(el('attMsg'), 'Готуємо файл…', true);
+  const { data, error } = await sb.storage.from('resumes').createSignedUrl(path, 600, { download: name || true });
+  if (error || !data) { flash(el('attMsg'), (error && error.message) || 'Помилка', false); return; }
+  const a = document.createElement('a');
+  a.href = data.signedUrl;
+  a.download = name || '';
+  document.body.appendChild(a); a.click(); a.remove();
+  flash(el('attMsg'), 'Завантаження почалося', true);
 }
 
 async function deleteFile(attId, path) {
@@ -605,12 +654,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const a = e.target.closest('[data-act]'); if (!a) return;
     e.preventDefault();
     const row = e.target.closest('.att');
-    if (a.dataset.act === 'view') viewFile(row.dataset.url, row.dataset.name);
+    if (a.dataset.act === 'view') openViewer(row.dataset.url, row.dataset.name);
+    else if (a.dataset.act === 'download') downloadFile(row.dataset.url, row.dataset.name);
     else if (a.dataset.act === 'delfile') deleteFile(row.dataset.att, row.dataset.url);
   });
+
+  el('vwrClose').addEventListener('click', closeViewer);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !el('viewer').hidden) closeViewer(); });
 
   atsGuard('candidates.html', initCandidate);
 });
 </script>
+
+<!-- Вбудований переглядач резюме/файлів -->
+<div id="viewer" class="vwr" hidden>
+  <div class="vwr__bar">
+    <div class="vwr__name" id="vwrName">файл</div>
+    <div class="vwr__acts">
+      <a id="vwrDl" class="btn btn--primary btn--sm" download>Завантажити</a>
+      <a id="vwrTab" class="btn btn--ghost btn--sm" target="_blank" rel="noopener">Нова вкладка</a>
+      <button id="vwrClose" class="btn btn--ghost btn--sm" title="Закрити (Esc)">✕</button>
+    </div>
+  </div>
+  <div class="vwr__body" id="vwrBody"></div>
+</div>
 </body>
 </html>
