@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   sitemap.xml для https://www.vulyk.clinic/
-  Згенеровано в межах SEO Фази 0. Містить лише реально існуючі сторінки (65 URL).
+  Згенеровано в межах SEO Фази 0. Містить лише реально існуючі сторінки (66 URL).
   Після завантаження у корінь сайту подайте його в Google Search Console:
   Індексування → Файли Sitemap → https://www.vulyk.clinic/sitemap.xml
   lastmod оновлюйте при зміні сторінки. Дати новин відповідають даті публікації.
@@ -42,6 +42,7 @@
 
   <!-- Послуги: розширена ПМД -->
   <url><loc>https://www.vulyk.clinic/sub-vaktsinatsiya.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.vulyk.clinic/sub-vaktsinatsiya-kalendar.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.vulyk.clinic/sub-dopologovi.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.vulyk.clinic/sub-grudne-vyg.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 
